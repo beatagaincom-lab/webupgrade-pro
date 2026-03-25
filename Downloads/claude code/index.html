@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebUpgrade Pro – Moderne Websites. KI-optimiert. Faire Preise.</title>
+  <meta name="description" content="Ich modernisiere Ihre veraltete Website mit den neuesten Technologien und künstlicher Intelligenz. Kostenlose Erstanalyse. Faire Preise. Direkt aus der Schweiz." />
+  <meta property="og:title" content="WebUpgrade Pro – Ihre Website neu gedacht" />
+  <meta property="og:description" content="Kostenlose Website-Analyse. Modernisierung mit KI. Faire Preise für KMU und Selbstständige." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #020817;
+      --bg2: #0c1629;
+      --bg3: #0f1e3a;
+      --blue: #3b82f6;
+      --blue-light: #60a5fa;
+      --cyan: #06b6d4;
+      --gold: #f59e0b;
+      --white: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(59,130,246,0.15);
+      --glass: rgba(15,30,60,0.6);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(2,8,23,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 2rem;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 1.3rem; font-weight: 800; color: var(--white);
+      text-decoration: none; letter-spacing: -0.5px;
+    }
+    .nav-logo .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .nav-logo span { color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff !important; padding: 0.55rem 1.3rem;
+      border-radius: 8px; font-weight: 600 !important;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px) !important; color: #fff !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px; transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(2,8,23,0.98); backdrop-filter: blur(20px);
+      z-index: 999; flex-direction: column; align-items: center;
+      justify-content: center; gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--white); text-decoration: none; font-size: 1.5rem;
+      font-weight: 700; transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--cyan); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 2rem; cursor: pointer; color: var(--muted);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 8rem 2rem 4rem;
+    }
+    #particles-canvas {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse at center,
+        rgba(59,130,246,0.18) 0%,
+        rgba(6,182,212,0.08) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 100px; padding: 0.4rem 1rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--blue-light);
+      margin-bottom: 1.5rem; letter-spacing: 0.5px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; background: var(--cyan);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -2px; margin-bottom: 1.5rem;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, var(--blue-light) 0%, var(--cyan) 50%, #a78bfa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted);
+      max-width: 620px; margin: 0 auto 2.5rem;
+      line-height: 1.7; font-weight: 400;
+    }
+    .hero-sub strong { color: var(--white); }
+    .hero-btns {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; margin-bottom: 3rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
+      color: #fff; padding: 0.9rem 2rem; border-radius: 12px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      border: none; cursor: pointer; display: inline-flex; align-items: center;
+      gap: 0.5rem; transition: all 0.3s;
+      box-shadow: 0 0 40px rgba(59,130,246,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 60px rgba(59,130,246,0.5);
+    }
+    .btn-whatsapp {
+      background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.3);
+      color: #25d366; padding: 0.9rem 2rem; border-radius: 12px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.3s;
+    }
+    .btn-whatsapp:hover {
+      background: rgba(37,211,102,0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(37,211,102,0.2);
+    }
+    .hero-trust {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; color: var(--muted); font-weight: 500;
+    }
+    .trust-badge .check {
+      width: 20px; height: 20px; background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.4); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; color: #4ade80;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: var(--muted); font-size: 0.75rem;
+    }
+    .scroll-indicator .arrow {
+      width: 20px; height: 20px; border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted); transform: rotate(45deg);
+      animation: scrollDown 1.5s infinite;
+    }
+    @keyframes scrollDown {
+      0%, 100% { opacity: 0.3; transform: rotate(45deg) translateY(-4px); }
+      50% { opacity: 1; transform: rotate(45deg) translateY(4px); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--cyan); text-transform: uppercase; margin-bottom: 0.8rem;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900; letter-spacing: -1px; margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    .section-sub {
+      color: var(--muted); font-size: 1.05rem; max-width: 580px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px; height: 3px; margin: 1rem 0;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      border-radius: 2px;
+    }
+    .text-center .divider { margin: 1rem auto; }
+
+    /* ── PROBLEM ── */
+    #problem { background: var(--bg2); }
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem; margin-bottom: 3rem;
+    }
+    .problem-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.4rem 1.6rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s; opacity: 0; transform: translateY(20px);
+    }
+    .problem-card.visible { opacity: 1; transform: none; }
+    .problem-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(59,130,246,0.1);
+    }
+    .problem-icon {
+      font-size: 1.5rem; min-width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .problem-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .problem-card p { font-size: 0.85rem; color: var(--muted); }
+    .problem-cta {
+      background: linear-gradient(90deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
+      border: 1px solid rgba(239,68,68,0.2); border-radius: 14px;
+      padding: 1.8rem 2rem; text-align: center;
+    }
+    .problem-cta p {
+      font-size: 1.15rem; font-weight: 700; color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .problem-cta span { color: var(--muted); font-size: 0.9rem; }
+    .problem-cta .highlight { color: #f87171; }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2rem;
+      backdrop-filter: blur(10px); position: relative; overflow: hidden;
+      transition: all 0.4s; opacity: 0; transform: translateY(20px);
+    }
+    .service-card.visible { opacity: 1; transform: none; }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      transform: scaleX(0); transition: transform 0.4s; transform-origin: left;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover {
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(59,130,246,0.12);
+    }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.08));
+      border: 1px solid rgba(59,130,246,0.2);
+    }
+    .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PROCESS ── */
+    #process { background: var(--bg2); }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; position: relative;
+    }
+    .process-step {
+      text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.5s;
+    }
+    .process-step.visible { opacity: 1; transform: none; }
+    .step-num {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 900; margin: 0 auto 1.2rem;
+      box-shadow: 0 0 30px rgba(59,130,246,0.4);
+      position: relative;
+    }
+    .step-num::after {
+      content: ''; position: absolute; inset: -4px;
+      border-radius: 50%; border: 2px dashed rgba(59,130,246,0.3);
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .process-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .process-step p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; align-items: start;
+    }
+    .price-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.2rem 2rem;
+      backdrop-filter: blur(10px); position: relative;
+      transition: all 0.4s; opacity: 0; transform: translateY(20px);
+    }
+    .price-card.visible { opacity: 1; transform: none; }
+    .price-card.featured {
+      border-color: rgba(59,130,246,0.5);
+      background: linear-gradient(145deg, rgba(59,130,246,0.08), rgba(6,182,212,0.04));
+      transform: scale(1.03);
+    }
+    .price-card.featured.visible { transform: scale(1.03) translateY(0); }
+    .price-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(59,130,246,0.12); }
+    .price-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+    .featured-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff; padding: 0.3rem 1.2rem; border-radius: 100px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .price-name {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem;
+    }
+    .price-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .price-amount {
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -1px;
+      margin: 1rem 0; color: var(--white);
+    }
+    .price-amount span { font-size: 1rem; font-weight: 500; color: var(--muted); }
+    .price-features { list-style: none; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.7rem; }
+    .price-features li {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.88rem; color: var(--muted);
+    }
+    .price-features li .chk {
+      width: 18px; height: 18px; background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.35); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; color: #4ade80; flex-shrink: 0;
+    }
+    .btn-price {
+      width: 100%; padding: 0.85rem; border-radius: 10px;
+      font-weight: 700; font-size: 0.95rem; cursor: pointer;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--white); transition: all 0.3s; text-align: center;
+      display: block; text-decoration: none;
+    }
+    .btn-price:hover { border-color: var(--blue); color: var(--blue-light); }
+    .btn-price.featured-btn {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border: none;
+    }
+    .btn-price.featured-btn:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+    .pricing-note {
+      text-align: center; margin-top: 2.5rem;
+      color: var(--muted); font-size: 0.9rem;
+    }
+    .pricing-note a {
+      color: var(--blue-light); text-decoration: none; font-weight: 600;
+    }
+
+    /* ── GUARANTEE ── */
+    .guarantee-banner {
+      background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(6,182,212,0.04));
+      border: 1px solid rgba(34,197,94,0.2); border-radius: 20px;
+      padding: 2.5rem 3rem; margin: 4rem auto 0;
+      max-width: 900px; display: flex; align-items: center; gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .guarantee-icon {
+      font-size: 4rem; flex-shrink: 0;
+      filter: drop-shadow(0 0 20px rgba(34,197,94,0.4));
+      animation: guaranteePulse 3s ease-in-out infinite;
+    }
+    @keyframes guaranteePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    .guarantee-text h3 {
+      font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+    .guarantee-text h3 span {
+      background: linear-gradient(135deg, #4ade80, #06b6d4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .guarantee-text p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; max-width: 580px; }
+    .guarantee-text .guarantee-points {
+      display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem;
+    }
+    .guarantee-points .gp {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 600; color: #4ade80;
+      background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 100px; padding: 0.3rem 0.8rem;
+    }
+
+    /* ── QUICK SERVICES ── */
+    #quick-services { background: var(--bg2); }
+    .qs-intro {
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 1.5rem; margin-bottom: 3rem;
+    }
+    .qs-intro-left { flex: 1; min-width: 260px; }
+    .qs-intro-right {
+      background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02));
+      border: 1px solid rgba(245,158,11,0.2); border-radius: 14px;
+      padding: 1.2rem 1.8rem; display: flex; align-items: center; gap: 1rem;
+      flex-shrink: 0;
+    }
+    .qs-intro-right .tag {
+      font-size: 2rem; font-weight: 900;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; white-space: nowrap;
+    }
+    .qs-intro-right p { font-size: 0.82rem; color: var(--muted); max-width: 180px; line-height: 1.5; }
+    .qs-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .qs-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.3rem 1.5rem;
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; gap: 1rem;
+      transition: all 0.35s; opacity: 0; transform: translateY(16px);
+      cursor: pointer; text-decoration: none;
+    }
+    .qs-card.visible { opacity: 1; transform: none; }
+    .qs-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(59,130,246,0.1);
+    }
+    .qs-icon {
+      font-size: 1.6rem; min-width: 46px; height: 46px;
+      background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.15);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .qs-info { flex: 1; }
+    .qs-info h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .qs-info p { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+    .qs-price {
+      text-align: right; flex-shrink: 0;
+    }
+    .qs-price .amount {
+      font-size: 1.1rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .qs-price .chf { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 0.1rem; }
+    .qs-wa-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem; font-weight: 600; color: #25d366;
+      margin-top: 0.15rem;
+    }
+    .qs-cta {
+      margin-top: 2.5rem; text-align: center;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+    .qs-cta p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
+    .qs-cta strong { color: var(--white); }
+    .qs-cta-btns { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+    /* ── FORM ── */
+    #analyse {
+      background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+      position: relative; overflow: hidden;
+    }
+    #analyse::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .form-wrapper {
+      max-width: 680px; margin: 0 auto; position: relative; z-index: 1;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 24px; padding: 3rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+    .form-header { text-align: center; margin-bottom: 2.5rem; }
+    .form-header .emoji { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .field label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--muted); margin-bottom: 0.5rem; letter-spacing: 0.3px;
+    }
+    .field input, .field textarea {
+      width: 100%; background: rgba(2,8,23,0.6);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1rem; color: var(--white);
+      font-size: 0.95rem; font-family: inherit;
+      transition: all 0.3s; outline: none; resize: none;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(148,163,184,0.4); }
+    .field input:focus, .field textarea:focus {
+      border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+    }
+    .field input.error { border-color: #ef4444; }
+    .field .error-msg { color: #f87171; font-size: 0.78rem; margin-top: 0.35rem; display: none; }
+    .field.has-error .error-msg { display: block; }
+    .field.has-error input, .field.has-error textarea { border-color: #ef4444; }
+    .btn-submit {
+      width: 100%; padding: 1rem; border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border: none; color: #fff; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      box-shadow: 0 0 40px rgba(59,130,246,0.25);
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(59,130,246,0.4); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .form-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 1.5rem 0; color: var(--muted); font-size: 0.85rem;
+    }
+    .form-divider::before, .form-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .btn-wa-form {
+      width: 100%; padding: 0.85rem; border-radius: 12px;
+      background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.25);
+      color: #25d366; font-size: 0.95rem; font-weight: 700;
+      text-decoration: none; display: flex; align-items: center;
+      justify-content: center; gap: 0.6rem; transition: all 0.3s; cursor: pointer;
+    }
+    .btn-wa-form:hover { background: rgba(37,211,102,0.15); transform: translateY(-2px); }
+    .success-msg {
+      display: none; text-align: center; padding: 2rem;
+    }
+    .success-msg .icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+    .success-msg h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .success-msg p { color: var(--muted); }
+
+    /* ── WHY US ── */
+    #why { background: var(--bg2); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .why-card {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s; opacity: 0; transform: translateY(20px);
+    }
+    .why-card.visible { opacity: 1; transform: none; }
+    .why-card:hover { border-color: rgba(59,130,246,0.35); transform: translateY(-4px); }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .why-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .why-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── STATS ── */
+    #stats {
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,182,212,0.03));
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem; text-align: center;
+    }
+    .stat h3 {
+      font-size: 2.8rem; font-weight: 900; letter-spacing: -2px;
+      background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat p { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 740px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem; }
+    .faq-item {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; backdrop-filter: blur(10px);
+      transition: border-color 0.3s;
+    }
+    .faq-item.open { border-color: rgba(59,130,246,0.35); }
+    .faq-q {
+      padding: 1.3rem 1.6rem; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      font-weight: 600; font-size: 0.95rem; user-select: none;
+    }
+    .faq-arrow {
+      font-size: 1rem; color: var(--muted); transition: transform 0.3s;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--cyan); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0 1.6rem;
+    }
+    .faq-a p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; padding-bottom: 1.3rem; }
+    .faq-item.open .faq-a { max-height: 200px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 3rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      justify-content: space-between; align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+    .footer-brand .nav-logo { margin-bottom: 0.8rem; }
+    .footer-brand p { font-size: 0.85rem; color: var(--muted); max-width: 260px; line-height: 1.6; }
+    .footer-links h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; color: var(--muted); letter-spacing: 0.5px; }
+    .footer-links a {
+      display: block; font-size: 0.88rem; color: var(--muted);
+      text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-contact a {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.88rem; color: var(--muted); text-decoration: none;
+      margin-bottom: 0.7rem; transition: color 0.2s;
+    }
+    .footer-contact a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1100px; margin: 0 auto;
+      border-top: 1px solid var(--border); padding-top: 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    .footer-bottom a { color: var(--muted); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--white); }
+
+    /* ── FLOATING WA ── */
+    .float-wa {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25d366;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 1.6rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: all 0.3s; animation: floatBounce 3s ease-in-out infinite;
+    }
+    .float-wa:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.6);
+    }
+    @keyframes floatBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .float-wa-tooltip {
+      position: fixed; bottom: 6.5rem; right: 2rem; z-index: 900;
+      background: #25d366; color: #fff; padding: 0.4rem 0.9rem;
+      border-radius: 8px; font-size: 0.78rem; font-weight: 600;
+      opacity: 0; pointer-events: none; white-space: nowrap;
+      transition: opacity 0.3s; transform: translateX(0);
+    }
+    .float-wa:hover + .float-wa-tooltip { opacity: 1; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-title { letter-spacing: -1px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-wrapper { padding: 2rem 1.5rem; }
+      .price-card.featured { transform: scale(1); }
+      .price-card.featured.visible { transform: scale(1); }
+      section { padding: 4rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="logo-icon">⚡</div>
+    Web<span>Upgrade</span> Pro
+  </a>
+  <div class="nav-links">
+    <a href="#services">Leistungen</a>
+    <a href="#process">Prozess</a>
+    <a href="#pricing">Preise</a>
+    <a href="#quick-services">Klein-Services</a>
+    <a href="#analyse" class="nav-cta">Gratis Analyse</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="openMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="closeMenu()">✕</span>
+  <a href="#services" onclick="closeMenu()">Leistungen</a>
+  <a href="#process" onclick="closeMenu()">Prozess</a>
+  <a href="#pricing" onclick="closeMenu()">Preise</a>
+  <a href="#why" onclick="closeMenu()">Warum ich</a>
+  <a href="#quick-services" onclick="closeMenu()">Klein-Services</a>
+  <a href="#analyse" onclick="closeMenu()" style="color:var(--cyan)">→ Gratis Analyse</a>
+  <a href="#analyse" onclick="closeMenu()" style="color:#4ade80;font-size:1rem">🛡️ Garantie</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      KI-gestützte Website-Modernisierung · Schweiz
+    </div>
+    <h1 class="hero-title">
+      Ihre Website ist Ihr<br />erster Eindruck –<br />
+      <span class="gradient-text">machen wir ihn unvergesslich.</span>
+    </h1>
+    <p class="hero-sub">
+      Ich modernisiere Ihre veraltete Website mit den neuesten Technologien
+      und <strong>künstlicher Intelligenz</strong> – schnell, professionell
+      und zu fairen Preisen.
+    </p>
+    <div class="hero-btns">
+      <a href="#analyse" class="btn-primary">
+        🚀 Kostenlose Analyse starten
+      </a>
+      <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Website-Modernisierung." target="_blank" class="btn-whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Via WhatsApp schreiben
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-badge"><span class="check">✓</span> Kostenlose Erstanalyse</div>
+      <div class="trust-badge"><span class="check">✓</span> KI-gestützt</div>
+      <div class="trust-badge"><span class="check">✓</span> Faire Preise</div>
+      <div class="trust-badge"><span class="check">✓</span> Persönlicher Kontakt</div>
+      <div class="trust-badge"><span class="check" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);color:#4ade80">✓</span> <span style="color:#4ade80;font-weight:600">Geld-zurück-Garantie</span></div>
+      <div class="trust-badge"><span class="check" style="background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.4);color:#67e8f9">🔐</span> <span style="color:#67e8f9;font-weight:600">Original-Website unangetastet</span></div>
+    </div>
+  </div>
+  <div class="scroll-indicator"><div class="arrow"></div></div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat reveal"><h3>+300%</h3><p>Mehr Anfragen durch modernes Design</p></div>
+      <div class="stat reveal"><h3>3s</h3><p>Zeit bis Besucher abspringen – bei langsamen Seiten</p></div>
+      <div class="stat reveal"><h3>78%</h3><p>Aller Nutzer surfen mobil</p></div>
+      <div class="stat reveal"><h3>24h</h3><p>Feedback nach Ihrer Analyse</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Das Problem</span>
+      <h2 class="section-title">Erkennen Sie sich wieder?</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Veraltete Websites kosten Sie täglich Kunden – oft ohne dass Sie es merken.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">😩</div>
+        <div>
+          <h3>Design aus dem letzten Jahrzehnt</h3>
+          <p>Ihre Website wirkt eingestaubt – Kunden verlieren sofort das Vertrauen.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📱</div>
+        <div>
+          <h3>Nicht mobil-optimiert</h3>
+          <p>78% der Nutzer surfen mit dem Handy – und sehen bei Ihnen nur Chaos.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🐢</div>
+        <div>
+          <h3>Langsame Ladezeiten</h3>
+          <p>Über 3 Sekunden und der Besucher ist weg – garantiert.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔍</div>
+        <div>
+          <h3>Unsichtbar bei Google</h3>
+          <p>Ohne SEO finden Sie Ihre Kunden nie – Ihre Konkurrenz schon.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📉</div>
+        <div>
+          <h3>Keine Anfragen, keine Conversions</h3>
+          <p>Besucher kommen, schauen – und gehen. Ohne Kontakt.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔒</div>
+        <div>
+          <h3>Sicherheitslücken & altes CMS</h3>
+          <p>Veraltete Plugins und Systeme sind ein offenes Eingangstor für Hacker.</p>
+        </div>
+      </div>
+    </div>
+    <div class="problem-cta">
+      <p>Das kostet Sie <span class="highlight">täglich</span> potenzielle Kunden. <strong>Ich ändere das.</strong></p>
+      <span>Mit moderner Technologie, KI und einem frischen Blick – professionell und bezahlbar.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-label">Leistungen</span>
+      <h2 class="section-title">Was ich für Sie tue</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Von der Analyse bis zum Launch – alles aus einer Hand.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Modernes Redesign</h3>
+        <p>Zeitgemässes Design, das Vertrauen schafft und Besucher in Kunden verwandelt. Professionell, klar und auf Ihre Marke zugeschnitten.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>KI-Integration</h3>
+        <p>Intelligente Chatbots, KI-generierte Inhalte und smarte Personalisierung. Ihre Website arbeitet für Sie – auch wenn Sie schlafen.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Performance-Optimierung</h3>
+        <p>Blitzschnelle Ladezeiten und Top-Scores bei Google PageSpeed. Mehr Geschwindigkeit = mehr Conversions, ganz einfach.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Mobile-First Design</h3>
+        <p>100% perfekt auf jedem Gerät – Smartphone, Tablet und Desktop. Kein Besucher verliert sich mehr im Layout.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>SEO-Optimierung</h3>
+        <p>Besser gefunden bei Google – mehr organischer Traffic ohne Werbebudget. Ihre Kunden suchen Sie. Ich sorge dafür, dass sie Sie finden.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Sicherheit & Compliance</h3>
+        <p>HTTPS, aktuelle Technologien, DSGVO-konform. Ihre Website ist sicher, modern und zukunftsfähig.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-label">Der Prozess</span>
+      <h2 class="section-title">So einfach geht's</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Von Ihrer Anfrage bis zur fertigen Website – transparent und ohne Überraschungen.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h3>Gratis-Analyse</h3>
+        <p>Sie geben Ihre Website-URL ein. Ich analysiere sie kostenlos und vollständig – Design, Speed, SEO, Sicherheit.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h3>Feedback & Konzept</h3>
+        <p>Innerhalb von 24 Stunden erhalten Sie konkretes Feedback und einen klaren Verbesserungsplan.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h3>Umsetzung – sicher & geschützt</h3>
+        <p>Ich modernisiere Ihre Website auf einer <strong style="color:var(--cyan)">separaten Vorschau-Umgebung</strong>. Ihre originale Website läuft unverändert weiter – kein Besucher bemerkt etwas.</p>
+      </div>
+      <div class="process-step" style="position:relative">
+        <div class="step-num">3.5</div>
+        <h3>Ihre Freigabe ✓</h3>
+        <p>Sie sehen alles zuerst. Feedback, Anpassungen, nochmal anschauen – so oft Sie möchten. <strong style="color:var(--white)">Erst mit Ihrer Zustimmung</strong> geht es weiter.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h3>Launch & Support</h3>
+        <p>Erst nach Ihrer ausdrücklichen Freigabe wird die neue Version live geschaltet. Ich stehe danach weiterhin für Fragen zur Verfügung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-label">Preise</span>
+      <h2 class="section-title">Faire Preise. Keine Überraschungen.</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Transparent, flexibel und auf Ihr Budget abgestimmt. Sie wissen immer, was Sie bezahlen.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-title">Auffrischung</div>
+        <div class="price-amount">ab CHF 490<span> /einmalig</span></div>
+        <ul class="price-features">
+          <li><span class="chk">✓</span> Redesign einer bestehenden Seite</li>
+          <li><span class="chk">✓</span> Mobile-Optimierung</li>
+          <li><span class="chk">✓</span> Performance-Verbesserung</li>
+          <li><span class="chk">✓</span> Kontaktformular</li>
+          <li><span class="chk">✓</span> 1 Revisionsrunde</li>
+        </ul>
+        <a href="#analyse" class="btn-price">Jetzt anfragen</a>
+      </div>
+      <div class="price-card featured">
+        <div class="featured-badge">⭐ BELIEBT</div>
+        <div class="price-name">Pro</div>
+        <div class="price-title">Modernisierung</div>
+        <div class="price-amount">ab CHF 990<span> /einmalig</span></div>
+        <ul class="price-features">
+          <li><span class="chk">✓</span> Komplettes Redesign</li>
+          <li><span class="chk">✓</span> KI-Elemente & Chatbot</li>
+          <li><span class="chk">✓</span> SEO-Grundoptimierung</li>
+          <li><span class="chk">✓</span> Kontaktformular & Analytics</li>
+          <li><span class="chk">✓</span> 3 Revisionsrunden</li>
+          <li><span class="chk">✓</span> 30 Tage Support</li>
+        </ul>
+        <a href="#analyse" class="btn-price featured-btn">Jetzt starten →</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Premium</div>
+        <div class="price-title">Transformation</div>
+        <div class="price-amount">Auf Anfrage</div>
+        <ul class="price-features">
+          <li><span class="chk">✓</span> Alles aus Pro</li>
+          <li><span class="chk">✓</span> Individuelle KI-Integration</li>
+          <li><span class="chk">✓</span> Vollständige SEO-Kampagne</li>
+          <li><span class="chk">✓</span> CMS / Admin-Bereich</li>
+          <li><span class="chk">✓</span> E-Commerce-Funktionen</li>
+          <li><span class="chk">✓</span> Laufender Support</li>
+        </ul>
+        <a href="https://wa.me/41784464832?text=Ich%20interessiere%20mich%20f%C3%BCr%20das%20Premium-Paket." target="_blank" class="btn-price">Beratung buchen</a>
+      </div>
+    </div>
+    <p class="pricing-note">
+      Nicht sicher, welches Paket passt? <a href="#analyse">Starten Sie mit der kostenlosen Analyse</a> –
+      ich empfehle Ihnen das Richtige, ganz unverbindlich.
+    </p>
+  </div>
+</section>
+
+<!-- GARANTIE BANNER -->
+<div style="padding: 0 2rem; background: var(--bg);">
+  <div class="guarantee-banner reveal">
+    <div class="guarantee-icon">🛡️</div>
+    <div class="guarantee-text">
+      <h3>Mein Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
+      <p>
+        Ich bin von meiner Arbeit überzeugt – und das beweise ich. Wenn Sie mit dem Ergebnis nicht zufrieden sind,
+        erhalten Sie Ihr Geld vollständig zurück. Kein Streit, keine Erklärungen nötig.
+        Ich liefere Qualität – oder Sie zahlen nichts.
+      </p>
+      <div class="guarantee-points">
+        <span class="gp">✓ 100% Rückerstattung</span>
+        <span class="gp">✓ Kein Risiko für Sie</span>
+        <span class="gp">✓ Keine versteckten Bedingungen</span>
+        <span class="gp">✓ Mein persönliches Versprechen</span>
+        <span class="gp" style="background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.25);color:#67e8f9">🔐 Original-Website bleibt unangetastet</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ANALYSE FORMULAR -->
+<section id="analyse">
+  <div class="container">
+    <div class="form-wrapper reveal">
+      <div class="form-header">
+        <span class="emoji">🚀</span>
+        <span class="section-label" style="display:block;text-align:center">Kostenloser Service</span>
+        <h2 class="section-title" style="font-size:1.8rem">Ihre kostenlose Website-Analyse</h2>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:0.5rem">
+          Ich analysiere Ihre Website und melde mich innerhalb von 24 Stunden mit konkretem Feedback.
+        </p>
+      </div>
+      <form id="analyseForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label>Ihr Name *</label>
+            <input type="text" id="fname" placeholder="Max Muster" />
+            <div class="error-msg">Bitte geben Sie Ihren Namen ein.</div>
+          </div>
+          <div class="field">
+            <label>E-Mail-Adresse *</label>
+            <input type="email" id="femail" placeholder="ihre@email.ch" />
+            <div class="error-msg">Bitte eine gültige E-Mail-Adresse eingeben.</div>
+          </div>
+          <div class="field full">
+            <label>Ihre Website-URL *</label>
+            <input type="url" id="furl" placeholder="https://ihre-webseite.ch" />
+            <div class="error-msg">Bitte geben Sie eine Website-URL ein.</div>
+          </div>
+          <div class="field full">
+            <label>Was möchten Sie verbessern? <span style="color:var(--muted)">(optional)</span></label>
+            <textarea id="fmsg" rows="4" placeholder="z.B. Die Seite lädt langsam, sieht auf dem Handy komisch aus, kaum Anfragen..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span id="btnText">Kostenlose Analyse anfordern →</span>
+          <span id="btnLoader" style="display:none">Wird gesendet...</span>
+        </button>
+        <div class="form-divider">oder</div>
+        <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20meine%20Website%20kostenlos%20analysieren%20lassen." target="_blank" class="btn-wa-form">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Lieber direkt per WhatsApp schreiben
+        </a>
+      </form>
+      <div class="success-msg" id="successMsg">
+        <span class="icon">✅</span>
+        <h3>Perfekt! Ihre Analyse ist unterwegs.</h3>
+        <p>Ich melde mich innerhalb von 24 Stunden mit einem ausführlichen Feedback zu Ihrer Website. Schauen Sie in Ihr Postfach!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK SERVICES -->
+<section id="quick-services">
+  <div class="container">
+    <div class="qs-intro">
+      <div class="qs-intro-left">
+        <span class="section-label">Klein-Services</span>
+        <h2 class="section-title">Nur eine kleine Sache?<br/>Kein Problem.</h2>
+        <div class="divider"></div>
+        <p class="section-sub">Nicht jede Verbesserung braucht ein grosses Projekt. Wählen Sie genau das aus, was Sie brauchen – ich erledige es schnell und unkompliziert.</p>
+      </div>
+      <div class="qs-intro-right">
+        <div class="tag">ab CHF 60</div>
+        <p>Fixpreise. Keine versteckten Kosten. Direkt per WhatsApp beauftragen.</p>
+      </div>
+    </div>
+    <div class="qs-grid">
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Texte%20aktualisieren%20(ab%20CHF%2060)." target="_blank">
+        <div class="qs-icon">✏️</div>
+        <div class="qs-info">
+          <h3>Texte aktualisieren</h3>
+          <p>Inhalte, Beschreibungen oder Kontaktdaten auf Ihrer Website ändern.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">60</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Bild%20austauschen%20(ab%20CHF%2060)." target="_blank">
+        <div class="qs-icon">🖼️</div>
+        <div class="qs-info">
+          <h3>Bilder austauschen</h3>
+          <p>Fotos, Banner oder Logos auf Ihrer Website ersetzen und optimieren.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">60</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Kontaktformular%20einbauen%20(ab%20CHF%2080)." target="_blank">
+        <div class="qs-icon">📬</div>
+        <div class="qs-info">
+          <h3>Kontaktformular einbauen</h3>
+          <p>Professionelles Formular – Nachrichten landen direkt in Ihrem Postfach.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">80</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Mobile-Fix%20(ab%20CHF%2090)." target="_blank">
+        <div class="qs-icon">📱</div>
+        <div class="qs-info">
+          <h3>Mobile-Darstellung fixen</h3>
+          <p>Ihre Website sieht auf dem Handy komisch aus? Ich repariere das.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">90</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Google%20Maps%20einbinden%20(ab%20CHF%2090)." target="_blank">
+        <div class="qs-icon">📍</div>
+        <div class="qs-info">
+          <h3>Google Maps einbinden</h3>
+          <p>Interaktive Karte mit Ihrem Standort direkt auf der Kontaktseite.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">90</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20WhatsApp-Button%20einbauen%20(ab%20CHF%2070)." target="_blank">
+        <div class="qs-icon">💬</div>
+        <div class="qs-info">
+          <h3>WhatsApp-Button einbauen</h3>
+          <p>Floating-Button auf Ihrer Website – Kunden schreiben Ihnen direkt.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">70</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Speed-Optimierung%20(ab%20CHF%20150)." target="_blank">
+        <div class="qs-icon">⚡</div>
+        <div class="qs-info">
+          <h3>Speed-Optimierung</h3>
+          <p>Ladezeit drastisch reduzieren – besseres Google-Ranking und weniger Absprünge.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">150</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SEO-Grundoptimierung%20(ab%20CHF%20180)." target="_blank">
+        <div class="qs-icon">🔍</div>
+        <div class="qs-info">
+          <h3>SEO-Grundoptimierung</h3>
+          <p>Meta-Tags, Titles, Beschreibungen – besser gefunden bei Google.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">180</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SSL%20%26%20Sicherheits-Update%20(ab%20CHF%20120)." target="_blank">
+        <div class="qs-icon">🔒</div>
+        <div class="qs-info">
+          <h3>SSL & Sicherheits-Update</h3>
+          <p>HTTPS aktivieren, veraltete Plugins updaten, Sicherheitslücken schliessen.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">120</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Analytics%20einrichten%20(ab%20CHF%2090)." target="_blank">
+        <div class="qs-icon">📊</div>
+        <div class="qs-info">
+          <h3>Analytics einrichten</h3>
+          <p>Google Analytics / Matomo – verstehen Sie, wer Ihre Website besucht.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">90</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Cookie-Banner%20%26%20Datenschutz%20(ab%20CHF%20100)." target="_blank">
+        <div class="qs-icon">🍪</div>
+        <div class="qs-info">
+          <h3>Cookie-Banner & Datenschutz</h3>
+          <p>DSGVO-konforme Lösung – rechtssicher ohne technischen Aufwand.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">100</span>
+          <span class="chf">CHF fix</span>
+          <span class="qs-wa-btn">→ Bestellen</span>
+        </div>
+      </a>
+
+      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20%C3%BCber%20einen%20individuellen%20Klein-Service%20sprechen." target="_blank">
+        <div class="qs-icon">💡</div>
+        <div class="qs-info">
+          <h3>Etwas anderes?</h3>
+          <p>Haben Sie eine spezifische Anfrage? Schreiben Sie mir – wir finden eine Lösung.</p>
+        </div>
+        <div class="qs-price">
+          <span class="amount">?</span>
+          <span class="chf">auf Anfrage</span>
+          <span class="qs-wa-btn">→ Anfragen</span>
+        </div>
+      </a>
+
+    </div>
+    <div class="qs-cta">
+      <p><strong>Nicht sicher was Sie brauchen?</strong><br/>Beschreiben Sie mir einfach das Problem – ich sage Ihnen ehrlich, was nötig ist und was es kostet.</p>
+      <div class="qs-cta-btns">
+        <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20brauche%20Hilfe%20mit%20meiner%20Website%20und%20weiss%20nicht%20genau%20was." target="_blank" class="btn-whatsapp" style="font-size:0.9rem;padding:0.75rem 1.5rem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Kostenlos beraten lassen
+        </a>
+        <a href="#analyse" class="btn-primary" style="font-size:0.9rem;padding:0.75rem 1.5rem">Website analysieren lassen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-label">Warum mich wählen</span>
+      <h2 class="section-title">Kein Grossunternehmen. Ein Experte.</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Das ist mein Versprechen.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">💡</span>
+        <h3>IT-Experte mit echtem Fachwissen</h3>
+        <p>Ich arbeite täglich in der IT-Branche und kenne die neuesten Technologien aus der Praxis – nicht aus dem Lehrbuch. Was ich Ihnen empfehle, funktioniert wirklich.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🤝</span>
+        <h3>Persönlicher Kontakt – direkt zu mir</h3>
+        <p>Kein Support-Ticket, kein Call-Center. Sie schreiben mir direkt per WhatsApp oder E-Mail und bekommen eine echte Antwort – von mir persönlich.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🤖</span>
+        <h3>Modernste KI-Technologie</h3>
+        <p>Ich nutze die neuesten KI-Tools, um Ihre Website nicht nur zu modernisieren, sondern zukunftssicher zu machen. Ihre Konkurrenz wird staunen.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">💰</span>
+        <h3>Faires Preis-Leistungs-Verhältnis</h3>
+        <p>Qualität muss nicht teuer sein. Ich biete Resultate auf Agentur-Niveau zu Preisen, die für KMU und Selbstständige tatsächlich funktionieren.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">⚡</span>
+        <h3>Schnell & zuverlässig</h3>
+        <p>Keine monatelangen Projekte. Ich arbeite fokussiert und effizient, damit Ihre neue Website schnell online geht und sofort wirkt.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🎯</span>
+        <h3>Ergebnisse die zählen</h3>
+        <p>Mehr Anfragen, mehr Vertrauen, mehr Umsatz. Ich messe Erfolg an Ihren Ergebnissen – nicht an meinen Stundenzahlen.</p>
+      </div>
+      <div class="why-card" style="border-color:rgba(6,182,212,0.3);background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(59,130,246,0.03))">
+        <span class="why-icon">🔐</span>
+        <h3>Ihre Live-Website bleibt unangetastet</h3>
+        <p>Alle Änderungen werden zuerst auf einer <strong style="color:var(--cyan)">separaten Vorschau-Umgebung</strong> entwickelt und gezeigt. Ihre originale Website läuft die ganze Zeit unverändert weiter. Erst wenn Sie alles gesehen haben, geprüft haben und <strong style="color:var(--white)">einverstanden sind</strong>, werden die Änderungen live geschaltet. Sie haben jederzeit die volle Kontrolle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Häufige Fragen</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Wie lange dauert eine Website-Modernisierung?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Das hängt vom Umfang ab. Eine einfache Auffrischung ist oft in 5–10 Arbeitstagen fertig. Grössere Projekte mit KI-Integration und komplettem Redesign dauern 2–4 Wochen. Nach der kostenlosen Analyse gebe ich Ihnen eine genaue Einschätzung.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Was kostet die Erstanalyse?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Die Erstanalyse ist 100% kostenlos und unverbindlich. Sie erhalten von mir ein detailliertes Feedback zu Ihrer aktuellen Website – ohne jegliche Verpflichtung.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Kann ich meine bestehenden Inhalte behalten?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Ja, selbstverständlich. Ich übernehme Ihre Texte, Bilder und Inhalte und bringe sie in ein modernes Gewand. Was gut ist, bleibt – was nicht funktioniert, verbessern wir gemeinsam.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Welche Technologien setzen Sie ein?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Ich arbeite mit den modernsten Web-Technologien: HTML5, CSS3, JavaScript, React/Next.js, Tailwind CSS, und je nach Projekt WordPress, Webflow oder individuelle Lösungen. KI-Tools wie ChatGPT-Integration, automatisierte Chatbots und KI-Bild-Optimierung sind ebenfalls möglich.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Was ist alles im Preis inbegriffen?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <p>Alle im Paket genannten Leistungen, inklusive Testing auf verschiedenen Geräten und Browsern. Es gibt keine versteckten Kosten – was ich anbiete, liefere ich. Bei Zusatzwünschen besprechen wir alles vorab transparent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo">
+        <div class="logo-icon">⚡</div>
+        Web<span>Upgrade</span> Pro
+      </a>
+      <p>Moderne Websites mit KI. Faire Preise. Direkt aus der Schweiz.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <a href="#services">Leistungen</a>
+      <a href="#process">Prozess</a>
+      <a href="#pricing">Preise</a>
+      <a href="#analyse">Gratis Analyse</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-contact">
+      <h4 style="font-size:0.85rem;font-weight:700;color:var(--muted);margin-bottom:1rem;letter-spacing:0.5px">Kontakt</h4>
+      <a href="https://wa.me/41784464832" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        +41 78 446 48 32
+      </a>
+      <a href="#analyse">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Kontaktformular
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 WebUpgrade Pro · Schweiz</span>
+    <span>Moderne Websites. Faire Preise. Echter Experte.</span>
+    <div style="display:flex;gap:1rem">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Website-Modernisierung." target="_blank" class="float-wa" title="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<div class="float-wa-tooltip">Direkt schreiben →</div>
+
+<script>
+// ── PARTICLES ──
+(function(){
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const colors = ['rgba(59,130,246,', 'rgba(6,182,212,', 'rgba(167,139,250,'];
+
+  for(let i=0;i<70;i++){
+    particles.push({
+      x: Math.random()*1200, y: Math.random()*800,
+      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
+      size: Math.random()*2+0.5,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      alpha: Math.random()*0.5+0.1
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.fill();
+    });
+    // draw lines between close particles
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();
+          ctx.strokeStyle='rgba(59,130,246,'+(0.12*(1-dist/120))+')';
+          ctx.lineWidth=0.8;
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── MOBILE MENU ──
+function openMenu(){ document.getElementById('mobileMenu').classList.add('open'); }
+function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .problem-card, .service-card, .process-step, .price-card, .why-card, .qs-card').forEach((el, i) => {
+  el.dataset.delay = (i % 4) * 80;
+  observer.observe(el);
+});
+
+// ── FAQ ──
+function toggleFaq(el){
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── SUPABASE ──
+const _sb = supabase.createClient(
+  'https://vewdipqilpgwaqshporo.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZld2RpcHFpbHBnd2Fxc2hwb3JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MzE3MTAsImV4cCI6MjA4OTQwNzcxMH0.Nrlg6LZYkK_QX377QaWm9U9GptoG1ozpiNukNVSFlc8'
+);
+
+// ── FORM ──
+document.getElementById('analyseForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  let valid = true;
+
+  const fields = [
+    { id: 'fname', check: v => v.trim().length > 1 },
+    { id: 'femail', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'furl', check: v => v.trim().length > 3 }
+  ];
+
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const wrap = el.closest('.field');
+    const ok = f.check(el.value);
+    wrap.classList.toggle('has-error', !ok);
+    if(!ok) valid = false;
+  });
+
+  if(!valid) return;
+
+  const btn = document.getElementById('submitBtn');
+  document.getElementById('btnText').style.display = 'none';
+  document.getElementById('btnLoader').style.display = 'inline';
+  btn.disabled = true;
+
+  const { error } = await _sb.from('analyse_anfragen').insert({
+    name:        document.getElementById('fname').value.trim(),
+    email:       document.getElementById('femail').value.trim(),
+    website_url: document.getElementById('furl').value.trim(),
+    nachricht:   document.getElementById('fmsg').value.trim() || null
+  });
+
+  if(error){
+    document.getElementById('btnText').style.display = 'inline';
+    document.getElementById('btnLoader').style.display = 'none';
+    btn.disabled = false;
+    // Fallback: show error hint but still open WhatsApp as backup
+    alert('Fehler beim Senden. Bitte schreiben Sie mir direkt per WhatsApp.');
+    window.open('https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20meine%20Website%20analysieren%20lassen.','_blank');
+    return;
+  }
+
+  document.getElementById('analyseForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+});
+
+// Clear error on input
+document.querySelectorAll('.field input, .field textarea').forEach(el => {
+  el.addEventListener('input', () => el.closest('.field').classList.remove('has-error'));
+});
+
+// ── SMOOTH SCROLL for nav links ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target){ e.preventDefault(); target.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+});
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el, target, suffix){
+  let start = 0;
+  const inc = target/60;
+  const timer = setInterval(() => {
+    start += inc;
+    if(start >= target){ start = target; clearInterval(timer); }
+    el.textContent = (suffix === 's') ? Math.round(start)+'s'
+      : suffix === '%' ? '+'+Math.round(start)+'%'
+      : Math.round(start)+'h';
+  }, 25);
+}
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const stats = e.target.querySelectorAll('.stat h3');
+      const values = [300, 3, 78, 24];
+      const suffixes = ['%','s','%','h'];
+      stats.forEach((s,i) => animateCounter(s, values[i], suffixes[i]));
+      statsObs.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.3});
+const statsSection = document.getElementById('stats');
+if(statsSection) statsObs.observe(statsSection);
+</script>
+</body>
+</html>
