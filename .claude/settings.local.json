@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__c12c0098-b911-44b1-9008-cff698e39712__apply_migration",
+      "mcp__c12c0098-b911-44b1-9008-cff698e39712__deploy_edge_function"
+    ]
+  }
+}
