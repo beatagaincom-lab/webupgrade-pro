@@ -36,7 +36,10 @@
       background: var(--bg);
       color: var(--white);
       overflow-x: hidden;
+      overflow-anchor: none;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* ── SCROLLBAR ── */
@@ -631,9 +634,12 @@
       gap: 2rem; position: relative;
     }
     .process-step {
-      text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.5s;
+      text-align: center; opacity: 0;
+      transform: translateY(20px) translateZ(0);
+      will-change: opacity, transform; backface-visibility: hidden;
+      transition: opacity 0.5s cubic-bezier(.22,1,.36,1), transform 0.5s cubic-bezier(.22,1,.36,1);
     }
-    .process-step.visible { opacity: 1; transform: none; }
+    .process-step.visible { opacity: 1; transform: translateY(0) translateZ(0); }
     .step-num {
       width: 60px; height: 60px; border-radius: 50%;
       background: linear-gradient(135deg, var(--blue), var(--cyan));
@@ -1026,23 +1032,35 @@
     .float-wa:hover + .float-wa-tooltip { opacity: 1; }
 
     /* ── REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.65s cubic-bezier(.22,1,.36,1); }
-    .reveal.visible { opacity: 1; transform: none; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px) translateZ(0);
+      will-change: opacity, transform;
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
+                  transform 0.6s cubic-bezier(.22,1,.36,1);
+      backface-visibility: hidden;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0) translateZ(0); }
 
     /* ── REVEAL VARIANTS ── */
     .reveal-left {
-      opacity: 0; transform: translateX(-52px);
-      transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
-    }
-    .reveal-right {
-      opacity: 0; transform: translateX(52px);
-      transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
-    }
-    .reveal-scale {
-      opacity: 0; transform: scale(0.88) translateY(22px);
+      opacity: 0; transform: translateX(-40px) translateZ(0);
+      will-change: opacity, transform; backface-visibility: hidden;
       transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
     }
-    .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { opacity: 1; transform: none; }
+    .reveal-right {
+      opacity: 0; transform: translateX(40px) translateZ(0);
+      will-change: opacity, transform; backface-visibility: hidden;
+      transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-scale {
+      opacity: 0; transform: scale(0.92) translateZ(0);
+      will-change: opacity, transform; backface-visibility: hidden;
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-left.visible  { opacity: 1; transform: translateX(0) translateZ(0); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0) translateZ(0); }
+    .reveal-scale.visible { opacity: 1; transform: scale(1)    translateZ(0); }
 
     /* ── SCROLL PROGRESS BAR ── */
     .scroll-progress {
@@ -2148,54 +2166,54 @@ document.addEventListener('mousemove', (e) => {
   });
 });
 
-// ── SCROLL PROGRESS BAR ──
-const progressBar = document.getElementById('scrollProgress');
-function updateProgress() {
-  const scrolled = window.scrollY;
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  if(progressBar) progressBar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
-}
-window.addEventListener('scroll', updateProgress, { passive: true });
+// ── UNIFIED RAF SCROLL HANDLER (smooth, no jank) ──
+const progressBar   = document.getElementById('scrollProgress');
+const _heroGlow     = document.querySelector('.hero-glow');
+const _heroGrid     = document.querySelector('.hero-grid');
+const _auroraEls    = document.querySelectorAll('.hero-aurora');
+const _heroContent  = document.querySelector('.hero-content');
+const _heroRing     = document.querySelector('.hero-ring');
+const _sectionIds   = ['hero','stats','problem','services','process','pricing','quick-services','analyse','why','faq'];
+const _navLinks     = document.querySelectorAll('.nav-links a[href^="#"]');
+const isMobile      = () => window.innerWidth <= 768;
 
-// ── HERO PARALLAX ON SCROLL ──
-const _heroGlow    = document.querySelector('.hero-glow');
-const _heroGrid    = document.querySelector('.hero-grid');
-const _auroraEls   = document.querySelectorAll('.hero-aurora');
-const _heroContent = document.querySelector('.hero-content');
-const _heroRing    = document.querySelector('.hero-ring');
-const isMobile     = () => window.innerWidth <= 768;
+let _rafPending = false;
+function onScroll() {
+  if (_rafPending) return;
+  _rafPending = true;
+  requestAnimationFrame(() => {
+    _rafPending = false;
+    const y     = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
 
-window.addEventListener('scroll', () => {
-  if (isMobile()) return;
-  const y = window.scrollY;
-  const vh = window.innerHeight;
-  if (y < vh * 1.3) {
-    if (_heroGlow)    _heroGlow.style.transform    = `translateX(-50%) translateY(${y * 0.22}px)`;
-    if (_heroGrid)    _heroGrid.style.transform    = `translateY(${y * 0.10}px)`;
-    if (_heroRing)    _heroRing.style.transform    = `translate(-50%,-50%) translateY(${y * 0.08}px)`;
-    if (_heroContent) _heroContent.style.transform = `translateY(${y * 0.06}px)`;
-    _auroraEls.forEach((a, i) => {
-      const d = i % 2 === 0 ? 0.16 : -0.12;
-      a.style.transform = `translateY(${y * d}px)`;
+    // Progress bar
+    if (progressBar) progressBar.style.width = Math.min(100, (y / total) * 100) + '%';
+
+    // Hero parallax (desktop only, only when hero is in view)
+    if (!isMobile() && y < window.innerHeight * 1.4) {
+      if (_heroGlow)    _heroGlow.style.transform    = `translateX(-50%) translateY(${y * 0.20}px)`;
+      if (_heroGrid)    _heroGrid.style.transform    = `translateY(${y * 0.09}px)`;
+      if (_heroRing)    _heroRing.style.transform    = `translate(-50%,-50%) translateY(${y * 0.07}px)`;
+      if (_heroContent) _heroContent.style.transform = `translateY(${y * 0.05}px)`;
+      _auroraEls.forEach((a, i) => {
+        a.style.transform = `translateY(${y * (i % 2 === 0 ? 0.14 : -0.10)}px)`;
+      });
+    }
+
+    // Active nav
+    let current = 'hero';
+    _sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && y >= el.offsetTop - 280) current = id;
     });
-  }
-}, { passive: true });
-
-// ── ACTIVE SECTION HIGHLIGHT IN NAV ──
-const _sectionIds = ['hero','stats','problem','services','process','pricing','quick-services','analyse','why','faq'];
-const _navLinks   = document.querySelectorAll('.nav-links a[href^="#"]');
-window.addEventListener('scroll', () => {
-  let current = 'hero';
-  _sectionIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 250) current = id;
+    _navLinks.forEach(a => {
+      const active = a.getAttribute('href') === '#' + current;
+      a.style.color      = active ? 'var(--white)' : '';
+      a.style.fontWeight = active ? '700' : '';
+    });
   });
-  _navLinks.forEach(a => {
-    const isActive = a.getAttribute('href') === '#' + current;
-    a.style.color = isActive ? 'var(--white)' : '';
-    a.style.fontWeight = isActive ? '700' : '';
-  });
-}, { passive: true });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
 
 // ── 3D CARD TILT (Desktop only) ──
 if (!('ontouchstart' in window)) {
