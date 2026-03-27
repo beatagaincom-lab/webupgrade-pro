@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2014,9 +2015,36 @@
   draw();
 })();
 
-// ── NAVBAR SCROLL ──
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+// ── LENIS ULTRA-SMOOTH SCROLL ──
+const lenis = new Lenis({
+  duration: 1.35,
+  easing: t => 1 - Math.pow(1 - t, 4),   // quartic ease-out — buttery
+  smoothWheel: true,
+  smoothTouch: false,                      // native feel on mobile
+  wheelMultiplier: 0.85,
+  touchMultiplier: 1.8,
+  infinite: false,
+});
+
+// Integrate Lenis with the rAF loop
+function lenisRaf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(lenisRaf);
+}
+requestAnimationFrame(lenisRaf);
+
+// Smooth anchor links through Lenis
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) lenis.scrollTo(target, { offset: -80, duration: 1.4, easing: t => 1 - Math.pow(1 - t, 4) });
+  });
+});
+
+// ── NAVBAR SCROLL (via Lenis) ──
+lenis.on('scroll', ({ scroll }) => {
+  document.getElementById('navbar').classList.toggle('scrolled', scroll > 50);
 });
 
 // ── MOBILE MENU ──
@@ -2177,43 +2205,36 @@ const _sectionIds   = ['hero','stats','problem','services','process','pricing','
 const _navLinks     = document.querySelectorAll('.nav-links a[href^="#"]');
 const isMobile      = () => window.innerWidth <= 768;
 
-let _rafPending = false;
-function onScroll() {
-  if (_rafPending) return;
-  _rafPending = true;
-  requestAnimationFrame(() => {
-    _rafPending = false;
-    const y     = window.scrollY;
-    const total = document.documentElement.scrollHeight - window.innerHeight;
+// ── LENIS-DRIVEN SCROLL EFFECTS ──
+lenis.on('scroll', ({ scroll: y, progress }) => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
 
-    // Progress bar
-    if (progressBar) progressBar.style.width = Math.min(100, (y / total) * 100) + '%';
+  // Progress bar
+  if (progressBar) progressBar.style.width = (progress * 100) + '%';
 
-    // Hero parallax (desktop only, only when hero is in view)
-    if (!isMobile() && y < window.innerHeight * 1.4) {
-      if (_heroGlow)    _heroGlow.style.transform    = `translateX(-50%) translateY(${y * 0.20}px)`;
-      if (_heroGrid)    _heroGrid.style.transform    = `translateY(${y * 0.09}px)`;
-      if (_heroRing)    _heroRing.style.transform    = `translate(-50%,-50%) translateY(${y * 0.07}px)`;
-      if (_heroContent) _heroContent.style.transform = `translateY(${y * 0.05}px)`;
-      _auroraEls.forEach((a, i) => {
-        a.style.transform = `translateY(${y * (i % 2 === 0 ? 0.14 : -0.10)}px)`;
-      });
-    }
-
-    // Active nav
-    let current = 'hero';
-    _sectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && y >= el.offsetTop - 280) current = id;
+  // Hero parallax (desktop only)
+  if (!isMobile() && y < window.innerHeight * 1.5) {
+    if (_heroGlow)    _heroGlow.style.transform    = `translateX(-50%) translateY(${y * 0.18}px)`;
+    if (_heroGrid)    _heroGrid.style.transform    = `translateY(${y * 0.08}px)`;
+    if (_heroRing)    _heroRing.style.transform    = `translate(-50%,-50%) translateY(${y * 0.06}px)`;
+    if (_heroContent) _heroContent.style.transform = `translateY(${y * 0.045}px)`;
+    _auroraEls.forEach((a, i) => {
+      a.style.transform = `translateY(${y * (i % 2 === 0 ? 0.12 : -0.09)}px)`;
     });
-    _navLinks.forEach(a => {
-      const active = a.getAttribute('href') === '#' + current;
-      a.style.color      = active ? 'var(--white)' : '';
-      a.style.fontWeight = active ? '700' : '';
-    });
+  }
+
+  // Active nav
+  let current = 'hero';
+  _sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && y >= el.offsetTop - 300) current = id;
   });
-}
-window.addEventListener('scroll', onScroll, { passive: true });
+  _navLinks.forEach(a => {
+    const active = a.getAttribute('href') === '#' + current;
+    a.style.color      = active ? 'var(--white)' : '';
+    a.style.fontWeight = active ? '700' : '';
+  });
+});
 
 // ── 3D CARD TILT (Desktop only) ──
 if (!('ontouchstart' in window)) {
