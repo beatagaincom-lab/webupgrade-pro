@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BeatAgain — Turn Your Words Into a Melody That Stays</title>
+<meta name="description" content="Create a custom jingle from your words. For your brand, your gift, your moment. From phrase to melody — unforgettable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ CANVAS FOR PARTICLES ============ -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- ============ ANIMATED BACKGROUND RIBBONS ============ -->
+<div class="bg-ribbons" aria-hidden="true">
+  <div class="ribbon ribbon-1"></div>
+  <div class="ribbon ribbon-2"></div>
+  <div class="ribbon ribbon-3"></div>
+  <div class="ribbon ribbon-4"></div>
+  <div class="ribbon ribbon-5"></div>
+  <div class="ribbon ribbon-6"></div>
+  <div class="bg-glow bg-glow-center"></div>
+  <div class="bg-glow bg-glow-left"></div>
+  <div class="bg-glow bg-glow-right"></div>
+  <div class="bg-mist"></div>
+</div>
+
+<!-- ============ NAVIGATION ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="logo-beat">Beat</span><span class="logo-again">Again</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#examples">Examples</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#configurator" class="nav-cta">Start your jingle</a>
+  </div>
+</nav>
+
+<!-- ============ HERO SECTION ============ -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">From words to earworm</div>
+    <h1 class="hero-headline">
+      Make your words<br>
+      <span class="hero-headline-accent">unforgettable.</span>
+    </h1>
+    <p class="hero-sub">
+      Create a custom jingle from your words in just a few guided steps — for your business, your brand, or a personal moment.
+    </p>
+    <div class="hero-ctas">
+      <a href="#configurator" class="btn btn-primary btn-glow">
+        <span>Start your jingle</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#examples" class="btn btn-ghost">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Explore examples</span>
+      </a>
+    </div>
+    <div class="hero-trust">
+      <span class="trust-dot"></span>
+      Business from 97€ · Personal from 18€
+    </div>
+  </div>
+
+  <!-- Waveform halo -->
+  <div class="hero-waveform" aria-hidden="true">
+    <svg viewBox="0 0 800 200" class="waveform-svg">
+      <path class="wave-path wave-path-1" d=""/>
+      <path class="wave-path wave-path-2" d=""/>
+      <path class="wave-path wave-path-3" d=""/>
+    </svg>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span>Discover</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ============ PATH SPLIT ============ -->
+<section class="path-split" id="path-split">
+  <div class="section-container">
+    <div class="section-label">Choose your path</div>
+    <h2 class="section-title">What kind of jingle do you need?</h2>
+    <div class="path-cards">
+      <button class="path-card" data-path="business" id="pathBusiness">
+        <div class="path-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+            <path d="M12 12v.01"/>
+            <path d="M2 12h20"/>
+          </svg>
+        </div>
+        <div class="path-card-label">For Business</div>
+        <p class="path-card-copy">For brands, campaigns, shops, creators, videos, products, and sonic recognition.</p>
+        <p class="path-card-sub">Create a short sound people remember.</p>
+        <div class="path-card-price">From <strong>97€</strong></div>
+        <div class="path-card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </button>
+
+      <button class="path-card" data-path="personal" id="pathPersonal">
+        <div class="path-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div class="path-card-label">For Personal</div>
+        <p class="path-card-copy">For gifts, family lines, fun sayings, names, memories, and emotional moments.</p>
+        <p class="path-card-sub">Turn a sentence into something unforgettable.</p>
+        <div class="path-card-price">From <strong>18€</strong></div>
+        <div class="path-card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-container">
+    <div class="section-label">Simple & guided</div>
+    <h2 class="section-title">How it works</h2>
+    <div class="steps-grid">
+      <div class="step-card" data-step="1">
+        <div class="step-number">01</div>
+        <div class="step-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h3>Type your phrase</h3>
+        <p>Enter the words you want turned into a catchy jingle. A name, a slogan, a line — anything short.</p>
+      </div>
+      <div class="step-card" data-step="2">
+        <div class="step-number">02</div>
+        <div class="step-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3>Set the mood</h3>
+        <p>Choose how it should feel. Warm? Bold? Playful? Emotional? One tap — we understand.</p>
+      </div>
+      <div class="step-card" data-step="3">
+        <div class="step-number">03</div>
+        <div class="step-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <h3>Pick a style</h3>
+        <p>Pop catchy? Soft emotional? Elegant luxury? Choose the musical direction that fits you.</p>
+      </div>
+      <div class="step-card" data-step="4">
+        <div class="step-number">04</div>
+        <div class="step-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>We create it</h3>
+        <p>Our team crafts your custom jingle — a memorable melody built around your exact words.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFIGURATOR ============ -->
+<section class="configurator" id="configurator">
+  <div class="section-container">
+    <div class="section-label">Your jingle, your way</div>
+    <h2 class="section-title">Build your jingle</h2>
+
+    <!-- Progress bar -->
+    <div class="config-progress">
+      <div class="config-progress-bar">
+        <div class="config-progress-fill" id="progressFill"></div>
+      </div>
+      <div class="config-progress-text" id="progressText">Step 1 of 7</div>
+    </div>
+
+    <!-- Jingle Aura -->
+    <div class="jingle-aura" id="jingleAura">
+      <canvas id="auraCanvas"></canvas>
+      <div class="aura-label">Your Jingle Aura</div>
+    </div>
+
+    <!-- Configurator steps container -->
+    <div class="config-steps" id="configSteps">
+
+      <!-- STEP 0: Path Selection (if not already chosen) -->
+      <div class="config-step active" data-config-step="0" id="configStep0">
+        <div class="step-header">
+          <h3>First, who is this for?</h3>
+          <p class="step-hint">This shapes everything — language, mood, pricing.</p>
+        </div>
+        <div class="path-select-mini">
+          <button class="path-mini-btn" data-select-path="business">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            <span>Business</span>
+            <small>from 97€</small>
+          </button>
+          <button class="path-mini-btn" data-select-path="personal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Personal</span>
+            <small>from 18€</small>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 1: Phrase -->
+      <div class="config-step" data-config-step="1" id="configStep1">
+        <div class="step-header">
+          <h3>What should your jingle say?</h3>
+          <p class="step-hint">Type the exact words you want turned into a catchy jingle. Keep it short — or let us help refine it.</p>
+        </div>
+
+        <div class="phrase-input-wrap">
+          <textarea id="phraseInput" class="phrase-input" placeholder="Type your phrase here..." maxlength="120" rows="2"></textarea>
+          <div class="phrase-char-count"><span id="charCount">0</span>/120</div>
+        </div>
+
+        <div class="phrase-suggestions" id="phraseSuggestions">
+          <!-- filled by JS based on path -->
+        </div>
+
+        <button class="btn-magic" id="btnMakeCatchier" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Make it catchier</span>
+        </button>
+
+        <!-- AI suggestions panel -->
+        <div class="catchier-panel" id="catchierPanel" style="display:none">
+          <div class="catchier-title">Try one of these:</div>
+          <div class="catchier-options" id="catchierOptions">
+            <!-- filled by JS -->
+          </div>
+        </div>
+
+        <button class="btn-voice" id="btnVoice">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <span>Record your voice</span>
+        </button>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="0">Back</button>
+          <button class="btn btn-primary btn-next" data-go="2" id="btnStep1Next" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Mood -->
+      <div class="config-step" data-config-step="2" id="configStep2">
+        <div class="step-header">
+          <h3>What should it feel like?</h3>
+          <p class="step-hint">Choose one or two moods that match the feeling you want.</p>
+        </div>
+
+        <div class="mood-chips" id="moodChips">
+          <!-- filled by JS based on path -->
+        </div>
+
+        <div class="mood-reaction" id="moodReaction" style="display:none">
+          <span class="reaction-dot"></span>
+          <span id="moodReactionText"></span>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="1">Back</button>
+          <button class="btn btn-primary btn-next" data-go="3" id="btnStep2Next" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Musical Style -->
+      <div class="config-step" data-config-step="3" id="configStep3">
+        <div class="step-header">
+          <h3>What musical direction fits best?</h3>
+          <p class="step-hint">Don't overthink it — pick the vibe that resonates.</p>
+        </div>
+
+        <div class="style-cards" id="styleCards">
+          <button class="style-card" data-style="pop-catchy">
+            <div class="style-card-visual" data-visual="pop"></div>
+            <span>Pop Catchy</span>
+          </button>
+          <button class="style-card" data-style="soft-emotional">
+            <div class="style-card-visual" data-visual="soft"></div>
+            <span>Soft Emotional</span>
+          </button>
+          <button class="style-card" data-style="elegant-luxury">
+            <div class="style-card-visual" data-visual="elegant"></div>
+            <span>Elegant Luxury</span>
+          </button>
+          <button class="style-card" data-style="modern-clean">
+            <div class="style-card-visual" data-visual="modern"></div>
+            <span>Modern Clean</span>
+          </button>
+          <button class="style-card" data-style="cinematic">
+            <div class="style-card-visual" data-visual="cinematic"></div>
+            <span>Cinematic</span>
+          </button>
+          <button class="style-card" data-style="playful-bright">
+            <div class="style-card-visual" data-visual="playful"></div>
+            <span>Playful Bright</span>
+          </button>
+          <button class="style-card" data-style="minimal-classy">
+            <div class="style-card-visual" data-visual="minimal"></div>
+            <span>Minimal Classy</span>
+          </button>
+          <button class="style-card" data-style="epic-memorable">
+            <div class="style-card-visual" data-visual="epic"></div>
+            <span>Epic Memorable</span>
+          </button>
+          <button class="style-card" data-style="retro-charm">
+            <div class="style-card-visual" data-visual="retro"></div>
+            <span>Retro Charm</span>
+          </button>
+          <button class="style-card" data-style="corporate-premium">
+            <div class="style-card-visual" data-visual="corporate"></div>
+            <span>Corporate Premium</span>
+          </button>
+          <button class="style-card" data-style="calm-beautiful">
+            <div class="style-card-visual" data-visual="calm"></div>
+            <span>Calm Beautiful</span>
+          </button>
+          <button class="style-card" data-style="custom">
+            <div class="style-card-visual" data-visual="custom"></div>
+            <span>Custom</span>
+          </button>
+        </div>
+
+        <div class="custom-style-input" id="customStyleInput" style="display:none">
+          <input type="text" placeholder="Describe your ideal musical direction..." class="glass-input" id="customStyleText">
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="2">Back</button>
+          <button class="btn btn-primary btn-next" data-go="4" id="btnStep3Next" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Use Case -->
+      <div class="config-step" data-config-step="4" id="configStep4">
+        <div class="step-header">
+          <h3>Where will it be used?</h3>
+          <p class="step-hint">This helps us shape the tone and energy of your jingle.</p>
+        </div>
+
+        <div class="usecase-chips" id="usecaseChips">
+          <!-- filled by JS based on path -->
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="3">Back</button>
+          <button class="btn btn-primary btn-next" data-go="5" id="btnStep4Next" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Personalization -->
+      <div class="config-step" data-config-step="5" id="configStep5">
+        <div class="step-header">
+          <h3>Personalization details</h3>
+          <p class="step-hint">Fine-tune how your jingle should sound. Everything here is optional.</p>
+        </div>
+
+        <div class="toggle-group">
+          <label class="toggle-row">
+            <span class="toggle-label">Include sung vocals</span>
+            <input type="checkbox" class="toggle-input" data-pref="vocals" checked>
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Instrumental only</span>
+            <input type="checkbox" class="toggle-input" data-pref="instrumental">
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Female voice</span>
+            <input type="checkbox" class="toggle-input" data-pref="female">
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Male voice</span>
+            <input type="checkbox" class="toggle-input" data-pref="male">
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Sweet / light voice</span>
+            <input type="checkbox" class="toggle-input" data-pref="sweet">
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Choir / group feel</span>
+            <input type="checkbox" class="toggle-input" data-pref="choir">
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Use my exact words</span>
+            <input type="checkbox" class="toggle-input" data-pref="exact" checked>
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Improve for catchiness</span>
+            <input type="checkbox" class="toggle-input" data-pref="improve">
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-row">
+            <span class="toggle-label">Surprise me creatively</span>
+            <input type="checkbox" class="toggle-input" data-pref="surprise">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="extra-notes">
+          <label for="extraNotes" class="extra-notes-label">Anything important we should know?</label>
+          <textarea id="extraNotes" class="glass-input" rows="3" placeholder="Optional — special wishes, references, details..."></textarea>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="4">Back</button>
+          <button class="btn btn-primary btn-next" data-go="6">Continue</button>
+        </div>
+      </div>
+
+      <!-- STEP 6: Package -->
+      <div class="config-step" data-config-step="6" id="configStep6">
+        <div class="step-header">
+          <h3>Choose your package</h3>
+          <p class="step-hint">Clear pricing. No hidden fees. Premium creative treatment included.</p>
+        </div>
+
+        <div class="package-cards" id="packageCards">
+          <button class="package-card selected" data-package="standard" id="pkgStandard">
+            <div class="package-badge" id="pkgBadge">Most popular</div>
+            <div class="package-name" id="pkgName">Custom Jingle</div>
+            <div class="package-price">from <strong id="pkgPrice">97€</strong></div>
+            <div class="package-desc" id="pkgDesc">Catchy custom jingle concept for business or brand use.</div>
+            <ul class="package-features">
+              <li>Custom melody based on your phrase</li>
+              <li>Professional production</li>
+              <li>Delivered as high-quality audio file</li>
+              <li>1 revision round included</li>
+            </ul>
+          </button>
+        </div>
+
+        <div class="addons">
+          <div class="addons-title">Optional add-ons</div>
+          <label class="addon-row">
+            <input type="checkbox" class="addon-input" data-addon="faster" data-cost="29">
+            <span class="addon-check"></span>
+            <span class="addon-label">Faster delivery (48h priority)</span>
+            <span class="addon-price">+29€</span>
+          </label>
+          <label class="addon-row">
+            <input type="checkbox" class="addon-input" data-addon="extra" data-cost="39">
+            <span class="addon-check"></span>
+            <span class="addon-label">Extra version (different style)</span>
+            <span class="addon-price">+39€</span>
+          </label>
+          <label class="addon-row">
+            <input type="checkbox" class="addon-input" data-addon="revision" data-cost="19">
+            <span class="addon-check"></span>
+            <span class="addon-label">Additional revision round</span>
+            <span class="addon-price">+19€</span>
+          </label>
+          <label class="addon-row">
+            <input type="checkbox" class="addon-input" data-addon="both" data-cost="49">
+            <span class="addon-check"></span>
+            <span class="addon-label">Instrumental + vocal version</span>
+            <span class="addon-price">+49€</span>
+          </label>
+          <label class="addon-row">
+            <input type="checkbox" class="addon-input" data-addon="premium" data-cost="59">
+            <span class="addon-check"></span>
+            <span class="addon-label">Premium priority treatment</span>
+            <span class="addon-price">+59€</span>
+          </label>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="5">Back</button>
+          <button class="btn btn-primary btn-next" data-go="7">Review & order</button>
+        </div>
+      </div>
+
+      <!-- STEP 7: Summary -->
+      <div class="config-step" data-config-step="7" id="configStep7">
+        <div class="step-header">
+          <h3>Your jingle direction</h3>
+          <p class="step-hint">Here's what you've shaped. Review and create your jingle.</p>
+        </div>
+
+        <div class="summary-card" id="summaryCard">
+          <div class="summary-aura-mini">
+            <canvas id="auraCanvasMini" width="120" height="120"></canvas>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Path</span>
+            <span class="summary-value" id="sumPath">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Phrase</span>
+            <span class="summary-value summary-phrase" id="sumPhrase">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Mood</span>
+            <span class="summary-value" id="sumMood">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Style</span>
+            <span class="summary-value" id="sumStyle">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Use case</span>
+            <span class="summary-value" id="sumUsecase">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Personalization</span>
+            <span class="summary-value" id="sumPersonal">—</span>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row summary-total">
+            <span class="summary-label">Starting price</span>
+            <span class="summary-value" id="sumPrice">—</span>
+          </div>
+        </div>
+
+        <div class="final-cta-area">
+          <button class="btn btn-primary btn-glow btn-large" id="btnCreateJingle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <span>Create my jingle</span>
+          </button>
+          <div class="final-reassurance">
+            <div class="reassurance-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Guided in minutes</span>
+            </div>
+            <div class="reassurance-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Personalized to your words</span>
+            </div>
+            <div class="reassurance-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Clear starting price</span>
+            </div>
+            <div class="reassurance-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Premium creative treatment</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-secondary btn-back" data-go="6">Back to packages</button>
+        </div>
+      </div>
+
+    </div><!-- /config-steps -->
+
+    <!-- Mini summary pill (sticky on mobile) -->
+    <div class="summary-pill" id="summaryPill" style="display:none">
+      <div class="pill-aura">
+        <canvas id="pillAuraCanvas" width="32" height="32"></canvas>
+      </div>
+      <div class="pill-info">
+        <span class="pill-phrase" id="pillPhrase">Your jingle</span>
+        <span class="pill-meta" id="pillMeta">—</span>
+      </div>
+      <span class="pill-price" id="pillPrice">—</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ EXAMPLES ============ -->
+<section class="examples" id="examples">
+  <div class="section-container">
+    <div class="section-label">Inspiration</div>
+    <h2 class="section-title">From phrase to feeling</h2>
+    <p class="section-sub">See how a few words can become something people remember.</p>
+
+    <div class="example-cards">
+      <div class="example-card">
+        <div class="example-phrase">"Fresh every morning"</div>
+        <div class="example-tags">
+          <span class="example-tag">Warm</span>
+          <span class="example-tag">Catchy</span>
+        </div>
+        <div class="example-direction">Bright retail pop</div>
+        <p class="example-result">A smiling melodic hook with clean, instant recall. The kind of line you hum at the store.</p>
+        <div class="example-type">Business Jingle</div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-phrase">"Good night, my star"</div>
+        <div class="example-tags">
+          <span class="example-tag">Loving</span>
+          <span class="example-tag">Soft</span>
+        </div>
+        <div class="example-direction">Tender lullaby-inspired melody</div>
+        <p class="example-result">Intimate, gentle, memorable, and emotionally warm. A sound keepsake for bedtime.</p>
+        <div class="example-type">Personal Jingle</div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-phrase">"Müller macht's einfach"</div>
+        <div class="example-tags">
+          <span class="example-tag">Trustworthy</span>
+          <span class="example-tag">Premium</span>
+        </div>
+        <div class="example-direction">Modern corporate mnemonic</div>
+        <p class="example-result">Clean sonic identity with a professional memorable lift. Instant brand recognition.</p>
+        <div class="example-type">Business Jingle</div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-phrase">"Together since forever"</div>
+        <div class="example-tags">
+          <span class="example-tag">Nostalgic</span>
+          <span class="example-tag">Joyful</span>
+        </div>
+        <div class="example-direction">Warm acoustic celebration</div>
+        <p class="example-result">A heartfelt melody that captures years of shared moments in a few beautiful notes.</p>
+        <div class="example-type">Personal Jingle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials" id="testimonials">
+  <div class="section-container">
+    <div class="section-label">Real stories</div>
+    <h2 class="section-title">What people say</h2>
+
+    <div class="testimonial-cards">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"I didn't expect a short phrase could become something this memorable. My customers now hum the jingle when they walk in."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: linear-gradient(135deg, #e879a8, #c97dda)">M</div>
+          <div>
+            <div class="testimonial-name">Marco T.</div>
+            <div class="testimonial-role">Bakery owner, Munich</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"I use it as my podcast intro. People tell me it's the catchiest opener they've heard. Absolutely worth every cent."</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: linear-gradient(135deg, #7db4da, #7ddac9)">S</div>
+          <div>
+            <div class="testimonial-name">Sarah K.</div>
+            <div class="testimonial-role">Content creator</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"I made one for my mom's birthday with her favorite saying. She cried. Best gift I've ever given — and it cost less than flowers."</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: linear-gradient(135deg, #da7db4, #dac97d)">L</div>
+          <div>
+            <div class="testimonial-name">Lena M.</div>
+            <div class="testimonial-role">Gift buyer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"We turned our family motto into a jingle. Now the kids sing it every morning. It's become part of our identity."</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: linear-gradient(135deg, #a87dda, #7daada)">J</div>
+          <div>
+            <div class="testimonial-name">Julia R.</div>
+            <div class="testimonial-role">Mother of three</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Our startup needed a sonic identity fast. BeatAgain delivered something premium that sounds like we spent 10x more."</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: linear-gradient(135deg, #7ddaa8, #7dc9da)">D</div>
+          <div>
+            <div class="testimonial-name">David H.</div>
+            <div class="testimonial-role">Startup founder, Berlin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="section-container">
+    <div class="section-label">Questions</div>
+    <h2 class="section-title">Frequently asked</h2>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary class="faq-question">How short should my phrase be?</summary>
+        <div class="faq-answer">Ideally 2–8 words. Think of it like a slogan, a name, or a short sentence. The shorter and punchier, the catchier the result. But we can work with longer phrases too — we'll help you refine it.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Can I use my own wording exactly?</summary>
+        <div class="faq-answer">Absolutely. You can choose to keep your exact words, or let us improve them for catchiness. It's your call — you stay in control.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Can I upload or record my voice?</summary>
+        <div class="faq-answer">Yes! You can record your voice directly in the configurator or describe the tone you want. This helps us match the energy and feel you're going for.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Can I describe my own style?</summary>
+        <div class="faq-answer">Of course. While we offer curated style options, you can always choose "Custom" and describe exactly what you have in mind. We love creative freedom.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Is this for both businesses and private people?</summary>
+        <div class="faq-answer">Yes. We offer two paths: Business jingles (from 97€) for brands, campaigns, and professional use — and Personal jingles (from 18€) for gifts, family moments, and fun.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">What does "from 18€" and "from 97€" mean?</summary>
+        <div class="faq-answer">These are starting prices for the base package. The final price depends on your chosen add-ons (faster delivery, extra versions, etc.). The base package includes everything you need for a beautiful custom jingle.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Do I need musical knowledge?</summary>
+        <div class="faq-answer">Not at all. The entire experience is designed so anyone can shape a jingle with zero musical background. Just choose what feels right — we handle the rest.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Can I request revisions?</summary>
+        <div class="faq-answer">Yes. One revision round is included in every package. You can add additional revision rounds as an add-on if needed. We want you to love the result.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="section-container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-beat">Beat</span><span class="logo-again">Again</span>
+        <p class="footer-tagline">Your words. Your melody. Unforgettable.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#examples">Examples</a>
+        <a href="#faq">FAQ</a>
+        <a href="#configurator">Start your jingle</a>
+      </div>
+      <div class="footer-copy">
+        © 2026 BeatAgain. All rights reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="sticky-cta" id="stickyCta" style="display:none">
+  <a href="#configurator" class="btn btn-primary btn-glow sticky-cta-btn" id="stickyCtaBtn">
+    <span>Continue your jingle</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<!-- ============ SUCCESS MODAL ============ -->
+<div class="modal-overlay" id="successModal" style="display:none">
+  <div class="modal-card">
+    <div class="modal-glow"></div>
+    <div class="modal-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+    <h3 class="modal-title">Your jingle is on its way.</h3>
+    <p class="modal-text">We've received your creative direction. Our team will start crafting your custom jingle — personalized to your words, your mood, and your vision.</p>
+    <p class="modal-sub">You'll hear from us soon with something unforgettable.</p>
+    <button class="btn btn-primary btn-glow" id="modalClose">Beautiful — I can't wait</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
