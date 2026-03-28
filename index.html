@@ -30,7 +30,8 @@
       --glass: rgba(15,30,60,0.6);
     }
 
-    html { scroll-behavior: smooth; }
+    /* scroll-behavior: smooth removed — Lenis handles all scrolling */
+    html.lenis, html.lenis body { height: auto; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -2053,15 +2054,17 @@ function closeMenu(){ document.getElementById('mobileMenu').classList.remove('op
 
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if(e.isIntersecting){
-      setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const delay = parseInt(e.target.dataset.delay || 0);
+      setTimeout(() => e.target.classList.add('visible'), delay);
+      observer.unobserve(e.target); // fire once only — no jumpiness
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.reveal, .problem-card, .service-card, .process-step, .price-card, .why-card, .qs-card').forEach((el, i) => {
-  el.dataset.delay = (i % 4) * 80;
+  el.dataset.delay = (i % 5) * 70;
   observer.observe(el);
 });
 
@@ -2257,14 +2260,14 @@ if (!('ontouchstart' in window)) {
 
 // ── REVEAL VARIANT OBSERVER ──
 const revealVarObs = new IntersectionObserver(entries => {
-  entries.forEach((e, idx) => {
+  entries.forEach(e => {
     if (e.isIntersecting) {
       const delay = parseInt(e.target.dataset.rdelay || 0);
       setTimeout(() => e.target.classList.add('visible'), delay);
-      revealVarObs.unobserve(e.target);
+      revealVarObs.unobserve(e.target); // once only
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.reveal-left, .reveal-right, .reveal-scale').forEach((el, i) => {
   el.dataset.rdelay = (i % 4) * 90;
