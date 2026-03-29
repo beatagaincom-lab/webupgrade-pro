@@ -1452,7 +1452,7 @@ img { max-width: 100%; display: block; }
 /* Summary pill (sticky mobile) */
 .summary-pill {
   position: fixed;
-  bottom: 80px;
+  bottom: 72px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 90;
@@ -1467,6 +1467,9 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   max-width: calc(100vw - 40px);
   animation: fadeUp 0.4s var(--ease-out);
+}
+@media (min-width: 768px) {
+  .summary-pill { display: none !important; }
 }
 .pill-aura canvas { border-radius: 50%; }
 .pill-info { display: flex; flex-direction: column; min-width: 0; }
