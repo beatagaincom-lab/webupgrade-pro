@@ -1,0 +1,8 @@
+# Netlify-CLI-Status (lokal, gehört nicht ins Repo)
+.netlify/
+
+# Temporärer Deploy-Staging-Ordner
+_netlify_deploy/
+
+# Node
+node_modules/

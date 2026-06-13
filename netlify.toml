@@ -1,0 +1,31 @@
+# Netlify-Konfiguration für webupgradepro.ch
+# Sicherheits-Header + sauberes Caching. Gilt für alle Deploys.
+
+[build]
+  # Nur der dist-Ordner wird veröffentlicht – .git, server.js, Downloads bleiben privat.
+  publish = "dist"
+
+# ── Sicherheits-Header für alle Seiten ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Schutz vor Clickjacking (Seite darf nicht in fremde iframes)
+    X-Frame-Options = "DENY"
+    # Browser darf MIME-Typen nicht "raten"
+    X-Content-Type-Options = "nosniff"
+    # Referrer sparsam weitergeben
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Nicht benötigte Browser-Features hart abschalten
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+    # HTTPS für 1 Jahr erzwingen (inkl. Subdomains)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # Content-Security-Policy – erlaubt nur die tatsächlich genutzten Quellen:
+    #   jsDelivr (supabase-js, lenis), Google Fonts, das Supabase-Projekt.
+    #   'unsafe-inline' ist nötig wegen der inline <script>/<style> und onclick-Handler.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://yzzzmypmlfdbxqkubewf.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+
+# ── Caching: HTML immer frisch, damit Änderungen sofort sichtbar sind ──
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
