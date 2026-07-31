@@ -1794,7 +1794,8 @@
           Wir analysieren Ihre Website und melden uns innerhalb von 24 Stunden mit konkretem Feedback.
         </p>
       </div>
-      <form id="analyseForm" novalidate>
+      <form id="analyseForm" name="analyse-lead" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+        <input type="hidden" name="form-name" value="analyse-lead" />
         <div class="form-grid">
           <div class="field">
             <label for="fname">Ihr Name *</label>
@@ -2424,15 +2425,29 @@ document.getElementById('analyseForm').addEventListener('submit', async function
 
   document.getElementById('formError').style.display = 'none';
 
+  const lead = {
+    name:        document.getElementById('fname').value.trim(),
+    email:       document.getElementById('femail').value.trim(),
+    website_url: document.getElementById('furl').value.trim(),
+    nachricht:   document.getElementById('fmsg').value.trim() || null
+  };
+
+  // Parallel an Netlify Forms senden (löst die E-Mail-Benachrichtigung aus) —
+  // fire-and-forget, damit der Lead auch bei einem Supabase-Ausfall ankommt
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      'form-name': 'analyse-lead',
+      name: lead.name, email: lead.email,
+      website_url: lead.website_url, nachricht: lead.nachricht || ''
+    }).toString()
+  }).catch(() => {});
+
   let failed = false;
   try {
     const _sb = await getSupabase();
-    const { error } = await _sb.from('analyse_anfragen').insert({
-      name:        document.getElementById('fname').value.trim(),
-      email:       document.getElementById('femail').value.trim(),
-      website_url: document.getElementById('furl').value.trim(),
-      nachricht:   document.getElementById('fmsg').value.trim() || null
-    });
+    const { error } = await _sb.from('analyse_anfragen').insert(lead);
     if (error) failed = true;
   } catch (_) {
     failed = true;
