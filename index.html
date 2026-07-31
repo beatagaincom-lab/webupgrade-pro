@@ -225,7 +225,21 @@
     #hero {
       min-height: 100vh; min-height: 100svh; position: relative; overflow: hidden;
       display: flex; align-items: center;
-      padding: 9rem 2rem 5rem 4.5rem;   /* links Platz für die Messachse */
+      padding: 9rem 2rem 5rem;
+    }
+    /* Atmosphäre: Werkstatt-Foto hinter dem Hero, stark abgedunkelt */
+    #hero::before {
+      content: ''; position: absolute; inset: 0; z-index: 0;
+      background:
+        linear-gradient(90deg, var(--bg) 0%, rgba(2,8,23,0.9) 42%, rgba(2,8,23,0.55) 100%),
+        url('img/hero-werkstatt.webp') right center / cover no-repeat;
+    }
+    @media (max-width: 768px) {
+      #hero::before {
+        background:
+          linear-gradient(rgba(2,8,23,0.93), rgba(2,8,23,0.93)),
+          url('img/hero-werkstatt.webp') center / cover no-repeat;
+      }
     }
     .hero-inner {
       position: relative; z-index: 2;
@@ -270,10 +284,10 @@
 
     .hero-trust { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; }
     .hero-trust li {
-      font: 500 .78rem/1 var(--mono); letter-spacing: .06em;
+      font: 500 .88rem/1.4 'Inter', sans-serif;
       color: var(--ink-2); display: flex; align-items: center; gap: .5rem;
     }
-    .hero-trust li::before { content: ''; width: 7px; height: 7px; border: 1px solid var(--mark); }
+    .hero-trust li::before { content: '✓'; color: var(--mark); font-weight: 700; }
 
     /* ── Aufnahmeblatt ── */
     .befund { padding: 1.5rem 1.6rem 1.3rem; }
@@ -281,8 +295,8 @@
       display: flex; justify-content: space-between; align-items: baseline;
       padding-bottom: .9rem; border-bottom: 1px solid var(--line-2); margin-bottom: .3rem;
     }
-    .befund-title { font: 600 .7rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
-    .befund-state { font: 600 .7rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--signal); }
+    .befund-title { font: 700 .92rem/1 'Inter', sans-serif; color: var(--ink); }
+    .befund-state { font: 600 .8rem/1 'Inter', sans-serif; color: var(--signal); }
 
     .befund-rows { list-style: none; margin: 0; }
     .befund-rows li {
@@ -345,8 +359,8 @@
     .section-label, .divider { display: none; }   /* Altbestand still gelegt */
 
     .sec-index { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.15rem; }
-    .sec-no    { font: 600 .72rem/1 var(--mono); letter-spacing: .08em; color: var(--mark); }
-    .sec-name  { font: 600 .72rem/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); }
+    .sec-no    { font: 700 .9rem/1 'Inter', sans-serif; color: var(--mark); }
+    .sec-name  { font: 600 .88rem/1 'Inter', sans-serif; letter-spacing: .03em; color: var(--ink-2); }
     .sec-rule  {
       flex: 0 0 84px; height: 1px; background: var(--line-3);
       transform: scaleX(0); transform-origin: 0 50%;
@@ -354,9 +368,9 @@
     }
     .visible .sec-rule, .visible ~ * .sec-rule { transform: scaleX(1); }
 
-    .section-title { font-size: clamp(1.7rem, 3.4vw, 2.5rem); font-weight: 700;
-                     letter-spacing: -.4px; line-height: 1.18; margin-bottom: .9rem; }
-    .section-sub   { color: var(--ink-2); font-size: 1rem; line-height: 1.75; max-width: 34em; }
+    .section-title { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800;
+                     letter-spacing: -.6px; line-height: 1.15; margin-bottom: 1rem; }
+    .section-sub   { color: var(--ink-2); font-size: 1.05rem; line-height: 1.75; max-width: 36em; }
     .section-header{ margin-bottom: 3.2rem; }
 
     /* Zentrierte Sektionsköpfe abschaffen — linksbündig ist die Haltung */
@@ -440,7 +454,7 @@
     .service-card.visible { opacity: 1; transform: none; }
     .service-icon {
       width: auto; height: auto; min-width: 0; background: none; border: 0; border-radius: 0;
-      font: 600 .72rem/1 var(--mono); letter-spacing: .1em; color: var(--mark);
+      font: 700 1.1rem/1 'Inter', sans-serif; color: var(--mark);
       margin-bottom: .9rem; display: block;
     }
     .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
@@ -472,8 +486,8 @@
       background: var(--line-3);
     }
     .step-num {
-      position: absolute; top: -34px; left: 0;
-      font: 600 .74rem/1 var(--mono); letter-spacing: .1em; color: var(--ink-2);
+      position: absolute; top: -36px; left: 0;
+      font: 700 .95rem/1 'Inter', sans-serif; color: var(--ink-2);
       background: none; border-radius: 0; box-shadow: none; width: auto; height: auto;
     }
     .process-step h3 { font-size: .95rem; font-weight: 600; margin-bottom: .5rem; }
@@ -484,9 +498,9 @@
     .process-step.is-hold::before   { background: var(--signal); width: 2px; height: 24px; top: -27px; }
     .process-step.is-hold h3        { color: var(--signal); }
     .process-step.is-hold::after {
-      content: 'HALT — bis Sie freigeben';
-      position: absolute; top: -34px; left: 3.4rem;
-      font: 600 .68rem/1 var(--mono); letter-spacing: .14em; color: var(--signal); white-space: nowrap;
+      content: 'Erst mit Ihrer Freigabe';
+      position: absolute; top: -35px; left: 2.6rem;
+      font: 600 .8rem/1 'Inter', sans-serif; color: var(--signal); white-space: nowrap;
     }
     @media (max-width: 900px) {
       .process-steps { grid-template-columns: 1fr; gap: 0; padding-top: 0; }
@@ -514,11 +528,11 @@
       position: static; display: inline-block; transform: none;
       background: none; border: 1px solid var(--mark); color: var(--mark);
       border-radius: 0; padding: .22rem .6rem; margin-bottom: 1rem;
-      font: 600 .66rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+      font: 700 .7rem/1 'Inter', sans-serif; letter-spacing: .14em; text-transform: uppercase;
       white-space: nowrap;
     }
     .price-name {
-      font: 600 .7rem/1 var(--mono); letter-spacing: .22em;
+      font: 700 .8rem/1 'Inter', sans-serif; letter-spacing: .12em;
       text-transform: uppercase; color: var(--mark); margin-bottom: 0.5rem;
     }
     .price-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
@@ -556,6 +570,9 @@
 
     /* ── GUARANTEE ── */
     .guarantee-banner {
+      background:
+        linear-gradient(90deg, rgba(4,10,24,0.96) 0%, rgba(4,10,24,0.9) 55%, rgba(4,10,24,0.62) 100%),
+        url('img/abnahme-plan.webp') right center / cover no-repeat;
       padding: 2.5rem 3rem; margin: 4rem auto 0;
       max-width: 900px; display: flex; align-items: center; gap: 2.5rem;
       flex-wrap: wrap;
@@ -571,7 +588,7 @@
     }
     .guarantee-points .gp {
       display: flex; align-items: center; gap: 0.4rem;
-      font: 600 .74rem/1.5 var(--mono); letter-spacing: .04em; color: var(--ink-2);
+      font: 600 .82rem/1.5 'Inter', sans-serif; color: var(--ink-2);
       border: 1px solid var(--line-2); border-radius: 0; padding: 0.3rem 0.8rem;
     }
 
@@ -607,10 +624,7 @@
       cursor: pointer; text-decoration: none;
     }
     .qs-card.visible { opacity: 1; transform: none; }
-    .qs-icon {
-      font: 600 .68rem/1 var(--mono); letter-spacing: .08em; color: var(--mark);
-      min-width: 3.2rem; flex-shrink: 0;
-    }
+    .qs-icon { display: none; }
     .qs-info { flex: 1; }
     .qs-info h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
     .qs-info p { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
@@ -720,7 +734,7 @@
     }
     .why-card.visible { opacity: 1; transform: none; }
     .why-icon {
-      font: 600 .72rem/1 var(--mono); letter-spacing: .1em; color: var(--mark);
+      font: 700 1.1rem/1 'Inter', sans-serif; color: var(--mark);
       margin-bottom: .9rem; display: block;
     }
     .why-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
@@ -843,37 +857,7 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── MESSACHSE (M1) ── */
-    .rail {
-      position: fixed; z-index: 1200; pointer-events: none;
-      left: calc(20px + env(safe-area-inset-left, 0px));
-      top: 0; bottom: 0; width: 26px;
-    }
-    .rail-line { position: absolute; left: 12px; top: 0; bottom: 0; width: 1px; background: var(--line-1); }
-    .rail-tick {
-      position: absolute; left: 6px; width: 13px; height: 1px;
-      background: var(--line-2);
-      transition: background-color 260ms var(--e-out-quart);
-    }
-    .rail-tick.is-current { background: var(--signal); }
-    .rail-runner {
-      position: absolute; left: 0; top: 0; width: 26px; height: 1px;
-      transform: translate3d(0,0,0);
-      will-change: transform;
-    }
-    .rail-runner::before {
-      content: ''; position: absolute; left: 2px; top: -4px;
-      width: 0; height: 0;
-      border-left: 7px solid var(--signal);
-      border-top: 4px solid transparent; border-bottom: 4px solid transparent;
-    }
-    .rail-runner::after {
-      content: ''; position: absolute; left: 12px; right: 0; top: 0; height: 1px;
-      background: var(--signal);
-    }
-    @media (max-width: 900px) { .rail { display: none; } }
-
-    /* ── PHILOSOPHIE    /* ── PHILOSOPHIE — bewusst ruhig: kein Glass, kein Gradient, keine Emojis ── */
+    /* ── PHILOSOPHIE    /* ── PHILOSOPHIE    /* ── PHILOSOPHIE — bewusst ruhig: kein Glass, kein Gradient, keine Emojis ── */
     #philosophie { padding: 8rem 2rem; background: var(--bg); }
     .philo { max-width: 860px; margin: 0 auto; text-align: left; }
     .philo-label { font-size: 0.78rem; letter-spacing: 3px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
@@ -907,7 +891,7 @@
 
     .abnahme { margin: 3.5rem auto 0; max-width: 780px; border: 1px solid var(--line-2); }
     .abnahme img { display: block; width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; }
-    .abnahme figcaption { font: 500 .78rem/1.5 var(--mono); letter-spacing: .06em;
+    .abnahme figcaption { font: italic 500 .88rem/1.5 'Inter', sans-serif;
                           color: var(--ink-2); padding: .8rem 1rem; border-top: 1px solid var(--line-2); }
 
     /* ── MICRO-INTERACTIONS & A11Y ── */
@@ -964,10 +948,7 @@
   </style>
 </head>
 <body>
-<div class="rail" id="rail" aria-hidden="true">
-  <div class="rail-line"></div>
-  <div class="rail-runner" id="railRunner"></div>
-</div>
+
 
 <!-- NAV -->
 <nav id="navbar">
@@ -1008,10 +989,6 @@
 
   <div class="hero-inner">
     <div class="hero-claim reveal">
-      <div class="sec-index">
-        <span class="sec-no">01</span><span class="sec-rule"></span><span class="sec-name">Aufmass</span>
-      </div>
-
       <h1 class="hero-title">
         <span class="ht-quiet">Ihre Website ist Ihr erster Eindruck &ndash;</span>
         <span class="ht-loud">machen wir ihn unverwechselbar.</span>
@@ -1039,8 +1016,8 @@
 
     <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">
       <header class="befund-head">
-        <span class="befund-title">Erstanalyse &middot; Aufnahmeblatt</span>
-        <span class="befund-state">offen</span>
+        <span class="befund-title">Ihre kostenlose Erstanalyse</span>
+        <span class="befund-state">noch offen</span>
       </header>
       <ol class="befund-rows">
         <li><span class="bf-no">01</span><span class="bf-label">Auffindbarkeit bei Google</span><span class="bf-val">&mdash;</span></li>
@@ -1065,7 +1042,7 @@
     <img src="img/betrieb-treuhand.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
   </figure>
   <div class="philo reveal">
-    <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Haltung</span></div>
+    <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Philosophie</span></div>
     <h2>
       Funktion schafft Vertrauen.
       <span class="p2">Identität schafft Verbindung.</span>
@@ -1125,7 +1102,7 @@
 <section id="problem">
   <div class="container">
     <div class="section-header reveal">
-      <div class="sec-index"><span class="sec-no">03</span><span class="sec-rule"></span><span class="sec-name">Befund</span></div>
+      <div class="sec-index"><span class="sec-no">03</span><span class="sec-rule"></span><span class="sec-name">Das Problem</span></div>
       <h2 class="section-title">Erkennen Sie sich wieder?</h2>
       <p class="section-sub">Veraltete Websites kosten Sie täglich Kunden – oft ohne dass Sie es merken.</p>
     </div>
@@ -1172,7 +1149,7 @@
 <section id="services">
   <div class="container">
     <div class="section-header text-center reveal">
-      <div class="sec-index"><span class="sec-no">04</span><span class="sec-rule"></span><span class="sec-name">Massnahmen</span></div>
+      <div class="sec-index"><span class="sec-no">04</span><span class="sec-rule"></span><span class="sec-name">Leistungen</span></div>
       <h2 class="section-title">Was wir für Sie tun</h2>
       <p class="section-sub">Von der Analyse bis zum Launch – alles aus einer Hand.</p>
     </div>
@@ -1215,7 +1192,7 @@
 <section id="process">
   <div class="container">
     <div class="section-header text-center reveal">
-      <div class="sec-index"><span class="sec-no">05</span><span class="sec-rule"></span><span class="sec-name">Ablauf</span></div>
+      <div class="sec-index"><span class="sec-no">05</span><span class="sec-rule"></span><span class="sec-name">Der Ablauf</span></div>
       <h2 class="section-title">So einfach geht's</h2>
       <p class="section-sub">Von Ihrer Anfrage bis zur fertigen Website – transparent und ohne Überraschungen.</p>
     </div>
@@ -1258,7 +1235,7 @@
 <section id="pricing">
   <div class="container">
     <div class="section-header text-center reveal">
-      <div class="sec-index"><span class="sec-no">06</span><span class="sec-rule"></span><span class="sec-name">Aufwand</span></div>
+      <div class="sec-index"><span class="sec-no">06</span><span class="sec-rule"></span><span class="sec-name">Preise</span></div>
       <h2 class="section-title">Faire Preise. Keine Überraschungen.</h2>
       <p class="section-sub">Transparent, flexibel und auf Ihr Budget abgestimmt. Sie wissen immer, was Sie bezahlen.</p>
     </div>
@@ -1317,7 +1294,7 @@
 <div style="padding: 0 2rem; background: var(--bg);">
   <div class="guarantee-banner panel reveal">
     <div class="guarantee-text">
-      <div class="sec-index"><span class="sec-no">07</span><span class="sec-rule"></span><span class="sec-name">Abnahme</span></div>
+      <div class="sec-index"><span class="sec-no">07</span><span class="sec-rule"></span><span class="sec-name">Garantie</span></div>
       <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
       <p>
         Wir sind von unserer Arbeit überzeugt – und das beweisen wir. Wenn Sie mit dem Ergebnis nicht zufrieden sind,
@@ -1340,7 +1317,7 @@
   <div class="container">
     <div class="form-wrapper panel reveal">
       <div class="form-header">
-        <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Auftrag</span></div>
+        <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Kostenlose Analyse</span></div>
         <h2 class="section-title" style="font-size:1.8rem">Ihre kostenlose Website-Analyse</h2>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:0.5rem">
           Wir analysieren Ihre Website und melden uns innerhalb von 24 Stunden mit konkretem Feedback.
@@ -1404,7 +1381,7 @@
   <div class="container">
     <div class="qs-intro">
       <div class="qs-intro-left">
-        <div class="sec-index"><span class="sec-no">09</span><span class="sec-rule"></span><span class="sec-name">Einzelpositionen</span></div>
+        <div class="sec-index"><span class="sec-no">09</span><span class="sec-rule"></span><span class="sec-name">Klein-Services</span></div>
         <h2 class="section-title">Nur eine kleine Sache?<br/>Kein Problem.</h2>
           <p class="section-sub">Nicht jede Verbesserung braucht ein grosses Projekt. Wählen Sie genau das aus, was Sie brauchen – wir erledigen es schnell und unkompliziert.</p>
       </div>
@@ -1589,7 +1566,7 @@
 <section id="why">
   <div class="container">
     <div class="section-header text-center reveal">
-      <div class="sec-index"><span class="sec-no">10</span><span class="sec-rule"></span><span class="sec-name">Ausführender</span></div>
+      <div class="sec-index"><span class="sec-no">10</span><span class="sec-rule"></span><span class="sec-name">Über uns</span></div>
       <h2 class="section-title">Klein genug, dass Sie mit dem sprechen, der baut.</h2>
       <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Das ist mein Versprechen.</p>
     </div>
@@ -1637,7 +1614,7 @@
 <section id="faq">
   <div class="container">
     <div class="section-header text-center reveal">
-      <div class="sec-index"><span class="sec-no">11</span><span class="sec-rule"></span><span class="sec-name">Rückfragen</span></div>
+      <div class="sec-index"><span class="sec-no">11</span><span class="sec-rule"></span><span class="sec-name">FAQ</span></div>
       <h2 class="section-title">Häufige Fragen</h2>
     </div>
     <div class="faq-list">
