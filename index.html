@@ -432,29 +432,16 @@
       gap: 1.5rem;
     }
     .service-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 18px; padding: 2rem;
-      position: relative; overflow: hidden;
-      transition: all 0.4s; opacity: 0; transform: translateY(20px);
+      padding: 2rem;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart),
+                  border-color 300ms var(--e-out-quart);
     }
     .service-card.visible { opacity: 1; transform: none; }
-    .service-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
-      transform: scaleX(0); transition: transform 0.4s; transform-origin: left;
-    }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-card:hover {
-      border-color: rgba(59,130,246,0.35);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 50px rgba(59,130,246,0.12);
-    }
     .service-icon {
-      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 1.2rem;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.08));
-      border: 1px solid rgba(59,130,246,0.2);
+      width: auto; height: auto; min-width: 0; background: none; border: 0; border-radius: 0;
+      font: 600 .72rem/1 var(--mono); letter-spacing: .1em; color: var(--mark);
+      margin-bottom: .9rem; display: block;
     }
     .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
     .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
@@ -515,35 +502,28 @@
       gap: 1.5rem; align-items: start;
     }
     .price-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 20px; padding: 2.2rem 2rem;
-      position: relative;
-      transition: all 0.4s; opacity: 0; transform: translateY(20px);
+      padding: 2.2rem 2rem;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart),
+                  border-color 300ms var(--e-out-quart);
     }
     .price-card.visible { opacity: 1; transform: none; }
-    .price-card.featured {
-      border-color: rgba(59,130,246,0.5);
-      background: linear-gradient(145deg, rgba(59,130,246,0.08), rgba(6,182,212,0.04));
-      transform: scale(1.03);
-    }
-    .price-card.featured.visible { transform: scale(1.03) translateY(0); }
-    .price-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(59,130,246,0.12); }
-    .price-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+    .price-card.featured { border-color: var(--line-3); }
     .featured-badge {
-      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      color: #fff; padding: 0.3rem 1.2rem; border-radius: 100px;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+      position: static; display: inline-block; transform: none;
+      background: none; border: 1px solid var(--mark); color: var(--mark);
+      border-radius: 0; padding: .22rem .6rem; margin-bottom: 1rem;
+      font: 600 .66rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
       white-space: nowrap;
     }
     .price-name {
-      font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem;
+      font: 600 .7rem/1 var(--mono); letter-spacing: .22em;
+      text-transform: uppercase; color: var(--mark); margin-bottom: 0.5rem;
     }
-    .price-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .price-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
     .price-amount {
-      font-size: 2.4rem; font-weight: 900; letter-spacing: -1px;
-      margin: 1rem 0; color: var(--white);
+      font: 700 2.1rem/1 var(--mono); letter-spacing: -1px; font-variant-numeric: tabular-nums;
+      margin: 1rem 0; color: var(--ink);
     }
     .price-amount span { font-size: 1rem; font-weight: 500; color: var(--muted); }
     .price-features { list-style: none; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.7rem; }
@@ -552,24 +532,19 @@
       font-size: 0.88rem; color: var(--muted);
     }
     .price-features li .chk {
-      width: 18px; height: 18px; background: rgba(34,197,94,0.12);
-      border: 1px solid rgba(34,197,94,0.35); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.6rem; color: #4ade80; flex-shrink: 0;
+      width: 12px; height: 12px; border-radius: 0; background: none;
+      border: 1px solid var(--mark); font-size: 0; flex-shrink: 0;
     }
     .btn-price {
-      width: 100%; padding: 0.85rem; border-radius: 10px;
+      width: 100%; padding: 0.85rem; border-radius: 2px;
       font-weight: 700; font-size: 0.95rem; cursor: pointer;
       border: 1px solid var(--border); background: transparent;
       color: var(--white); transition: all 0.3s; text-align: center;
       display: block; text-decoration: none;
     }
     .btn-price:hover { border-color: var(--blue); color: var(--blue-light); }
-    .btn-price.featured-btn {
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      border: none;
-    }
-    .btn-price.featured-btn:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+    .btn-price.featured-btn { background: var(--mark); border: none; color: #04121f; }
+    .btn-price.featured-btn:hover { background: #5ecbfa; color: #04121f; }
     .pricing-note {
       text-align: center; margin-top: 2.5rem;
       color: var(--muted); font-size: 0.9rem;
@@ -580,8 +555,6 @@
 
     /* ── GUARANTEE ── */
     .guarantee-banner {
-      background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(6,182,212,0.04));
-      border: 1px solid rgba(34,197,94,0.2); border-radius: 20px;
       padding: 2.5rem 3rem; margin: 4rem auto 0;
       max-width: 900px; display: flex; align-items: center; gap: 2.5rem;
       flex-wrap: wrap;
@@ -590,20 +563,15 @@
       font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem;
       color: var(--white);
     }
-    .guarantee-text h3 span {
-      background: linear-gradient(135deg, #4ade80, #06b6d4);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .guarantee-text h3 span { color: var(--mark); }
     .guarantee-text p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; max-width: 580px; }
     .guarantee-text .guarantee-points {
       display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem;
     }
     .guarantee-points .gp {
       display: flex; align-items: center; gap: 0.4rem;
-      font-size: 0.82rem; font-weight: 600; color: #4ade80;
-      background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
-      border-radius: 100px; padding: 0.3rem 0.8rem;
+      font: 600 .74rem/1.5 var(--mono); letter-spacing: .04em; color: var(--ink-2);
+      border: 1px solid var(--line-2); border-radius: 0; padding: 0.3rem 0.8rem;
     }
 
     /* ── QUICK SERVICES ── */
@@ -614,16 +582,13 @@
     }
     .qs-intro-left { flex: 1; min-width: 260px; }
     .qs-intro-right {
-      background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02));
-      border: 1px solid rgba(245,158,11,0.2); border-radius: 14px;
+      border: 1px solid var(--line-2); border-radius: 2px;
       padding: 1.2rem 1.8rem; display: flex; align-items: center; gap: 1rem;
       flex-shrink: 0;
     }
     .qs-intro-right .tag {
-      font-size: 2rem; font-weight: 900;
-      background: linear-gradient(135deg, #f59e0b, #fbbf24);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; white-space: nowrap;
+      font: 700 1.8rem/1 var(--mono); letter-spacing: -1px;
+      color: var(--signal); white-space: nowrap;
     }
     .qs-intro-right p { font-size: 0.82rem; color: var(--muted); max-width: 180px; line-height: 1.5; }
     .qs-grid {
@@ -631,23 +596,17 @@
       gap: 1rem;
     }
     .qs-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.3rem 1.5rem;
+      padding: 1.3rem 1.5rem;
       display: flex; align-items: center; gap: 1rem;
-      transition: all 0.35s; opacity: 0; transform: translateY(16px);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart),
+                  border-color 300ms var(--e-out-quart);
       cursor: pointer; text-decoration: none;
     }
     .qs-card.visible { opacity: 1; transform: none; }
-    .qs-card:hover {
-      border-color: rgba(59,130,246,0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 35px rgba(59,130,246,0.1);
-    }
     .qs-icon {
-      font-size: 1.6rem; min-width: 46px; height: 46px;
-      background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.15);
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      font: 600 .68rem/1 var(--mono); letter-spacing: .08em; color: var(--mark);
+      min-width: 3.2rem; flex-shrink: 0;
     }
     .qs-info { flex: 1; }
     .qs-info h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
@@ -656,10 +615,8 @@
       text-align: right; flex-shrink: 0;
     }
     .qs-price .amount {
-      font-size: 1.1rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font: 700 1.05rem/1 var(--mono); color: var(--ink);
+      font-variant-numeric: tabular-nums;
     }
     .qs-price .chf { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 0.1rem; }
     .qs-wa-btn {
@@ -669,8 +626,7 @@
     }
     .qs-cta {
       margin-top: 2.5rem; text-align: center;
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 18px; padding: 2rem;
+      border: 1px solid var(--line-2); border-radius: 2px; padding: 2rem;
     }
     .qs-cta p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
     .qs-cta strong { color: var(--white); }
@@ -690,9 +646,7 @@
     }
     .form-wrapper {
       max-width: 680px; margin: 0 auto; position: relative; z-index: 1;
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 24px; padding: 3rem;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+      padding: 3rem;
     }
     .form-header { text-align: center; margin-bottom: 2.5rem; }
     .form-header .emoji { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
@@ -756,43 +710,46 @@
       gap: 1.5rem;
     }
     .why-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 18px; padding: 2rem;
-      transition: all 0.4s; opacity: 0; transform: translateY(20px);
+      padding: 2rem;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart),
+                  border-color 300ms var(--e-out-quart);
     }
     .why-card.visible { opacity: 1; transform: none; }
-    .why-card:hover { border-color: rgba(59,130,246,0.35); transform: translateY(-4px); }
-    .why-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .why-icon {
+      font: 600 .72rem/1 var(--mono); letter-spacing: .1em; color: var(--mark);
+      margin-bottom: .9rem; display: block;
+    }
     .why-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
     .why-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
 
-    /* ── STATS ── */
-    #stats {
-      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,182,212,0.03));
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem;
-    }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 2rem; text-align: center;
-    }
+    /* ── BEZUGSWERTE (M7) ── */
+    #stats { background: var(--bg2); border-top: 1px solid var(--line-2);
+             border-bottom: 1px solid var(--line-2); padding: 4.5rem 2rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem;
+                  max-width: 1100px; margin: 0 auto; text-align: left; }
     .stat h3 {
-      font-size: 2.8rem; font-weight: 900; letter-spacing: -2px;
+      font: 700 2.6rem/1 var(--mono);
       font-variant-numeric: tabular-nums;
-      background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: -1px; color: var(--ink);
     }
-    .stat p { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
+    .stat::after {
+      content: ''; display: block; height: 1px; background: var(--line-3); margin: .9rem 0 .8rem;
+      transform: scaleX(0); transform-origin: 0 50%;
+      transition: transform var(--t-line) var(--e-out-expo) 140ms;
+    }
+    .stat.visible::after { transform: scaleX(1); }
+    .stat p { font-size: .84rem; color: var(--ink-2); line-height: 1.55; }
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; gap: 1.8rem; } }
 
     /* ── FAQ ── */
     .faq-list { max-width: 740px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem; }
     .faq-item {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden;
+      background: var(--panel); border: 1px solid var(--line-2);
+      border-radius: 2px; overflow: hidden;
       transition: border-color 0.3s;
     }
-    .faq-item.open { border-color: rgba(59,130,246,0.35); }
+    .faq-item.open { border-color: var(--line-3); }
     .faq-q {
       padding: 1.3rem 1.6rem; cursor: pointer;
       display: flex; justify-content: space-between; align-items: center;
@@ -1054,16 +1011,11 @@
     .field input, .field textarea { font-size: 16px; }
     .field input::placeholder, .field textarea::placeholder { color: rgba(203,213,225,0.6); }
 
-    /* Cursor-folgendes Glow auf Cards (nutzt --mx/--my aus dem Tilt-Handler) */
-    .service-card::after, .price-card::after, .why-card::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0;
-      background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
-                  rgba(59,130,246,0.14), transparent 62%);
-      transition: opacity 0.4s var(--e-out-quart);
-    }
-    .service-card:hover::after, .price-card:hover::after, .why-card:hover::after { opacity: 1; }
-    .service-card, .price-card, .why-card { overflow: hidden; }
+    /* Buttons: Anschlag (M9) */
+    .btn-submit, .btn-price, .btn-wa-form, .nav-cta { border-radius: 2px; box-shadow: none; }
+    .btn-submit:hover, .nav-cta:hover { transform: none; }
 
+    /* CTA-Pfeil nudge */
     /* CTA-Pfeil nudge */
     .btn-primary:hover .arrow { transform: translateX(4px); }
     .btn-primary .arrow { display: inline-block; transition: transform 0.4s var(--e-out-back); }
@@ -1117,7 +1069,7 @@
   <a href="#why" onclick="closeMenu()">Warum wir</a>
   <a href="#quick-services" onclick="closeMenu()">Klein-Services</a>
   <a href="#analyse" onclick="closeMenu()" style="color:var(--cyan)">→ Gratis Analyse</a>
-  <a href="#analyse" onclick="closeMenu()" style="color:#4ade80;font-size:1rem">🛡️ Garantie</a>
+  <a href="#analyse" onclick="closeMenu()">Garantie</a>
 </div>
 
 <!-- HERO -->
@@ -1291,33 +1243,33 @@
       <p class="section-sub">Von der Analyse bis zum Launch – alles aus einer Hand.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon">🎨</div>
+      <div class="service-card panel">
+        <div class="service-icon">01</div>
         <h3>Modernes Redesign</h3>
         <p>Zeitgemässes Design, das Vertrauen schafft und Besucher in Kunden verwandelt. Professionell, klar und auf Ihre Marke zugeschnitten.</p>
       </div>
-      <div class="service-card">
-        <div class="service-icon">🤖</div>
+      <div class="service-card panel">
+        <div class="service-icon">02</div>
         <h3>Automatisierung mit Augenmass</h3>
         <p>Nur dort, wo es Ihrem Betrieb wirklich hilft: automatische Terminanfragen, strukturierte Anfragen, schnelle Antworten. Kein Schnickschnack – spürbare Entlastung im Alltag.</p>
       </div>
-      <div class="service-card">
-        <div class="service-icon">⚡</div>
+      <div class="service-card panel">
+        <div class="service-icon">03</div>
         <h3>Performance-Optimierung</h3>
         <p>Blitzschnelle Ladezeiten und Top-Scores bei Google PageSpeed. Mehr Geschwindigkeit = mehr Conversions, ganz einfach.</p>
       </div>
-      <div class="service-card">
-        <div class="service-icon">📱</div>
+      <div class="service-card panel">
+        <div class="service-icon">04</div>
         <h3>Mobile-First Design</h3>
         <p>100% perfekt auf jedem Gerät – Smartphone, Tablet und Desktop. Kein Besucher verliert sich mehr im Layout.</p>
       </div>
-      <div class="service-card">
-        <div class="service-icon">🔍</div>
+      <div class="service-card panel">
+        <div class="service-icon">05</div>
         <h3>SEO-Optimierung</h3>
         <p>Besser gefunden bei Google – mehr organischer Traffic ohne Werbebudget. Ihre Kunden suchen Sie. Wir sorgen dafür, dass sie Sie finden.</p>
       </div>
-      <div class="service-card">
-        <div class="service-icon">🔒</div>
+      <div class="service-card panel">
+        <div class="service-icon">06</div>
         <h3>Sicherheit & Compliance</h3>
         <p>HTTPS, aktuelle Technologien, revDSG-konform. Ihre Website ist sicher, modern und zukunftsfähig.</p>
       </div>
@@ -1372,7 +1324,7 @@
       <p class="section-sub">Transparent, flexibel und auf Ihr Budget abgestimmt. Sie wissen immer, was Sie bezahlen.</p>
     </div>
     <div class="pricing-grid">
-      <div class="price-card">
+      <div class="price-card panel">
         <div class="price-name">Starter</div>
         <div class="price-title">Auffrischung</div>
         <div class="price-amount">ab CHF 490<span> /einmalig</span></div>
@@ -1385,7 +1337,7 @@
         </ul>
         <a href="#analyse" class="btn-price">Jetzt anfragen</a>
       </div>
-      <div class="price-card featured">
+      <div class="price-card featured panel">
         <div class="featured-badge">⭐ BELIEBT</div>
         <div class="price-name">Pro</div>
         <div class="price-title">Modernisierung</div>
@@ -1400,7 +1352,7 @@
         </ul>
         <a href="#analyse" class="btn-price featured-btn">Jetzt starten →</a>
       </div>
-      <div class="price-card">
+      <div class="price-card panel">
         <div class="price-name">Premium</div>
         <div class="price-title">Transformation</div>
         <div class="price-amount">Auf Anfrage</div>
@@ -1424,7 +1376,7 @@
 
 <!-- GARANTIE BANNER -->
 <div style="padding: 0 2rem; background: var(--bg);">
-  <div class="guarantee-banner reveal">
+  <div class="guarantee-banner panel reveal">
     <div class="guarantee-text">
       <div class="sec-index"><span class="sec-no">07</span><span class="sec-rule"></span><span class="sec-name">Abnahme</span></div>
       <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
@@ -1447,7 +1399,7 @@
 <!-- ANALYSE FORMULAR -->
 <section id="analyse">
   <div class="container">
-    <div class="form-wrapper reveal">
+    <div class="form-wrapper panel reveal">
       <div class="form-header">
         <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Auftrag</span></div>
         <h2 class="section-title" style="font-size:1.8rem">Ihre kostenlose Website-Analyse</h2>
@@ -1501,7 +1453,6 @@
         </a>
       </form>
       <div class="success-msg" id="successMsg">
-        <span class="icon">✅</span>
         <h3>Perfekt! Ihre Analyse ist unterwegs.</h3>
         <p>Wir melden uns innerhalb von 24 Stunden mit einem ausführlichen Feedback zu Ihrer Website.</p>
       </div>
@@ -1525,8 +1476,8 @@
     </div>
     <div class="qs-grid">
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Texte%20aktualisieren%20(ab%20CHF%2060)." target="_blank">
-        <div class="qs-icon">✏️</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Texte%20aktualisieren%20(ab%20CHF%2060)." target="_blank">
+        <div class="qs-icon">P-01</div>
         <div class="qs-info">
           <h3>Texte aktualisieren</h3>
           <p>Inhalte, Beschreibungen oder Kontaktdaten auf Ihrer Website ändern.</p>
@@ -1538,8 +1489,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Bild%20austauschen%20(ab%20CHF%2060)." target="_blank">
-        <div class="qs-icon">🖼️</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Bild%20austauschen%20(ab%20CHF%2060)." target="_blank">
+        <div class="qs-icon">P-02</div>
         <div class="qs-info">
           <h3>Bilder austauschen</h3>
           <p>Fotos, Banner oder Logos auf Ihrer Website ersetzen und optimieren.</p>
@@ -1551,8 +1502,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Kontaktformular%20einbauen%20(ab%20CHF%2080)." target="_blank">
-        <div class="qs-icon">📬</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Kontaktformular%20einbauen%20(ab%20CHF%2080)." target="_blank">
+        <div class="qs-icon">P-03</div>
         <div class="qs-info">
           <h3>Kontaktformular einbauen</h3>
           <p>Professionelles Formular – Nachrichten landen direkt in Ihrem Postfach.</p>
@@ -1564,8 +1515,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Mobile-Fix%20(ab%20CHF%2090)." target="_blank">
-        <div class="qs-icon">📱</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Mobile-Fix%20(ab%20CHF%2090)." target="_blank">
+        <div class="qs-icon">P-04</div>
         <div class="qs-info">
           <h3>Mobile-Darstellung fixen</h3>
           <p>Ihre Website sieht auf dem Handy komisch aus? Wir reparieren das.</p>
@@ -1577,8 +1528,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Google%20Maps%20einbinden%20(ab%20CHF%2090)." target="_blank">
-        <div class="qs-icon">📍</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Google%20Maps%20einbinden%20(ab%20CHF%2090)." target="_blank">
+        <div class="qs-icon">P-05</div>
         <div class="qs-info">
           <h3>Google Maps einbinden</h3>
           <p>Interaktive Karte mit Ihrem Standort direkt auf der Kontaktseite.</p>
@@ -1590,8 +1541,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20WhatsApp-Button%20einbauen%20(ab%20CHF%2070)." target="_blank">
-        <div class="qs-icon">💬</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20WhatsApp-Button%20einbauen%20(ab%20CHF%2070)." target="_blank">
+        <div class="qs-icon">P-06</div>
         <div class="qs-info">
           <h3>WhatsApp-Button einbauen</h3>
           <p>Floating-Button auf Ihrer Website – Kunden schreiben Ihnen direkt.</p>
@@ -1603,8 +1554,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Speed-Optimierung%20(ab%20CHF%20150)." target="_blank">
-        <div class="qs-icon">⚡</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Speed-Optimierung%20(ab%20CHF%20150)." target="_blank">
+        <div class="qs-icon">P-07</div>
         <div class="qs-info">
           <h3>Speed-Optimierung</h3>
           <p>Ladezeit drastisch reduzieren – besseres Google-Ranking und weniger Absprünge.</p>
@@ -1616,8 +1567,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SEO-Grundoptimierung%20(ab%20CHF%20180)." target="_blank">
-        <div class="qs-icon">🔍</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SEO-Grundoptimierung%20(ab%20CHF%20180)." target="_blank">
+        <div class="qs-icon">P-08</div>
         <div class="qs-info">
           <h3>SEO-Grundoptimierung</h3>
           <p>Meta-Tags, Titles, Beschreibungen – besser gefunden bei Google.</p>
@@ -1629,8 +1580,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SSL%20%26%20Sicherheits-Update%20(ab%20CHF%20120)." target="_blank">
-        <div class="qs-icon">🔒</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SSL%20%26%20Sicherheits-Update%20(ab%20CHF%20120)." target="_blank">
+        <div class="qs-icon">P-09</div>
         <div class="qs-info">
           <h3>SSL & Sicherheits-Update</h3>
           <p>HTTPS aktivieren, veraltete Plugins updaten, Sicherheitslücken schliessen.</p>
@@ -1642,8 +1593,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Analytics%20einrichten%20(ab%20CHF%2090)." target="_blank">
-        <div class="qs-icon">📊</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Analytics%20einrichten%20(ab%20CHF%2090)." target="_blank">
+        <div class="qs-icon">P-10</div>
         <div class="qs-info">
           <h3>Analytics einrichten</h3>
           <p>Google Analytics / Matomo – verstehen Sie, wer Ihre Website besucht.</p>
@@ -1655,8 +1606,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Cookie-Banner%20%26%20Datenschutz%20(ab%20CHF%20100)." target="_blank">
-        <div class="qs-icon">🍪</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Cookie-Banner%20%26%20Datenschutz%20(ab%20CHF%20100)." target="_blank">
+        <div class="qs-icon">P-11</div>
         <div class="qs-info">
           <h3>Cookie-Banner & Datenschutz</h3>
           <p>revDSG-konforme Lösung nach Schweizer Recht – rechtssicher ohne technischen Aufwand.</p>
@@ -1668,8 +1619,8 @@
         </div>
       </a>
 
-      <a class="qs-card" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20%C3%BCber%20einen%20individuellen%20Klein-Service%20sprechen." target="_blank">
-        <div class="qs-icon">💡</div>
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20%C3%BCber%20einen%20individuellen%20Klein-Service%20sprechen." target="_blank">
+        <div class="qs-icon">P-12</div>
         <div class="qs-info">
           <h3>Etwas anderes?</h3>
           <p>Haben Sie eine spezifische Anfrage? Schreiben Sie mir – wir finden eine Lösung.</p>
@@ -1704,38 +1655,38 @@
       <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Das ist mein Versprechen.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card">
-        <span class="why-icon">💡</span>
+      <div class="why-card panel">
+        <span class="why-icon">01</span>
         <h3>IT-Experte mit echtem Fachwissen</h3>
         <p>Wir arbeiten täglich in der IT-Branche und kennen die neuesten Technologien aus der Praxis – nicht aus dem Lehrbuch. Was wir Ihnen empfehlen, funktioniert wirklich.</p>
       </div>
-      <div class="why-card">
-        <span class="why-icon">🤝</span>
+      <div class="why-card panel">
+        <span class="why-icon">02</span>
         <h3>Persönlicher Kontakt – direkt zu mir</h3>
         <p>Kein Support-Ticket, kein Call-Center. Sie schreiben mir direkt per WhatsApp oder E-Mail und bekommen eine echte Antwort – von mir persönlich.</p>
       </div>
-      <div class="why-card">
-        <span class="why-icon">🤖</span>
+      <div class="why-card panel">
+        <span class="why-icon">03</span>
         <h3>Modernste KI-Technologie</h3>
         <p>Wir setzen KI dort ein, wo sie Ihnen Zeit spart oder neue Möglichkeiten eröffnet – nicht, weil es gerade Trend ist. So bleibt Ihre Website auch in ein paar Jahren aktuell.</p>
       </div>
-      <div class="why-card">
-        <span class="why-icon">💰</span>
+      <div class="why-card panel">
+        <span class="why-icon">04</span>
         <h3>Faires Preis-Leistungs-Verhältnis</h3>
         <p>Qualität muss nicht teuer sein. Wir bieten Resultate auf Agentur-Niveau zu Preisen, die für KMU und Selbstständige tatsächlich funktionieren.</p>
       </div>
-      <div class="why-card">
-        <span class="why-icon">⚡</span>
+      <div class="why-card panel">
+        <span class="why-icon">05</span>
         <h3>Schnell & zuverlässig</h3>
         <p>Keine monatelangen Projekte. Wir arbeiten fokussiert und effizient, damit Ihre neue Website schnell online geht und sofort wirkt.</p>
       </div>
-      <div class="why-card">
-        <span class="why-icon">🎯</span>
+      <div class="why-card panel">
+        <span class="why-icon">06</span>
         <h3>Ergebnisse die zählen</h3>
         <p>Mehr Anfragen, mehr Vertrauen, mehr Umsatz. Wir messen Erfolg an Ihren Ergebnissen – nicht an unseren Stundenzahlen.</p>
       </div>
-      <div class="why-card" style="border-color:rgba(6,182,212,0.3);background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(59,130,246,0.03))">
-        <span class="why-icon">🔐</span>
+      <div class="why-card panel" style="border-color:rgba(6,182,212,0.3);background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(59,130,246,0.03))">
+        <span class="why-icon">07</span>
         <h3>Ihre Live-Website bleibt unangetastet</h3>
         <p>Alle Änderungen werden zuerst auf einer <strong style="color:var(--cyan)">separaten Vorschau-Umgebung</strong> entwickelt und gezeigt. Ihre originale Website läuft die ganze Zeit unverändert weiter. Erst wenn Sie alles gesehen haben, geprüft haben und <strong style="color:var(--white)">einverstanden sind</strong>, werden die Änderungen live geschaltet. Sie haben jederzeit die volle Kontrolle.</p>
       </div>
@@ -2156,35 +2107,20 @@ if (lenis) {
   }, { passive: true });
 }
 
-// ── 3D CARD TILT + Cursor-Glow (nur echte Maus-Geräte) ──
-// Rect wird 1× bei pointerenter gelesen (kein Layout-Thrashing), Featured-Card
-// behält ihre scale(1.03), Writes sind rAF-gedrosselt.
+// ── CURSOR-FADENKREUZ: schreibt --mx/--my auf Panels (nur echte Maus-Geräte) ──
 if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !REDUCE_MOTION) {
-  document.querySelectorAll('.service-card, .price-card, .why-card').forEach(card => {
+  document.querySelectorAll('.panel').forEach(card => {
     let r = null, raf = 0;
-    const base = card.classList.contains('featured') ? ' scale(1.03)' : '';
-    card.addEventListener('pointerenter', () => {
-      r = card.getBoundingClientRect();
-      card.style.transition = 'transform 120ms linear, box-shadow 0.4s var(--e-out-quart)';
-    }, { passive: true });
+    card.addEventListener('pointerenter', () => { r = card.getBoundingClientRect(); }, { passive: true });
     card.addEventListener('pointermove', e => {
       if (!r || raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        const x = e.clientX - r.left - r.width  / 2;
-        const y = e.clientY - r.top  - r.height / 2;
-        card.style.transform =
-          `perspective(900px) rotateX(${(y / (r.height / 2)) * -4.5}deg)` +
-          ` rotateY(${(x / (r.width / 2)) * 4.5}deg) translateY(-5px)` + base;
         card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
         card.style.setProperty('--my', (e.clientY - r.top) + 'px');
       });
     }, { passive: true });
-    card.addEventListener('pointerleave', () => {
-      r = null;
-      card.style.transform = '';
-      card.style.transition = 'transform 0.5s var(--e-out-back), box-shadow 0.4s var(--e-out-quart)';
-    }, { passive: true });
+    card.addEventListener('pointerleave', () => { r = null; }, { passive: true });
   });
 }
 
