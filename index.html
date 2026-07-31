@@ -882,12 +882,28 @@
       .philo-cols { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
-    /* ── BILDER: Motivband & Abnahme (Teil 3) — Bilder stehen still ── */
-    .motivband { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-                 background: var(--line-2); border: 1px solid var(--line-2);
-                 max-width: 860px; margin: 0 auto 4rem; }
-    .motivband img { display: block; width: 100%; height: 100%; aspect-ratio: 2/3; object-fit: cover; }
-    @media (max-width: 700px) { .motivband { grid-template-columns: 1fr; } .motivband img:nth-child(n+2) { display: none; } }
+    /* ── DREI BETRIEBE — Bilder als Argument, nicht als Deko ── */
+    .betriebe { margin: 3.6rem 0 3.2rem; }
+    .betriebe-head h3 { font-size: 1.4rem; font-weight: 800; letter-spacing: -.3px; margin-bottom: .5rem; }
+    .betriebe-head p { color: var(--ink-2); font-size: .95rem; line-height: 1.7; max-width: 36em; margin-bottom: 2rem; }
+    .betriebe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; align-items: start; }
+    .betriebe-grid figure {
+      border: 1px solid var(--line-2); background: var(--panel);
+      transition: border-color 300ms var(--e-out-quart);
+    }
+    .betriebe-grid figure:hover { border-color: var(--line-3); }
+    .betriebe-grid figure.shift { margin-top: 2.4rem; }   /* editorialer Versatz */
+    .betriebe-grid img { display: block; width: 100%; height: auto; aspect-ratio: 2/3; object-fit: cover; }
+    .betriebe-grid figcaption { padding: .9rem 1rem 1.05rem; font-size: .86rem; color: var(--ink-2); line-height: 1.5; }
+    .betriebe-grid figcaption span {
+      display: block; font: 700 .74rem/1 'Inter', sans-serif;
+      color: var(--mark); letter-spacing: .06em; margin-bottom: .4rem;
+    }
+    @media (max-width: 700px) {
+      .betriebe-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .betriebe-grid figure.shift { margin-top: 0; }
+      .betriebe-grid img { aspect-ratio: 3/2; }
+    }
 
     .abnahme { margin: 3.5rem auto 0; max-width: 780px; border: 1px solid var(--line-2); }
     .abnahme img { display: block; width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; }
@@ -1036,11 +1052,6 @@
 
 <!-- PHILOSOPHIE -->
 <section id="philosophie">
-  <figure class="motivband reveal" aria-hidden="true">
-    <img src="img/betrieb-schreinerei.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
-    <img src="img/betrieb-praxis.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
-    <img src="img/betrieb-treuhand.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
-  </figure>
   <div class="philo reveal">
     <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Philosophie</span></div>
     <h2>
@@ -1063,6 +1074,28 @@
       Unternehmens auf, schärfen seine Stärken und übersetzen sie in Design, Sprache und
       digitale Werkzeuge. Jede Lösung spart Zeit und eröffnet neue Möglichkeiten.
     </p>
+    <div class="betriebe">
+      <div class="betriebe-head">
+        <h3>Drei Betriebe. Drei Handschriften.</h3>
+        <p>Ein Schreiner überzeugt anders als eine Ärztin, eine Treuhänderin anders als ein
+           Schreiner. Deshalb bekommt bei uns keiner die Website des anderen.</p>
+      </div>
+      <div class="betriebe-grid">
+        <figure>
+          <img src="img/betrieb-schreinerei.webp" width="560" height="840" alt="Werkbank einer Schreinerei am Abend, Werkzeug präzise ausgelegt" loading="lazy" decoding="async">
+          <figcaption><span>01 · Die Schreinerei</span>Hier zählt, was man anfassen kann.</figcaption>
+        </figure>
+        <figure class="shift">
+          <img src="img/betrieb-praxis.webp" width="560" height="840" alt="Empfang einer Arztpraxis am Abend, aufgeräumt und ruhig" loading="lazy" decoding="async">
+          <figcaption><span>02 · Die Praxis</span>Hier zählt Vertrauen ab der ersten Minute.</figcaption>
+        </figure>
+        <figure>
+          <img src="img/betrieb-treuhand.webp" width="560" height="840" alt="Schreibtisch eines Treuhandbüros mit Ordnern und Messinglampe" loading="lazy" decoding="async">
+          <figcaption><span>03 · Das Treuhandbüro</span>Hier zählt Genauigkeit bis zur letzten Zahl.</figcaption>
+        </figure>
+      </div>
+    </div>
+
     <div class="philo-cols">
       <div class="philo-col">
         <h3>Funktion heisst bei uns:</h3>
