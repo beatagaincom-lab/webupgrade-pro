@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36' fill='none'><path stroke='%2338bdf8' stroke-width='3' d='M2 9V2h7M34 27v7h-7M9 34H2v-7'/><path stroke='%23eef2f8' stroke-width='3.5' d='M9 27L25 11'/><path stroke='%23f0a92c' stroke-width='3.5' d='M20 9h7v7'/></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script type="application/ld+json">
@@ -146,13 +146,11 @@
       text-decoration: none; letter-spacing: -0.5px;
     }
     .nav-logo .logo-icon {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      border-radius: 10px;
+      width: 34px; height: 34px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
     }
-    .nav-logo span { color: var(--cyan); }
+    .nav-logo .logo-icon svg { width: 100%; height: 100%; display: block; }
+    .nav-logo span { color: var(--mark); }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-links a {
       color: var(--muted); text-decoration: none; font-size: 0.9rem;
@@ -900,6 +898,18 @@
       .philo-cols { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ── BILDER: Motivband & Abnahme (Teil 3) — Bilder stehen still ── */
+    .motivband { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+                 background: var(--line-2); border: 1px solid var(--line-2);
+                 max-width: 860px; margin: 0 auto 4rem; }
+    .motivband img { display: block; width: 100%; height: 100%; aspect-ratio: 2/3; object-fit: cover; }
+    @media (max-width: 700px) { .motivband { grid-template-columns: 1fr; } .motivband img:nth-child(n+2) { display: none; } }
+
+    .abnahme { margin: 3.5rem auto 0; max-width: 780px; border: 1px solid var(--line-2); }
+    .abnahme img { display: block; width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; }
+    .abnahme figcaption { font: 500 .78rem/1.5 var(--mono); letter-spacing: .06em;
+                          color: var(--ink-2); padding: .8rem 1rem; border-top: 1px solid var(--line-2); }
+
     /* ── MICRO-INTERACTIONS & A11Y ── */
     /* Press-Feedback: der grösste Einzel-Gewinn fürs "satte" Gefühl */
     .btn-primary:active, .btn-whatsapp:active, .btn-price:active,
@@ -962,7 +972,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <div class="logo-icon">⚡</div>
+    <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="#38bdf8" stroke-width="2" d="M2 9V2h7M34 27v7h-7M9 34H2v-7"/><path stroke="#eef2f8" stroke-width="2.5" stroke-linecap="square" d="M9 27L25 11"/><path stroke="#f0a92c" stroke-width="2.5" stroke-linecap="square" d="M20 9h7v7"/></svg></div>
     Web<span>Upgrade</span> Pro
   </a>
   <div class="nav-links">
@@ -1049,6 +1059,11 @@
 
 <!-- PHILOSOPHIE -->
 <section id="philosophie">
+  <figure class="motivband reveal" aria-hidden="true">
+    <img src="img/betrieb-schreinerei.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
+    <img src="img/betrieb-praxis.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
+    <img src="img/betrieb-treuhand.webp" width="560" height="840" alt="" loading="lazy" decoding="async">
+  </figure>
   <div class="philo reveal">
     <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Haltung</span></div>
     <h2>
@@ -1231,6 +1246,11 @@
         <p>Erst nach Ihrer ausdrücklichen Freigabe wird die neue Version live geschaltet. Wir stehen danach weiterhin für Fragen zur Verfügung.</p>
       </div>
     </div>
+    <figure class="abnahme reveal">
+      <img src="img/abnahme-plan.webp" width="1200" height="800" alt="Ein gedruckter Plan auf einem Tisch, mit Bleistift abgezeichnet."
+           loading="lazy" decoding="async">
+      <figcaption>Nichts geht live, bevor Sie abgezeichnet haben.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -1675,7 +1695,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="#hero" class="nav-logo">
-        <div class="logo-icon">⚡</div>
+        <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="#38bdf8" stroke-width="2" d="M2 9V2h7M34 27v7h-7M9 34H2v-7"/><path stroke="#eef2f8" stroke-width="2.5" stroke-linecap="square" d="M9 27L25 11"/><path stroke="#f0a92c" stroke-width="2.5" stroke-linecap="square" d="M20 9h7v7"/></svg></div>
         Web<span>Upgrade</span> Pro
       </a>
       <p>Websites und digitale Systeme für Schweizer KMU. Faire Preise. Direkt aus der Schweiz.</p>
