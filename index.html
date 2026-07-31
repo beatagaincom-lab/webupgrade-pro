@@ -74,7 +74,7 @@
       --white: #f8fafc;
       --muted: #94a3b8;
       --border: rgba(59,130,246,0.15);
-      --glass: rgba(15,30,60,0.6);
+      --glass: rgba(13,26,52,0.82); /* dichter, da backdrop-filter entfernt (Scroll-Performance) */
       --e-out-expo:  cubic-bezier(.16, 1, .3, 1);
       --e-out-quart: cubic-bezier(.25, 1, .5, 1);
       --e-out-back:  cubic-bezier(.34, 1.56, .64, 1);
@@ -255,7 +255,8 @@
     /* Horizontal scan line */
     .hero-scan { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .hero-scan::after {
-      content: ''; position: absolute; left: 0; right: 0; height: 1px;
+      content: ''; position: absolute; left: 0; right: 0; height: 1px; top: 0;
+      will-change: transform, opacity;
       background: linear-gradient(90deg, transparent 0%, rgba(6,182,212,0.35) 20%,
         rgba(59,130,246,0.55) 50%, rgba(6,182,212,0.35) 80%, transparent 100%);
       animation: scanMove 10s ease-in-out infinite;
@@ -270,28 +271,29 @@
     }
 
     /* Aurora orbs */
+    /* Weichheit steckt im Gradient selbst — filter:blur() wäre ein Echtzeit-Weichzeichner pro Frame */
     .hero-aurora {
       position: absolute; pointer-events: none; border-radius: 50%;
-      filter: blur(75px); z-index: 0; will-change: transform;
+      z-index: 0;
     }
     .aurora-1 {
       width: 620px; height: 620px; top: -18%; left: -12%;
-      background: radial-gradient(circle, rgba(59,130,246,0.16) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(59,130,246,0.14) 0%, rgba(59,130,246,0.05) 45%, transparent 68%);
       animation: auroraDrift 14s ease-in-out infinite;
     }
     .aurora-2 {
       width: 520px; height: 520px; top: 8%; right: -14%;
-      background: radial-gradient(circle, rgba(6,182,212,0.13) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(6,182,212,0.11) 0%, rgba(6,182,212,0.04) 45%, transparent 68%);
       animation: auroraDrift 17s ease-in-out infinite; animation-delay: -6s;
     }
     .aurora-3 {
       width: 440px; height: 440px; bottom: -8%; left: 22%;
-      background: radial-gradient(circle, rgba(167,139,250,0.10) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(167,139,250,0.09) 0%, rgba(167,139,250,0.03) 45%, transparent 68%);
       animation: auroraDrift 12s ease-in-out infinite; animation-delay: -4s;
     }
     .aurora-4 {
       width: 280px; height: 280px; top: 42%; left: 52%;
-      background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(34,197,94,0.05) 0%, transparent 68%);
       animation: auroraDrift 19s ease-in-out infinite; animation-delay: -9s;
     }
     @keyframes auroraDrift {
@@ -324,9 +326,7 @@
     /* ══ SIDE CARDS ══ */
     .hero-side-card {
       position: absolute; z-index: 2;
-      background: rgba(5,10,24,0.88);
-      backdrop-filter: blur(24px) saturate(1.7);
-      -webkit-backdrop-filter: blur(24px) saturate(1.7);
+      background: rgba(5,10,24,0.94);
       border-radius: 20px; padding: 1.1rem 1.4rem;
       display: flex; align-items: center; gap: .9rem;
       cursor: default;
@@ -661,7 +661,6 @@
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 14px; padding: 1.4rem 1.6rem;
       display: flex; align-items: flex-start; gap: 1rem;
-      backdrop-filter: blur(10px);
       transition: all 0.3s; opacity: 0; transform: translateY(20px);
     }
     .problem-card.visible { opacity: 1; transform: none; }
@@ -696,7 +695,7 @@
     .service-card {
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 18px; padding: 2rem;
-      backdrop-filter: blur(10px); position: relative; overflow: hidden;
+      position: relative; overflow: hidden;
       transition: all 0.4s; opacity: 0; transform: translateY(20px);
     }
     .service-card.visible { opacity: 1; transform: none; }
@@ -729,11 +728,10 @@
     }
     .process-step {
       text-align: center; opacity: 0;
-      transform: translateY(20px) translateZ(0);
-      will-change: opacity, transform; backface-visibility: hidden;
+      transform: translateY(20px);
       transition: opacity 0.5s cubic-bezier(.22,1,.36,1), transform 0.5s cubic-bezier(.22,1,.36,1);
     }
-    .process-step.visible { opacity: 1; transform: translateY(0) translateZ(0); }
+    .process-step.visible { opacity: 1; transform: translateY(0); }
     .step-num {
       width: 60px; height: 60px; border-radius: 50%;
       background: linear-gradient(135deg, var(--blue), var(--cyan));
@@ -759,7 +757,7 @@
     .price-card {
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 20px; padding: 2.2rem 2rem;
-      backdrop-filter: blur(10px); position: relative;
+      position: relative;
       transition: all 0.4s; opacity: 0; transform: translateY(20px);
     }
     .price-card.visible { opacity: 1; transform: none; }
@@ -884,7 +882,6 @@
     .qs-card {
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 14px; padding: 1.3rem 1.5rem;
-      backdrop-filter: blur(10px);
       display: flex; align-items: center; gap: 1rem;
       transition: all 0.35s; opacity: 0; transform: translateY(16px);
       cursor: pointer; text-decoration: none;
@@ -923,7 +920,6 @@
       margin-top: 2.5rem; text-align: center;
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 18px; padding: 2rem;
-      backdrop-filter: blur(10px);
     }
     .qs-cta p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
     .qs-cta strong { color: var(--white); }
@@ -945,7 +941,6 @@
       max-width: 680px; margin: 0 auto; position: relative; z-index: 1;
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 24px; padding: 3rem;
-      backdrop-filter: blur(20px);
       box-shadow: 0 40px 80px rgba(0,0,0,0.4);
     }
     .form-header { text-align: center; margin-bottom: 2.5rem; }
@@ -1012,7 +1007,6 @@
     .why-card {
       background: var(--glass); border: 1px solid var(--border);
       border-radius: 18px; padding: 2rem;
-      backdrop-filter: blur(10px);
       transition: all 0.4s; opacity: 0; transform: translateY(20px);
     }
     .why-card.visible { opacity: 1; transform: none; }
@@ -1044,7 +1038,7 @@
     .faq-list { max-width: 740px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem; }
     .faq-item {
       background: var(--glass); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden; backdrop-filter: blur(10px);
+      border-radius: 14px; overflow: hidden;
       transition: border-color 0.3s;
     }
     .faq-item.open { border-color: rgba(59,130,246,0.35); }
@@ -1133,35 +1127,31 @@
     .float-wa:hover + .float-wa-tooltip { opacity: 1; }
 
     /* ── REVEAL ── */
+    /* Kein permanentes will-change/translateZ — ~30 dauerhafte GPU-Layer gespart */
     .reveal {
       opacity: 0;
-      transform: translateY(20px) translateZ(0);
-      will-change: opacity, transform;
+      transform: translateY(20px);
       transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
                   transform 0.6s cubic-bezier(.22,1,.36,1);
-      backface-visibility: hidden;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0) translateZ(0); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ── REVEAL VARIANTS ── */
     .reveal-left {
-      opacity: 0; transform: translateX(-40px) translateZ(0);
-      will-change: opacity, transform; backface-visibility: hidden;
+      opacity: 0; transform: translateX(-40px);
       transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
     }
     .reveal-right {
-      opacity: 0; transform: translateX(40px) translateZ(0);
-      will-change: opacity, transform; backface-visibility: hidden;
+      opacity: 0; transform: translateX(40px);
       transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
     }
     .reveal-scale {
-      opacity: 0; transform: scale(0.92) translateZ(0);
-      will-change: opacity, transform; backface-visibility: hidden;
+      opacity: 0; transform: scale(0.92);
       transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1);
     }
-    .reveal-left.visible  { opacity: 1; transform: translateX(0) translateZ(0); }
-    .reveal-right.visible { opacity: 1; transform: translateX(0) translateZ(0); }
-    .reveal-scale.visible { opacity: 1; transform: scale(1)    translateZ(0); }
+    .reveal-left.visible  { opacity: 1; transform: translateX(0); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
 
     /* ── SCROLL PROGRESS BAR ── */
     .scroll-progress {
@@ -1169,9 +1159,7 @@
       height: 2px; width: 100%; pointer-events: none;
       transform: scaleX(0); transform-origin: 0 50%;
       will-change: transform;
-      background: linear-gradient(90deg, #3b82f6, #06b6d4, #a78bfa, #f472b6, #3b82f6);
-      background-size: 200% 100%;
-      animation: gradSweep 4s linear infinite;
+      background: linear-gradient(90deg, #3b82f6, #06b6d4, #a78bfa, #f472b6);
       box-shadow: 0 0 12px rgba(59,130,246,0.9), 0 0 24px rgba(6,182,212,0.5);
     }
 
@@ -1333,10 +1321,14 @@
     .btn-primary:hover .arrow { transform: translateX(4px); }
     .btn-primary .arrow { display: inline-block; transition: transform 0.4s var(--e-out-back); }
 
-    /* Aurora auf Mobile entschärfen: blur(75px) auf 600px-Flächen ist dort zu teuer */
+    /* Aurora auf Mobile reduzieren */
     @media (max-width: 768px) {
       .aurora-3, .aurora-4 { display: none; }
-      .hero-aurora { filter: blur(45px); }
+    }
+
+    /* Hero-Animationen komplett pausieren, sobald der Hero aus dem Viewport ist */
+    #hero.hero-paused *, #hero.hero-paused *::before, #hero.hero-paused *::after {
+      animation-play-state: paused !important;
     }
 
     /* ── REDUCED MOTION — Animationen respektvoll abschalten ── */
@@ -2211,20 +2203,16 @@ const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matc
   let W, H, particles = [];
 
   function resize(){
-    // devicePixelRatio berücksichtigen — sonst unscharf auf Retina
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.offsetWidth;
-    H = canvas.offsetHeight;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Bewusst 1x-Auflösung: weicher Deko-Effekt, Retina-Schärfe lohnt die 4-fache Pixellast nicht
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
   }
   resize();
   window.addEventListener('resize', resize);
 
   const colors = ['rgba(59,130,246,', 'rgba(6,182,212,', 'rgba(167,139,250,'];
 
-  const COUNT = window.innerWidth <= 768 ? 35 : 70;
+  const COUNT = window.innerWidth <= 768 ? 28 : 45;
   for(let i=0;i<COUNT;i++){
     particles.push({
       x: Math.random()*W, y: Math.random()*H,
@@ -2265,10 +2253,12 @@ const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matc
     if (heroVisible) requestAnimationFrame(draw);
   }
 
-  // Pause the canvas loop while the hero is scrolled out of view
+  // Pause canvas loop AND all hero CSS animations while the hero is scrolled out of view
   let heroVisible = true;
+  const heroEl = document.getElementById('hero');
   new IntersectionObserver(entries => {
     const nowVisible = entries[0].isIntersecting;
+    if (heroEl) heroEl.classList.toggle('hero-paused', !nowVisible);
     if (nowVisible && !heroVisible) { heroVisible = true; requestAnimationFrame(draw); }
     else heroVisible = nowVisible;
   }, { threshold: 0 }).observe(canvas);
@@ -2562,9 +2552,7 @@ function onScrollUpdate(y, progress) {
     if (_heroGlow)    _heroGlow.style.transform    = `translateY(${y * 0.16}px)`;
     if (_heroGrid)    _heroGrid.style.transform    = `translateY(${y * 0.07}px)`;
     if (_heroContent) _heroContent.style.transform = `translateY(${y * 0.04}px)`;
-    _auroraEls.forEach((a, i) => {
-      a.style.transform = `translateY(${y * (i % 2 === 0 ? 0.10 : -0.07)}px)`;
-    });
+    // Aurora-Orbs bewegen sich bereits per Drift-Animation — kein zusätzlicher Parallax-Write pro Frame
   }
 
   // 4. Active nav — Klassen-Toggle nur bei Wechsel (statt 10 Style-Writes pro Frame)
