@@ -405,42 +405,26 @@
     }
     .panel:hover::after { opacity: 1; }
 
-    /* ── PROBLEM ── */
-    /* ── PROBLEM ── */
+    /* ── BEFUND (M5) ── */
     #problem { background: var(--bg2); }
-    .problem-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem; margin-bottom: 3rem;
-    }
-    .problem-card {
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.4rem 1.6rem;
-      display: flex; align-items: flex-start; gap: 1rem;
-      transition: all 0.3s; opacity: 0; transform: translateY(20px);
-    }
-    .problem-card.visible { opacity: 1; transform: none; }
-    .problem-card:hover {
-      border-color: rgba(59,130,246,0.4);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(59,130,246,0.1);
-    }
-    .problem-icon {
-      font-size: 1.5rem; min-width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .problem-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .problem-card p { font-size: 0.85rem; color: var(--muted); }
-    .problem-cta {
-      background: linear-gradient(90deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
-      border: 1px solid rgba(239,68,68,0.2); border-radius: 14px;
-      padding: 1.8rem 2rem; text-align: center;
-    }
+    .findings { list-style: none; display: grid; grid-template-columns: 1fr 1fr;
+                gap: 0 3rem; margin-bottom: 3rem; border-top: 1px solid var(--line-2); }
+    .finding  { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem;
+                padding: 1.35rem 0; border-bottom: 1px solid var(--line-1); }
+    .fd-no    { font: 600 .72rem/1.7 var(--mono); color: var(--mark); letter-spacing: .06em; }
+    .finding h3 { font-size: .95rem; font-weight: 600; margin-bottom: .3rem; color: var(--ink); }
+    .finding p  { font-size: .87rem; color: var(--ink-2); line-height: 1.6; }
+    @media (max-width: 768px) { .findings { grid-template-columns: 1fr; gap: 0; } }
+
+    /* Befundzusammenfassung statt roter Warnbox */
+    .problem-cta { border: 0; border-left: 2px solid var(--signal); border-radius: 0;
+                   background: none; padding: 1.1rem 0 1.1rem 1.6rem; text-align: left; }
     .problem-cta p {
-      font-size: 1.15rem; font-weight: 700; color: var(--white);
+      font-size: 1.15rem; font-weight: 700; color: var(--ink);
       margin-bottom: 0.4rem;
     }
-    .problem-cta span { color: var(--muted); font-size: 0.9rem; }
-    .problem-cta .highlight { color: #f87171; }
+    .problem-cta span { color: var(--ink-2); font-size: 0.9rem; }
+    .problem-cta .highlight { color: var(--signal); }
 
     /* ── SERVICES ── */
     .services-grid {
@@ -475,28 +459,55 @@
     .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
     .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
 
-    /* ── PROCESS ── */
+    /* ── ABLAUF ALS BEMASSUNGSKETTE (M6) ── */
     #process { background: var(--bg2); }
     .process-steps {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem; position: relative;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6rem;
+      position: relative; padding-top: 3.2rem;
     }
-    .process-step {
-      text-align: center; opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s cubic-bezier(.22,1,.36,1), transform 0.5s cubic-bezier(.22,1,.36,1);
+    /* Die Kette: eine Linie, die beim Eintreten gezogen wird */
+    .process-steps::before {
+      content: ''; position: absolute; top: 12px; left: 4%; right: 4%; height: 1px;
+      background: var(--line-3);
+      transform: scaleX(0); transform-origin: 0 50%;
+      transition: transform 720ms var(--e-out-expo) 120ms;
+    }
+    .process-steps.visible::before { transform: scaleX(1); }
+
+    .process-step { position: relative; text-align: left; padding-top: 2rem;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart);
     }
     .process-step.visible { opacity: 1; transform: translateY(0); }
-    .step-num {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; font-weight: 900; margin: 0 auto 1.2rem;
-      box-shadow: 0 0 30px rgba(59,130,246,0.4);
-      position: relative;
+    .process-step::before {          /* Teilstrich auf der Kette */
+      content: ''; position: absolute; top: -20px; left: 0; width: 1px; height: 17px;
+      background: var(--line-3);
     }
-    .process-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
-    .process-step p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+    .step-num {
+      position: absolute; top: -34px; left: 0;
+      font: 600 .74rem/1 var(--mono); letter-spacing: .1em; color: var(--ink-2);
+      background: none; border-radius: 0; box-shadow: none; width: auto; height: auto;
+    }
+    .process-step h3 { font-size: .95rem; font-weight: 600; margin-bottom: .5rem; }
+    .process-step p  { font-size: .86rem; color: var(--ink-2); line-height: 1.62; }
+
+    /* Der einzige Anschlag der ganzen Seite */
+    .process-step.is-hold .step-num { color: var(--signal); }
+    .process-step.is-hold::before   { background: var(--signal); width: 2px; height: 24px; top: -27px; }
+    .process-step.is-hold h3        { color: var(--signal); }
+    .process-step.is-hold::after {
+      content: 'HALT — bis Sie freigeben';
+      position: absolute; top: -34px; left: 3.4rem;
+      font: 600 .68rem/1 var(--mono); letter-spacing: .14em; color: var(--signal); white-space: nowrap;
+    }
+    @media (max-width: 900px) {
+      .process-steps { grid-template-columns: 1fr; gap: 0; padding-top: 0; }
+      .process-steps::before { display: none; }
+      .process-step { padding: 1.4rem 0 1.4rem 3rem; border-bottom: 1px solid var(--line-1); }
+      .process-step::before { top: 1.5rem; height: calc(100% - 1.5rem); }
+      .step-num { top: 1.35rem; }
+      .process-step.is-hold::after { position: static; display: block; margin-top: .5rem; }
+    }
 
     /* ── PRICING ── */
     .pricing-grid {
@@ -1168,7 +1179,7 @@
 <!-- PHILOSOPHIE -->
 <section id="philosophie">
   <div class="philo reveal">
-    <span class="philo-label">Philosophie</span>
+    <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Haltung</span></div>
     <h2>
       Funktion schafft Vertrauen.
       <span class="p2">Identität schafft Verbindung.</span>
@@ -1228,55 +1239,42 @@
 <section id="problem">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-label">Das Problem</span>
+      <div class="sec-index"><span class="sec-no">03</span><span class="sec-rule"></span><span class="sec-name">Befund</span></div>
       <h2 class="section-title">Erkennen Sie sich wieder?</h2>
-      <div class="divider"></div>
       <p class="section-sub">Veraltete Websites kosten Sie täglich Kunden – oft ohne dass Sie es merken.</p>
     </div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-icon">😩</div>
-        <div>
-          <h3>Design aus dem letzten Jahrzehnt</h3>
-          <p>Ihre Website wirkt eingestaubt – Kunden verlieren sofort das Vertrauen.</p>
-        </div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">📱</div>
-        <div>
-          <h3>Nicht mobil-optimiert</h3>
-          <p>78% der Nutzer surfen mit dem Handy – und sehen bei Ihnen nur Chaos.</p>
-        </div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">🐢</div>
-        <div>
-          <h3>Langsame Ladezeiten</h3>
-          <p>Über 3 Sekunden und der Besucher ist weg – garantiert.</p>
-        </div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">🔍</div>
-        <div>
-          <h3>Unsichtbar bei Google</h3>
-          <p>Ohne SEO finden Sie Ihre Kunden nie – Ihre Konkurrenz schon.</p>
-        </div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">📉</div>
-        <div>
-          <h3>Keine Anfragen, keine Conversions</h3>
-          <p>Besucher kommen, schauen – und gehen. Ohne Kontakt.</p>
-        </div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">🔒</div>
-        <div>
-          <h3>Sicherheitslücken & altes CMS</h3>
-          <p>Veraltete Plugins und Systeme sind ein offenes Eingangstor für Hacker.</p>
-        </div>
-      </div>
-    </div>
+    <ol class="findings">
+      <li class="finding reveal">
+        <span class="fd-no">01</span>
+        <div><h3>Design aus dem letzten Jahrzehnt</h3>
+             <p>Ihre Website wirkt eingestaubt – Kunden verlieren sofort das Vertrauen.</p></div>
+      </li>
+      <li class="finding reveal">
+        <span class="fd-no">02</span>
+        <div><h3>Nicht mobil-optimiert</h3>
+             <p>78% der Nutzer surfen mit dem Handy – und sehen bei Ihnen nur Chaos.</p></div>
+      </li>
+      <li class="finding reveal">
+        <span class="fd-no">03</span>
+        <div><h3>Langsame Ladezeiten</h3>
+             <p>Über 3 Sekunden und der Besucher ist weg – garantiert.</p></div>
+      </li>
+      <li class="finding reveal">
+        <span class="fd-no">04</span>
+        <div><h3>Unsichtbar bei Google</h3>
+             <p>Ohne SEO finden Sie Ihre Kunden nie – Ihre Konkurrenz schon.</p></div>
+      </li>
+      <li class="finding reveal">
+        <span class="fd-no">05</span>
+        <div><h3>Keine Anfragen, keine Conversions</h3>
+             <p>Besucher kommen, schauen – und gehen. Ohne Kontakt.</p></div>
+      </li>
+      <li class="finding reveal">
+        <span class="fd-no">06</span>
+        <div><h3>Sicherheitslücken &amp; altes CMS</h3>
+             <p>Veraltete Plugins und Systeme sind ein offenes Eingangstor für Hacker.</p></div>
+      </li>
+    </ol>
     <div class="problem-cta">
       <p>Das kostet Sie <span class="highlight">täglich</span> potenzielle Kunden. <strong>Wir ändern das.</strong></p>
       <span>Mit moderner Technologie, KI und einem frischen Blick – professionell und bezahlbar.</span>
@@ -1288,9 +1286,8 @@
 <section id="services">
   <div class="container">
     <div class="section-header text-center reveal">
-      <span class="section-label">Leistungen</span>
+      <div class="sec-index"><span class="sec-no">04</span><span class="sec-rule"></span><span class="sec-name">Massnahmen</span></div>
       <h2 class="section-title">Was wir für Sie tun</h2>
-      <div class="divider"></div>
       <p class="section-sub">Von der Analyse bis zum Launch – alles aus einer Hand.</p>
     </div>
     <div class="services-grid">
@@ -1331,10 +1328,9 @@
 <!-- PROCESS -->
 <section id="process">
   <div class="container">
-    <div class="section-header text-center">
-      <span class="section-label">Der Prozess</span>
+    <div class="section-header text-center reveal">
+      <div class="sec-index"><span class="sec-no">05</span><span class="sec-rule"></span><span class="sec-name">Ablauf</span></div>
       <h2 class="section-title">So einfach geht's</h2>
-      <div class="divider"></div>
       <p class="section-sub">Von Ihrer Anfrage bis zur fertigen Website – transparent und ohne Überraschungen.</p>
     </div>
     <div class="process-steps">
@@ -1353,9 +1349,9 @@
         <h3>Umsetzung – sicher & geschützt</h3>
         <p>Wir modernisieren Ihre Website auf einer <strong style="color:var(--cyan)">separaten Vorschau-Umgebung</strong>. Ihre originale Website läuft unverändert weiter – kein Besucher bemerkt etwas.</p>
       </div>
-      <div class="process-step" style="position:relative">
+      <div class="process-step is-hold">
         <div class="step-num">3.5</div>
-        <h3>Ihre Freigabe ✓</h3>
+        <h3>Ihre Freigabe</h3>
         <p>Sie sehen alles zuerst. Feedback, Anpassungen, nochmal anschauen – so oft Sie möchten. <strong style="color:var(--white)">Erst mit Ihrer Zustimmung</strong> geht es weiter.</p>
       </div>
       <div class="process-step">
@@ -1370,10 +1366,9 @@
 <!-- PRICING -->
 <section id="pricing">
   <div class="container">
-    <div class="section-header text-center">
-      <span class="section-label">Preise</span>
+    <div class="section-header text-center reveal">
+      <div class="sec-index"><span class="sec-no">06</span><span class="sec-rule"></span><span class="sec-name">Aufwand</span></div>
       <h2 class="section-title">Faire Preise. Keine Überraschungen.</h2>
-      <div class="divider"></div>
       <p class="section-sub">Transparent, flexibel und auf Ihr Budget abgestimmt. Sie wissen immer, was Sie bezahlen.</p>
     </div>
     <div class="pricing-grid">
@@ -1431,6 +1426,7 @@
 <div style="padding: 0 2rem; background: var(--bg);">
   <div class="guarantee-banner reveal">
     <div class="guarantee-text">
+      <div class="sec-index"><span class="sec-no">07</span><span class="sec-rule"></span><span class="sec-name">Abnahme</span></div>
       <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
       <p>
         Wir sind von unserer Arbeit überzeugt – und das beweisen wir. Wenn Sie mit dem Ergebnis nicht zufrieden sind,
@@ -1441,8 +1437,8 @@
         <span class="gp">✓ 100% Rückerstattung</span>
         <span class="gp">✓ Kein Risiko für Sie</span>
         <span class="gp">✓ Keine versteckten Bedingungen</span>
-        <span class="gp">✓ Mein persönliches Versprechen</span>
-        <span class="gp" style="background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.25);color:#67e8f9">🔐 Original-Website bleibt unangetastet</span>
+        <span class="gp">✓ Unser persönliches Versprechen</span>
+        <span class="gp">✓ Original-Website bleibt unangetastet</span>
       </div>
     </div>
   </div>
@@ -1453,8 +1449,7 @@
   <div class="container">
     <div class="form-wrapper reveal">
       <div class="form-header">
-        <span class="emoji">🚀</span>
-        <span class="section-label" style="display:block;text-align:center">Kostenloser Service</span>
+        <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Auftrag</span></div>
         <h2 class="section-title" style="font-size:1.8rem">Ihre kostenlose Website-Analyse</h2>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:0.5rem">
           Wir analysieren Ihre Website und melden uns innerhalb von 24 Stunden mit konkretem Feedback.
@@ -1519,10 +1514,9 @@
   <div class="container">
     <div class="qs-intro">
       <div class="qs-intro-left">
-        <span class="section-label">Klein-Services</span>
+        <div class="sec-index"><span class="sec-no">09</span><span class="sec-rule"></span><span class="sec-name">Einzelpositionen</span></div>
         <h2 class="section-title">Nur eine kleine Sache?<br/>Kein Problem.</h2>
-        <div class="divider"></div>
-        <p class="section-sub">Nicht jede Verbesserung braucht ein grosses Projekt. Wählen Sie genau das aus, was Sie brauchen – wir erledigen es schnell und unkompliziert.</p>
+          <p class="section-sub">Nicht jede Verbesserung braucht ein grosses Projekt. Wählen Sie genau das aus, was Sie brauchen – wir erledigen es schnell und unkompliziert.</p>
       </div>
       <div class="qs-intro-right">
         <div class="tag">ab CHF 60</div>
@@ -1705,9 +1699,8 @@
 <section id="why">
   <div class="container">
     <div class="section-header text-center reveal">
-      <span class="section-label">Warum wir</span>
+      <div class="sec-index"><span class="sec-no">10</span><span class="sec-rule"></span><span class="sec-name">Ausführender</span></div>
       <h2 class="section-title">Klein genug, dass Sie mit dem sprechen, der baut.</h2>
-      <div class="divider"></div>
       <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Das ist mein Versprechen.</p>
     </div>
     <div class="why-grid">
@@ -1754,9 +1747,8 @@
 <section id="faq">
   <div class="container">
     <div class="section-header text-center reveal">
-      <span class="section-label">FAQ</span>
+      <div class="sec-index"><span class="sec-no">11</span><span class="sec-rule"></span><span class="sec-name">Rückfragen</span></div>
       <h2 class="section-title">Häufige Fragen</h2>
-      <div class="divider"></div>
     </div>
     <div class="faq-list">
       <div class="faq-item">
@@ -1931,7 +1923,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
 
-document.querySelectorAll('.reveal, .problem-card, .service-card, .process-step, .price-card, .why-card, .qs-card').forEach((el, i) => {
+document.querySelectorAll('.reveal, .service-card, .process-step, .process-steps, .price-card, .why-card, .qs-card').forEach((el, i) => {
   el.style.transitionDelay = (i % 5) * 70 + 'ms';
   observer.observe(el);
 });
