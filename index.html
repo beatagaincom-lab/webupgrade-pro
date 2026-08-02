@@ -854,7 +854,7 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── PHILOSOPHIE    /* ── PHILOSOPHIE    /* ── PHILOSOPHIE — bewusst ruhig: kein Glass, kein Gradient, keine Emojis ── */
+    /* ── PHILOSOPHIE — bewusst ruhig: kein Glass, kein Gradient, keine Emojis ── */
     #philosophie { padding: 8rem 2rem; background: var(--bg); }
     .philo { max-width: 860px; margin: 0 auto; text-align: left; }
     .philo-label { font-size: 0.78rem; letter-spacing: 3px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
@@ -1565,6 +1565,55 @@
       .is-released  .roll-track > span:last-child { display: block; }
       .sysB-num.tick { transform: none !important; }
     }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE-REPARATUR (B1–B9)
+    ══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      /* B1: Mobile-Navigation wiederherstellen */
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 1rem 1.2rem; }
+      nav.scrolled { padding: .7rem 1.2rem; }
+      /* B2: Kasten-in-Kasten-Polster */
+      section { padding: 4rem 1.2rem; }
+      #analyse { padding: 4rem 1rem; }
+      .form-wrapper { padding: 1.5rem 1.1rem; }
+      /* B3: Formular einspaltig */
+      .form-grid { grid-template-columns: 1fr; gap: 1rem; }
+      /* B6: Garantie-Banner */
+      .guarantee-banner { padding: 1.6rem 1.2rem;
+        background: linear-gradient(rgba(4,10,24,.94), rgba(4,10,24,.94)),
+                    url('img/abnahme-plan.webp') center / cover no-repeat; }
+      /* B9: Footer */
+      .footer-inner { flex-direction: column; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: .5rem; }
+      /* Hero-Typo */
+      .hero-title { font-size: clamp(1.9rem, 8.5vw, 2.6rem); letter-spacing: -0.8px; }
+    }
+    @media (max-width: 900px) {
+      /* B4: Blatt-Zeilen umbrechen statt abschneiden */
+      .kfg-row { grid-template-columns: 1.9rem 1fr auto; }
+      .kfg-row .bf-val { white-space: normal; max-width: none; word-break: break-word;
+                         text-align: right; line-height: 1.45; }
+      /* B5: Preisraster einspaltig, Empfehlung zuerst */
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+      .price-card.featured { order: -1; }
+    }
+    @media (max-width: 600px) {
+      /* B7: Float-Button kollidiert mit Absenden */
+      .float-wa, .float-wa-tooltip { display: none; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 3.5rem 1rem; }
+      nav { padding: .9rem 1rem; }
+      .mobile-menu a { font-size: 1.3rem; }
+    }
+    @media (max-width: 380px) {
+      .kfg-row { grid-template-columns: 1.9rem 1fr; }
+      .kfg-row .bf-val { grid-column: 2; text-align: left; margin-top: .2rem; }
+    }
+
   </style>
 </head>
 <body>
@@ -1575,7 +1624,7 @@
   <div class="rail-runner" id="railRunner"></div>
 </div>
 
-<!-- NAV --><!-- NAV -->
+<!-- NAV -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo" aria-label="WebUpgrade Pro – zur Startseite">
     <img class="logo-symbol" src="img/logo-symbol.svg" alt="" width="55" height="36" decoding="async" />
@@ -1640,7 +1689,7 @@
       </ul>
     </div>
 
-    <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">    <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">
+    <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">
       <header class="befund-head">
         <span class="befund-title">Ihre kostenlose Erstanalyse</span>
         <span class="befund-state">noch offen</span>
@@ -1662,7 +1711,7 @@
 </section>
 
 <!-- PHILOSOPHIE -->
-<section id="philosophie"><section id="philosophie">
+<section id="philosophie">
   <div class="philo reveal">
     <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Philosophie</span></div>
     <h2>
@@ -2208,7 +2257,7 @@
         <p>Erst nach Ihrer ausdrücklichen Freigabe wird die neue Version live geschaltet. Wir stehen danach weiterhin für Fragen zur Verfügung.</p>
       </div>
     </div>
-    <figure class="abnahme reveal"><figure class="abnahme reveal">
+    <figure class="abnahme reveal">
       <img src="img/abnahme-plan.webp" width="1200" height="800" alt="Ein gedruckter Plan auf einem Tisch, mit Bleistift abgezeichnet."
            loading="lazy" decoding="async">
       <figcaption>Nichts geht live, bevor Sie abgezeichnet haben.</figcaption>
@@ -2217,7 +2266,7 @@
 </section>
 
 <!-- PRICING -->
-<section id="pricing"><section id="pricing">
+<section id="pricing">
   <div class="container">
     <div class="section-header text-center reveal">
       <div class="sec-index"><span class="sec-no">07</span><span class="sec-rule"></span><span class="sec-name">Preise</span></div>
@@ -2278,7 +2327,7 @@
 
 <!-- GARANTIE BANNER -->
 <div style="padding: 0 2rem; background: var(--bg);">
-  <div class="guarantee-banner panel reveal">  <div class="guarantee-banner panel reveal">
+  <div class="guarantee-banner panel reveal">
     <div class="guarantee-text">
       <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Garantie</span></div>
       <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
@@ -2425,7 +2474,7 @@
 
       <p class="kfg-jsonly kfg-foot">Kostenlos, unverbindlich. Zum Schluss brauchen wir: Name, E-Mail und Ihre Website-Adresse. Sonst nichts.</p>
 
-      <form id="analyseForm"      <form id="analyseForm" name="analyse-lead" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+      <form id="analyseForm" name="analyse-lead" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
         <input type="hidden" name="form-name" value="analyse-lead" />
         <input type="hidden" name="blatt_nr" id="hf_blatt" value="" />
         <input type="hidden" name="branche" id="hf_branche" value="" />
@@ -2474,7 +2523,7 @@
           Ihre Angaben gehen ausschliesslich an uns – kein Newsletter, keine Weitergabe.
           Details in der <a href="datenschutz.html" style="color:var(--cyan); text-decoration:none;">Datenschutzerklärung</a>.
         </p>
-      </form>      </form>
+      </form>
       <p class="kfg-alt">Lieber kurz fragen statt ausfüllen? <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20h%C3%A4tte%20eine%20kurze%20Frage%20zu%20meiner%20Website." target="_blank" rel="noopener">Schreiben Sie uns &rarr;</a></p>
       <div class="success-msg" id="successMsg">
         <h3>Eingegangen. <span id="qtNr" style="font-variant-numeric:tabular-nums"></span></h3>
@@ -2490,10 +2539,6 @@
         <p style="font-size:.8rem;color:var(--ink-2);margin-top:1rem">Sie müssen jetzt nichts weiter tun.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- QUICK SERVICES -->    </div>
   </div>
 </section>
 
