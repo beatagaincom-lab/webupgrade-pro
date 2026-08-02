@@ -1093,6 +1093,22 @@
       .kfg-key { display: none !important; }
     }
 
+    /* ── ICON-SYSTEM: Stroke 1.8, rund, --mark ── */
+    .ico { width: 22px; height: 22px; display: block; }
+    .ico use, .ico { stroke: var(--mark); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .kfg-opt-ic { display: flex; align-items: center; justify-content: center;
+      width: 2.2rem; height: 2.2rem; }
+    .kfg-opt.sel .kfg-opt-ic .ico { stroke: var(--signal); }
+    .kfg-opt.sel .kfg-key { display: none; }
+    .kfg-opt.sel::before { content: '\2713'; position: absolute; right: 1rem; top: 50%;
+      transform: translateY(-50%); color: var(--signal); font-weight: 700; font-size: 1rem; }
+    .service-icon .ico { width: 26px; height: 26px; margin-bottom: 0; }
+    .service-icon { margin-bottom: 1rem; }
+    .why-icon .ico { width: 24px; height: 24px; }
+    .why-icon { margin-bottom: .9rem; }
+    .fd-ic { display: flex; align-items: flex-start; padding-top: .1rem; }
+    .fd-ic .ico { width: 20px; height: 20px; }
+
     /* ── STILLE MESSACHSE    /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -1200,6 +1216,39 @@
   </style>
 </head>
 <body>
+<svg style="display:none" aria-hidden="true"><defs>
+<symbol id="i-hammer" viewBox="0 0 24 24"><path d="M14 6l4 4M6 20l7-7M12 4l4-2 4 4-2 4-6-6z"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 6h14M7 6l-3 6a3.5 3.5 0 0 0 7 0L8 6M17 6l-3 6a3.5 3.5 0 0 0 7 0l-3-6M8 21h8"/></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5M4 9a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 5 0M5 11v9h14v-9M10 20v-5h4v5"/></symbol>
+<symbol id="i-car" viewBox="0 0 24 24"><path d="M4 15l1.5-6h13L20 15M4 15h16v4h-2M4 19h2m-2-4v4M7 19h10M7.5 12h9"/><circle cx="7.5" cy="16.5" r="1"/><circle cx="16.5" cy="16.5" r="1"/></symbol>
+<symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+<symbol id="i-clockold" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 3M4 4l2 2M20 4l-2 2"/></symbol>
+<symbol id="i-phonex" viewBox="0 0 24 24"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM10 18h4M10 9l4 4m0-4l-4 4"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 18a9 9 0 1 1 16 0M12 15l4-6"/><circle cx="12" cy="15" r="1.3"/></symbol>
+<symbol id="i-searchx" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M8.5 8.5l4 4m0-4l-4 4"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13l2-8h12l2 8M4 13v6h16v-6M4 13h5a3 3 0 0 0 6 0h5"/></symbol>
+<symbol id="i-shieldq" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M10 10a2 2 0 1 1 3 1.7c-.7.4-1 .8-1 1.55M12 16.4v.2"/></symbol>
+<symbol id="i-pageplus" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5zM14 3v5h5M12 12v6M9 15h6"/></symbol>
+<symbol id="i-inboxin" viewBox="0 0 24 24"><path d="M4 13l2-8h12l2 8M4 13v6h16v-6M4 13h5a3 3 0 0 0 6 0h5M12 2v6m0 0l-2.5-2.5M12 8l2.5-2.5"/></symbol>
+<symbol id="i-badge" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5"/><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5M12 7l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2L9.1 9.1l2-.3L12 7z"/></symbol>
+<symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="4" width="6" height="5" rx="1"/><rect x="15" y="15" width="6" height="5" rx="1"/><path d="M9 6.5h5a3 3 0 0 1 3 3V15M12 12.5L15 15l-3 2.5"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.2"/></symbol>
+<symbol id="i-shieldok" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.8 12l2.2 2.2 4.2-4.4"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13.5h5L11 21l8-10.5h-5L13 3z"/></symbol>
+<symbol id="i-cal1" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="1"/><path d="M4 9.5h16M8 3v4M16 3v4M12 12.5v4.5m0-4.5l-1.5 1"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="1"/><path d="M4 9.5h16M8 3v4M16 3v4"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-1.5-1.4-3.6-2-6-2-1 0-2 .12-3 .4v14.6c1-.28 2-.4 3-.4 2.4 0 4.5.6 6 2 1.5-1.4 3.6-2 6-2 1 0 2 .12 3 .4V4.4c-1-.28-2-.4-3-.4-2.4 0-4.5.6-6 2zM12 6v14"/></symbol>
+<symbol id="i-penruler" viewBox="0 0 24 24"><path d="M3 21l2.5-7L16 3.5 20.5 8 10 18.5 3 21zM14 5.5L18.5 10M5.5 14L10 18.5"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="1.5"/><path d="M10 18h4"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></symbol>
+<symbol id="i-tools" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 1 5-5l-3 3 .7 2.3 2.3.7 3-3a4 4 0 0 1-5 5L7 20a2 2 0 0 1-3-3l10.5-10.5z"/></symbol>
+<symbol id="i-hand" viewBox="0 0 24 24"><path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V10m0-5.5v-1a1.5 1.5 0 0 1 3 0V10m0-5v1a1.5 1.5 0 0 1 3 0v5m0-3a1.5 1.5 0 0 1 3 0v6c0 4-2.5 7-6.5 7-3 0-4.5-1-6-3.5L4.6 14a1.6 1.6 0 0 1 2.4-2l1.5 2"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/><circle cx="8" cy="8" r="1.4"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3M12 15v2"/></symbol>
+</defs></svg>
 
 
 <div class="rail" id="rail" aria-hidden="true">
@@ -1219,6 +1268,7 @@
     <a href="#systeme">Systeme</a>
     <a href="#process">Prozess</a>
     <a href="#pricing">Preise</a>
+    <a href="#quick-services">Klein-Services</a>
     <a href="#analyse" class="nav-cta" id="navCta" data-einstieg="nav">Gratis Analyse</a>
   </div>
   <button type="button" class="hamburger" id="hamburger" onclick="openMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
@@ -1363,22 +1413,22 @@
     </div>
     <ol class="findings">
       <li class="finding reveal">
-        <span class="fd-no">01</span>
+        <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-clockold"/></svg></span>
         <div><h3>Design aus dem letzten Jahrzehnt</h3>
              <p>Ihre Website wirkt eingestaubt – Kunden verlieren sofort das Vertrauen.</p></div>
       </li>
       <li class="finding reveal">
-        <span class="fd-no">02</span>
+        <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-phonex"/></svg></span>
         <div><h3>Nicht mobil-optimiert</h3>
              <p>78% der Nutzer surfen mit dem Handy – und sehen bei Ihnen nur Chaos.</p></div>
       </li>
       <li class="finding reveal">
-        <span class="fd-no">03</span>
+        <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-searchx"/></svg></span>
         <div><h3>Unsichtbar bei Google</h3>
              <p>Ohne SEO finden Sie Ihre Kunden nie – Ihre Konkurrenz schon.</p></div>
       </li>
       <li class="finding reveal">
-        <span class="fd-no">04</span>
+        <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-shieldq"/></svg></span>
         <div><h3>Sicherheitslücken &amp; altes CMS</h3>
              <p>Veraltete Plugins und Systeme sind ein offenes Eingangstor für Hacker.</p></div>
       </li>
@@ -1400,32 +1450,32 @@
     </div>
     <div class="services-grid">
       <div class="service-card panel">
-        <div class="service-icon">01</div>
+        <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-penruler"/></svg></div>
         <h3>Modernes Redesign</h3>
         <p>Zeitgemässes Design, das Vertrauen schafft und Besucher in Kunden verwandelt. Professionell, klar und auf Ihre Marke zugeschnitten.</p>
       </div>
       <div class="service-card panel">
-        <div class="service-icon">02</div>
+        <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-flow"/></svg></div>
         <h3>Automatisierung mit Augenmass</h3>
         <p>Nur dort, wo es Ihrem Betrieb wirklich hilft: automatische Terminanfragen, strukturierte Anfragen, schnelle Antworten. Kein Schnickschnack – spürbare Entlastung im Alltag.</p>
       </div>
       <div class="service-card panel">
-        <div class="service-icon">03</div>
+        <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-gauge"/></svg></div>
         <h3>Performance-Optimierung</h3>
         <p>Blitzschnelle Ladezeiten und Top-Scores bei Google PageSpeed. Mehr Geschwindigkeit = mehr Conversions, ganz einfach.</p>
       </div>
       <div class="service-card panel">
-        <div class="service-icon">04</div>
+        <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-phone"/></svg></div>
         <h3>Mobile-First Design</h3>
         <p>100% perfekt auf jedem Gerät – Smartphone, Tablet und Desktop. Kein Besucher verliert sich mehr im Layout.</p>
       </div>
       <div class="service-card panel">
-        <div class="service-icon">05</div>
+        <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-search"/></svg></div>
         <h3>SEO-Optimierung</h3>
         <p>Besser gefunden bei Google – mehr organischer Traffic ohne Werbebudget. Ihre Kunden suchen Sie. Wir sorgen dafür, dass sie Sie finden.</p>
       </div>
       <div class="service-card panel">
-        <div class="service-icon">06</div>
+        <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-shieldok"/></svg></div>
         <h3>Sicherheit & Compliance</h3>
         <p>HTTPS, aktuelle Technologien, revDSG-konform. Ihre Website ist sicher, modern und zukunftsfähig.</p>
       </div>
@@ -1931,12 +1981,12 @@
             <h3 class="kfg-q" tabindex="-1">Was für ein Betrieb sind Sie?</h3>
             <p class="kfg-hint">Damit wir wissen, mit welchen Augen wir Ihre Website anschauen.</p>
             <div class="kfg-opts" role="radiogroup" aria-label="Betriebsart">
-              <button type="button" class="kfg-opt" data-val="handwerk" data-short="Handwerk &amp; Bau"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">Handwerk &amp; Bau</span><span class="kfg-opt-sub">Schreinerei, Sanitär, Elektro, Malerei</span></button>
-              <button type="button" class="kfg-opt" data-val="praxis" data-short="Gesundheit &amp; Praxis"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Gesundheit &amp; Praxis</span><span class="kfg-opt-sub">Arzt, Zahnarzt, Physio, Therapie</span></button>
-              <button type="button" class="kfg-opt" data-val="beratung" data-short="Beratung &amp; Treuhand"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Beratung &amp; Treuhand</span><span class="kfg-opt-sub">Treuhand, Anwalt, Architektur, Coaching</span></button>
-              <button type="button" class="kfg-opt" data-val="gastro" data-short="Gastro, Hotel &amp; Laden"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Gastro, Hotel &amp; Laden</span><span class="kfg-opt-sub">Restaurant, Hotel, Ladengeschäft</span></button>
-              <button type="button" class="kfg-opt" data-val="dienst" data-short="Dienstleistung vor Ort"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Dienstleistung vor Ort</span><span class="kfg-opt-sub">Garage, Reinigung, Gärtnerei, Fahrschule</span></button>
-              <button type="button" class="kfg-opt" data-val="anderes" data-short="Etwas anderes"><span class="kfg-opt-no">06</span><span class="kfg-opt-title">Etwas anderes</span><span class="kfg-opt-sub">passt nichts davon &ndash; auch gut</span></button>
+              <button type="button" class="kfg-opt" data-val="handwerk" data-short="Handwerk &amp; Bau"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-hammer"/></svg></span><span class="kfg-opt-title">Handwerk &amp; Bau</span><span class="kfg-opt-sub">Schreinerei, Sanitär, Elektro, Malerei</span></button>
+              <button type="button" class="kfg-opt" data-val="praxis" data-short="Gesundheit &amp; Praxis"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-pulse"/></svg></span><span class="kfg-opt-title">Gesundheit &amp; Praxis</span><span class="kfg-opt-sub">Arzt, Zahnarzt, Physio, Therapie</span></button>
+              <button type="button" class="kfg-opt" data-val="beratung" data-short="Beratung &amp; Treuhand"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-scale"/></svg></span><span class="kfg-opt-title">Beratung &amp; Treuhand</span><span class="kfg-opt-sub">Treuhand, Anwalt, Architektur, Coaching</span></button>
+              <button type="button" class="kfg-opt" data-val="gastro" data-short="Gastro, Hotel &amp; Laden"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-store"/></svg></span><span class="kfg-opt-title">Gastro, Hotel &amp; Laden</span><span class="kfg-opt-sub">Restaurant, Hotel, Ladengeschäft</span></button>
+              <button type="button" class="kfg-opt" data-val="dienst" data-short="Dienstleistung vor Ort"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-car"/></svg></span><span class="kfg-opt-title">Dienstleistung vor Ort</span><span class="kfg-opt-sub">Garage, Reinigung, Gärtnerei, Fahrschule</span></button>
+              <button type="button" class="kfg-opt" data-val="anderes" data-short="Etwas anderes"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-dots"/></svg></span><span class="kfg-opt-title">Etwas anderes</span><span class="kfg-opt-sub">passt nichts davon &ndash; auch gut</span></button>
             </div>
             <p class="kfg-note" aria-live="polite"></p>
             <div class="kfg-nav"><span></span><span class="kfg-nav-hint">Karte anklicken genügt</span></div>
@@ -1946,14 +1996,14 @@
             <h3 class="kfg-q" tabindex="-1">Was hat Sie hierher gebracht?</h3>
             <p class="kfg-hint">Mehrfachauswahl. Kreuzen Sie an, was zutrifft &ndash; auch wenn es unangenehm ist.</p>
             <div class="kfg-opts" role="group" aria-label="Anlass">
-              <button type="button" class="kfg-opt kfg-multi" data-val="veraltet" data-short="veraltet"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">Die Seite sieht veraltet aus</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="mobil" data-short="Handy"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Auf dem Handy stimmt die Darstellung nicht</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="speed" data-short="Ladezeit"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Sie lädt langsam</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="google" data-short="Google"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Wir werden bei Google kaum gefunden</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="anfragen" data-short="Anfragen"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Es kommen zu wenige Anfragen</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="sicherheit" data-short="Sicherheit"><span class="kfg-opt-no">06</span><span class="kfg-opt-title">Ich weiss nicht, ob sie noch sicher und revDSG-konform ist</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="keine" data-short="Noch keine Website"><span class="kfg-opt-no">07</span><span class="kfg-opt-title">Wir haben noch gar keine Website</span></button>
-              <button type="button" class="kfg-opt kfg-multi" data-val="anderes" data-short="Anderes"><span class="kfg-opt-no">08</span><span class="kfg-opt-title">Etwas anderes stört mich</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="veraltet" data-short="veraltet"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-clockold"/></svg></span><span class="kfg-opt-title">Die Seite sieht veraltet aus</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="mobil" data-short="Handy"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-phonex"/></svg></span><span class="kfg-opt-title">Auf dem Handy stimmt die Darstellung nicht</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="speed" data-short="Ladezeit"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-gauge"/></svg></span><span class="kfg-opt-title">Sie lädt langsam</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="google" data-short="Google"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-searchx"/></svg></span><span class="kfg-opt-title">Wir werden bei Google kaum gefunden</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="anfragen" data-short="Anfragen"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-inbox"/></svg></span><span class="kfg-opt-title">Es kommen zu wenige Anfragen</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="sicherheit" data-short="Sicherheit"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-shieldq"/></svg></span><span class="kfg-opt-title">Ich weiss nicht, ob sie noch sicher und revDSG-konform ist</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="keine" data-short="Noch keine Website"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-pageplus"/></svg></span><span class="kfg-opt-title">Wir haben noch gar keine Website</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="anderes" data-short="Anderes"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-dots"/></svg></span><span class="kfg-opt-title">Etwas anderes stört mich</span></button>
             </div>
             <p class="kfg-note" aria-live="polite"></p>
             <div class="kfg-nav">
@@ -1966,11 +2016,11 @@
             <h3 class="kfg-q" tabindex="-1">Wann wurde Ihre Website zuletzt richtig überarbeitet?</h3>
             <p class="kfg-hint">Grobe Schätzung genügt.</p>
             <div class="kfg-opts" role="radiogroup" aria-label="Letzter Umbau">
-              <button type="button" class="kfg-opt" data-val="12m" data-short="In den letzten 12 Monaten"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">In den letzten 12 Monaten</span></button>
-              <button type="button" class="kfg-opt" data-val="1-3j" data-short="Vor 1&ndash;3 Jahren"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Vor 1 bis 3 Jahren</span></button>
-              <button type="button" class="kfg-opt" data-val="3plus" data-short="Vor mehr als 3 Jahren"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Vor mehr als 3 Jahren</span></button>
-              <button type="button" class="kfg-opt" data-val="unbekannt" data-short="Weiss nicht mehr"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Weiss ich ehrlich gesagt nicht mehr</span></button>
-              <button type="button" class="kfg-opt" data-val="keine" data-short="Noch keine"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Wir haben (noch) keine</span></button>
+              <button type="button" class="kfg-opt" data-val="12m" data-short="In den letzten 12 Monaten"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-cal1"/></svg></span><span class="kfg-opt-title">In den letzten 12 Monaten</span></button>
+              <button type="button" class="kfg-opt" data-val="1-3j" data-short="Vor 1&ndash;3 Jahren"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-cal"/></svg></span><span class="kfg-opt-title">Vor 1 bis 3 Jahren</span></button>
+              <button type="button" class="kfg-opt" data-val="3plus" data-short="Vor mehr als 3 Jahren"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-clockold"/></svg></span><span class="kfg-opt-title">Vor mehr als 3 Jahren</span></button>
+              <button type="button" class="kfg-opt" data-val="unbekannt" data-short="Weiss nicht mehr"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-dots"/></svg></span><span class="kfg-opt-title">Weiss ich ehrlich gesagt nicht mehr</span></button>
+              <button type="button" class="kfg-opt" data-val="keine" data-short="Noch keine"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-pageplus"/></svg></span><span class="kfg-opt-title">Wir haben (noch) keine</span></button>
             </div>
             <p class="kfg-note" aria-live="polite"></p>
             <div class="kfg-nav"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
@@ -1980,11 +2030,11 @@
             <h3 class="kfg-q" tabindex="-1">Was soll in einem halben Jahr anders sein?</h3>
             <p class="kfg-hint">Das Wichtigste. Danach richten wir die Analyse aus.</p>
             <div class="kfg-opts" role="radiogroup" aria-label="Ziel">
-              <button type="button" class="kfg-opt" data-val="anfragen" data-short="Mehr passende Anfragen"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">Mehr Anfragen</span><span class="kfg-opt-sub">und zwar von Kunden, die wirklich zu uns passen</span></button>
-              <button type="button" class="kfg-opt" data-val="serioes" data-short="Seriöser Auftritt"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Endlich seriös aussehen</span><span class="kfg-opt-sub">so, wie wir tatsächlich arbeiten</span></button>
-              <button type="button" class="kfg-opt" data-val="aufwand" data-short="Weniger Aufwand"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Weniger Aufwand</span><span class="kfg-opt-sub">Termine und Anfragen sollen strukturiert reinkommen</span></button>
-              <button type="button" class="kfg-opt" data-val="region" data-short="Regional gefunden werden"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">In der Region gefunden werden</span><span class="kfg-opt-sub">wenn jemand in der Nähe sucht</span></button>
-              <button type="button" class="kfg-opt" data-val="ruhe" data-short="Ruhe haben"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Ruhe haben</span><span class="kfg-opt-sub">aktuell, sicher, nichts, worum ich mich kümmern muss</span></button>
+              <button type="button" class="kfg-opt" data-val="anfragen" data-short="Mehr passende Anfragen"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-inbox"/></svg></span><span class="kfg-opt-title">Mehr Anfragen</span><span class="kfg-opt-sub">und zwar von Kunden, die wirklich zu uns passen</span></button>
+              <button type="button" class="kfg-opt" data-val="serioes" data-short="Seriöser Auftritt"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-badge"/></svg></span><span class="kfg-opt-title">Endlich seriös aussehen</span><span class="kfg-opt-sub">so, wie wir tatsächlich arbeiten</span></button>
+              <button type="button" class="kfg-opt" data-val="aufwand" data-short="Weniger Aufwand"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-flow"/></svg></span><span class="kfg-opt-title">Weniger Aufwand</span><span class="kfg-opt-sub">Termine und Anfragen sollen strukturiert reinkommen</span></button>
+              <button type="button" class="kfg-opt" data-val="region" data-short="Regional gefunden werden"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-pin"/></svg></span><span class="kfg-opt-title">In der Region gefunden werden</span><span class="kfg-opt-sub">wenn jemand in der Nähe sucht</span></button>
+              <button type="button" class="kfg-opt" data-val="ruhe" data-short="Ruhe haben"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-shieldok"/></svg></span><span class="kfg-opt-title">Ruhe haben</span><span class="kfg-opt-sub">aktuell, sicher, nichts, worum ich mich kümmern muss</span></button>
             </div>
             <p class="kfg-note" aria-live="polite"></p>
             <div class="kfg-nav"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
@@ -1994,10 +2044,10 @@
             <h3 class="kfg-q" tabindex="-1">Wann möchten Sie das angehen?</h3>
             <p class="kfg-hint">Ehrlich gesagt &ndash; es ändert nichts an der Analyse.</p>
             <div class="kfg-opts" role="radiogroup" aria-label="Zeitrahmen">
-              <button type="button" class="kfg-opt" data-val="sofort" data-short="So bald wie möglich"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">So bald wie möglich</span></button>
-              <button type="button" class="kfg-opt" data-val="1-3m" data-short="In 1&ndash;3 Monaten"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">In den nächsten 1 bis 3 Monaten</span></button>
-              <button type="button" class="kfg-opt" data-val="jahr" data-short="Dieses Jahr, ohne Eile"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Dieses Jahr noch, ohne Eile</span></button>
-              <button type="button" class="kfg-opt" data-val="infos" data-short="Sammle nur Informationen"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Ich sammle im Moment nur Informationen</span></button>
+              <button type="button" class="kfg-opt" data-val="sofort" data-short="So bald wie möglich"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-bolt"/></svg></span><span class="kfg-opt-title">So bald wie möglich</span></button>
+              <button type="button" class="kfg-opt" data-val="1-3m" data-short="In 1&ndash;3 Monaten"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-cal1"/></svg></span><span class="kfg-opt-title">In den nächsten 1 bis 3 Monaten</span></button>
+              <button type="button" class="kfg-opt" data-val="jahr" data-short="Dieses Jahr, ohne Eile"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-cal"/></svg></span><span class="kfg-opt-title">Dieses Jahr noch, ohne Eile</span></button>
+              <button type="button" class="kfg-opt" data-val="infos" data-short="Sammle nur Informationen"><span class="kfg-opt-ic" aria-hidden="true"><svg class="ico"><use href="#i-book"/></svg></span><span class="kfg-opt-title">Ich sammle im Moment nur Informationen</span></button>
             </div>
             <p class="kfg-note" aria-live="polite"></p>
             <div class="kfg-nav"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
@@ -2303,37 +2353,37 @@
     </div>
     <div class="why-grid">
       <div class="why-card panel">
-        <span class="why-icon">01</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-tools"/></svg></span>
         <h3>IT-Experte mit echtem Fachwissen</h3>
         <p>Wir arbeiten täglich in der IT-Branche und kennen die neuesten Technologien aus der Praxis – nicht aus dem Lehrbuch. Was wir Ihnen empfehlen, funktioniert wirklich.</p>
       </div>
       <div class="why-card panel">
-        <span class="why-icon">02</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-hand"/></svg></span>
         <h3>Persönlicher Kontakt – direkt zu mir</h3>
         <p>Kein Support-Ticket, kein Call-Center. Sie schreiben mir direkt per WhatsApp oder E-Mail und bekommen eine echte Antwort – von mir persönlich.</p>
       </div>
       <div class="why-card panel">
-        <span class="why-icon">03</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-spark"/></svg></span>
         <h3>Modernste KI-Technologie</h3>
         <p>Wir setzen KI dort ein, wo sie Ihnen Zeit spart oder neue Möglichkeiten eröffnet – nicht, weil es gerade Trend ist. So bleibt Ihre Website auch in ein paar Jahren aktuell.</p>
       </div>
       <div class="why-card panel">
-        <span class="why-icon">04</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-tag"/></svg></span>
         <h3>Faires Preis-Leistungs-Verhältnis</h3>
         <p>Qualität muss nicht teuer sein. Wir bieten Resultate auf Agentur-Niveau zu Preisen, die für KMU und Selbstständige tatsächlich funktionieren.</p>
       </div>
       <div class="why-card panel">
-        <span class="why-icon">05</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-bolt"/></svg></span>
         <h3>Schnell & zuverlässig</h3>
         <p>Keine monatelangen Projekte. Wir arbeiten fokussiert und effizient, damit Ihre neue Website schnell online geht und sofort wirkt.</p>
       </div>
       <div class="why-card panel">
-        <span class="why-icon">06</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-target"/></svg></span>
         <h3>Ergebnisse die zählen</h3>
         <p>Mehr Anfragen, mehr Vertrauen, mehr Umsatz. Wir messen Erfolg an Ihren Ergebnissen – nicht an unseren Stundenzahlen.</p>
       </div>
       <div class="why-card panel" style="border-color:rgba(6,182,212,0.3);background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(59,130,246,0.03))">
-        <span class="why-icon">07</span>
+        <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span>
         <h3>Ihre Live-Website bleibt unangetastet</h3>
         <p>Alle Änderungen werden zuerst auf einer <strong style="color:var(--cyan)">separaten Vorschau-Umgebung</strong> entwickelt und gezeigt. Ihre originale Website läuft die ganze Zeit unverändert weiter. Erst wenn Sie alles gesehen haben, geprüft haben und <strong style="color:var(--white)">einverstanden sind</strong>, werden die Änderungen live geschaltet. Sie haben jederzeit die volle Kontrolle.</p>
       </div>
@@ -3672,6 +3722,16 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !REDUCE_M
 }
 
 // ── REVEAL VARIANT OBSERVER ──
+// Karten in aufklappbaren Bereichen: beim Öffnen sofort einblenden
+document.querySelectorAll('details.qs-more').forEach(d => {
+  d.addEventListener('toggle', () => {
+    if (d.open) d.querySelectorAll('.qs-card').forEach((c, i) => {
+      c.style.transitionDelay = (i % 4) * 60 + 'ms';
+      c.classList.add('visible');
+    });
+  });
+});
+
 // Also observe section-headers and faq items with the main observer// Also observe section-headers and faq items with the main observer
 document.querySelectorAll('.faq-item').forEach((el, i) => {
   el.classList.add('reveal');
