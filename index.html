@@ -1510,22 +1510,6 @@
       .tk-perf::after  { right: -1.2rem; }
     }
 
-    /* ── FREISTELLER — Objekte auf exakt der Flächenfarbe, verschmelzen kantenlos ── */
-    .fs { position: absolute; pointer-events: none; user-select: none; z-index: 1; }
-    .fs-winkel { left: 5%; top: -200px; width: 290px; height: auto; z-index: 2; }
-    #philosophie { position: relative; }
-    .fs-blatt { left: -20px; bottom: -16px; width: 106%; height: auto; z-index: -1;
-                transform: rotate(4deg); max-width: none; }
-    .befund { position: relative; }
-    .fs-bleistift { top: -34px; right: -36px; width: 250px; height: auto; z-index: 2;
-                    transform: rotate(-22deg); }
-    .abnahme { position: relative; }
-    .fs-massstab { left: -50px; top: 110px; width: 56px; height: auto; z-index: 0; }
-    #pricing { position: relative; }
-    .fs-stempel { right: -42px; top: -44px; width: 210px; height: auto; z-index: 2;
-                  transform: rotate(8deg); }
-    @media (max-width: 980px) { .fs { display: none; } }
-
     /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -1657,7 +1641,6 @@
     </div>
 
     <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">    <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">
-      <img class="fs fs-blatt" src="img/freisteller-blatt.webp" alt="" width="900" height="600" loading="lazy" decoding="async" aria-hidden="true">
       <header class="befund-head">
         <span class="befund-title">Ihre kostenlose Erstanalyse</span>
         <span class="befund-state">noch offen</span>
@@ -1680,7 +1663,6 @@
 
 <!-- PHILOSOPHIE -->
 <section id="philosophie"><section id="philosophie">
-  <img class="fs fs-winkel" src="img/freisteller-winkel.webp" alt="" width="640" height="954" loading="lazy" decoding="async" aria-hidden="true">
   <div class="philo reveal">
     <div class="sec-index"><span class="sec-no">02</span><span class="sec-rule"></span><span class="sec-name">Philosophie</span></div>
     <h2>
@@ -2227,7 +2209,6 @@
       </div>
     </div>
     <figure class="abnahme reveal"><figure class="abnahme reveal">
-      <img class="fs fs-bleistift" src="img/freisteller-bleistift.webp" alt="" width="640" height="429" loading="lazy" decoding="async" aria-hidden="true">
       <img src="img/abnahme-plan.webp" width="1200" height="800" alt="Ein gedruckter Plan auf einem Tisch, mit Bleistift abgezeichnet."
            loading="lazy" decoding="async">
       <figcaption>Nichts geht live, bevor Sie abgezeichnet haben.</figcaption>
@@ -2237,7 +2218,6 @@
 
 <!-- PRICING -->
 <section id="pricing"><section id="pricing">
-  <img class="fs fs-massstab" src="img/freisteller-massstab.webp" alt="" width="614" height="1100" loading="lazy" decoding="async" aria-hidden="true">
   <div class="container">
     <div class="section-header text-center reveal">
       <div class="sec-index"><span class="sec-no">07</span><span class="sec-rule"></span><span class="sec-name">Preise</span></div>
@@ -2299,7 +2279,6 @@
 <!-- GARANTIE BANNER -->
 <div style="padding: 0 2rem; background: var(--bg);">
   <div class="guarantee-banner panel reveal">  <div class="guarantee-banner panel reveal">
-    <img class="fs fs-stempel" src="img/freisteller-stempel.webp" alt="" width="560" height="374" loading="lazy" decoding="async" aria-hidden="true">
     <div class="guarantee-text">
       <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Garantie</span></div>
       <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
