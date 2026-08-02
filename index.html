@@ -943,6 +943,101 @@
     }
 
 
+    /* ── ANALYSE-KONFIGURATOR (Funnel) ── */
+    .kfg-jsonly { display: none; }
+    .js .kfg-jsonly { display: block; }
+    .js #analyseForm .form-grid > .field:not(.full),
+    .js #analyseForm .form-grid > .field.full { display: none; }
+    .js #analyseForm.kfg-live .form-grid > .field { display: block; }
+    .js #analyseForm #submitBtn, .js #analyseForm .kfg-ds { display: none; }
+    .js #analyseForm.kfg-live #submitBtn, .js #analyseForm.kfg-live .kfg-ds { display: block; }
+    .js #analyseForm { margin-top: 0; }
+
+    .kfg-chain { position: relative; height: 1px; background: var(--line-3); margin: .2rem 0 1rem; }
+    .kfg-chain-fill { position: absolute; inset: 0 auto 0 0; width: 100%; height: 1px; background: var(--signal);
+      transform-origin: 0 50%; transform: scaleX(0.1667); transition: transform 520ms var(--e-out-expo); }
+    .kfg-count { font: 500 .82rem/1 'Inter', sans-serif; color: var(--ink-2); margin-bottom: 1.6rem; }
+
+    .js .kfg-body { display: grid; grid-template-columns: 7fr 5fr; gap: 3rem; align-items: start; }
+    .kfg-q { font-size: 1.25rem; font-weight: 700; letter-spacing: -.3px; margin-bottom: .4rem; outline: none; }
+    .kfg-hint { color: var(--ink-2); font-size: .88rem; margin-bottom: 1.2rem; }
+    .kfg-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: .7rem; }
+    .kfg-opt {
+      min-height: 58px; padding: .9rem 1.1rem .9rem 1.2rem;
+      background: rgba(2,8,23,.55);
+      border: 1px solid var(--line-2); border-radius: 2px;
+      border-left: 2px solid transparent;
+      display: grid; grid-template-columns: 1.9rem 1fr; gap: .1rem .7rem;
+      text-align: left; cursor: pointer; color: inherit; font: inherit;
+      transition: border-color .25s var(--e-out-quart), background-color .25s var(--e-out-quart), transform 70ms linear;
+    }
+    .kfg-opt:hover { border-color: var(--line-3); }
+    .kfg-opt:active { transform: scale(.972); }
+    .kfg-opt.sel {
+      border-color: var(--line-3); border-left-color: var(--signal);
+      background: rgba(240,169,44,.06);
+    }
+    .kfg-opt.sel .kfg-opt-no { color: var(--signal); }
+    .kfg-opt-no { font: 600 .7rem/1.6 var(--mono); color: var(--ink-2); letter-spacing: .06em; }
+    .kfg-opt-title { font: 600 .95rem/1.35 'Inter', sans-serif; color: var(--ink); }
+    .kfg-opt-sub { font: 400 .78rem/1.45 'Inter', sans-serif; color: var(--ink-2); grid-column: 2; }
+    .kfg-note { min-height: 1.4rem; margin-top: 1rem; font-size: .86rem; color: var(--ink-2); line-height: 1.55;
+      opacity: 0; transform: translateY(6px); transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart); }
+    .kfg-note.show { opacity: 1; transform: none; }
+    .kfg-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.4rem; gap: 1rem; }
+    .kfg-nav-top { margin: 0 0 1.2rem; }
+    .kfg-nav-hint { font-size: .78rem; color: var(--ink-2); }
+    .kfg-back { background: none; border: none; color: var(--ink-2); font: 500 .88rem/1 'Inter', sans-serif;
+      cursor: pointer; padding: .5rem .2rem; }
+    .kfg-back:hover { color: var(--ink); }
+    .kfg-next { background: var(--mark); color: #04121f; border: none; border-radius: 2px;
+      font: 700 .9rem/1 'Inter', sans-serif; padding: .8rem 1.4rem; cursor: pointer;
+      transition: background-color .25s var(--e-out-quart), transform 70ms linear; }
+    .kfg-next:hover { background: #5ecbfa; }
+    .kfg-next:active { transform: scale(.972); }
+    .kfg-plan { border-left: 2px solid var(--signal); padding: .8rem 0 .8rem 1.2rem; margin-bottom: 1.4rem;
+      font-size: .88rem; color: var(--ink-2); line-height: 1.6; }
+    .kfg-plan strong { color: var(--ink); display: block; margin-bottom: .3rem; }
+    .kfg-plan em { font-style: normal; color: var(--ink-2); font-size: .8rem; display: block; margin-top: .4rem; }
+
+    .kfg-blatt { border-left: 1px solid var(--line-2); padding-left: 1.6rem; position: sticky; top: 90px; }
+    .kfg-rows { list-style: none; margin: .3rem 0 0; }
+    .kfg-row { display: grid; grid-template-columns: 2.2rem 1fr auto; align-items: baseline; gap: .5rem;
+      padding: .62rem 0; border-bottom: 1px solid var(--line-1); }
+    .kfg-row .bf-val { font: 600 .82rem/1.35 var(--mono); text-align: right; max-width: 14em;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .kfg-row.active .bf-no { color: var(--mark); }
+    .kfg-row.active .bf-val { color: var(--ink-2); }
+    .kfg-row.filled .bf-no { color: var(--signal); }
+    .kfg-row.filled .bf-val { color: var(--ink); }
+    .kfg-row .bf-val.entering { opacity: 0; transform: translateY(10px); }
+    .kfg-row .bf-val { transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart); }
+    .kfg-row.flash .bf-no, .kfg-row.flash .bf-val { color: var(--signal); }
+    .kfg-blatt-b { margin-top: 1rem; font: 500 .74rem/1.5 var(--mono); letter-spacing: .04em; color: var(--ink-2); }
+    .kfg-foot { margin-top: 1.6rem; font-size: .8rem; color: var(--ink-2); }
+    .kfg-alt { margin-top: 1rem; font-size: .85rem; color: var(--ink-2); }
+    .kfg-alt a { color: var(--mark); text-decoration: none; }
+    .kfg-alt a:hover { text-decoration: underline; }
+    .befund-cta { display: inline-block; margin-top: 1rem; color: var(--mark); text-decoration: none; font: 600 .85rem/1 'Inter', sans-serif; }
+    .befund-cta:hover { text-decoration: underline; }
+    .qt-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+    .qt-actions .btn-price { width: auto; padding: .75rem 1.2rem; font-size: .85rem; }
+
+    @media (max-width: 900px) {
+      .js .kfg-body { grid-template-columns: 1fr; gap: 1.6rem; }
+      .kfg-blatt { position: static; border-left: 0; padding-left: 0; border-top: 1px solid var(--line-2); padding-top: 1rem; }
+      .kfg-opts { grid-template-columns: 1fr; }
+      .kfg-opt { min-height: 60px; }
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      .kfg-blatt, .kfg-blatt * { visibility: visible; }
+      .kfg-blatt { position: absolute; left: 0; top: 0; width: 100%; border: 0; padding: 2rem; }
+      body { background: #fff; }
+      .kfg-blatt, .kfg-blatt * { color: #000 !important; }
+    }
+
     /* ── REDUCED MOTION — Animationen respektvoll abschalten ── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -955,7 +1050,8 @@
       .panel::after { display: none !important; }
       .sec-rule, .process-steps::before, .stat::after { transform: none !important; }
       .js .reveal, .js .befund-rows li, .js .service-card, .js .price-card,
-      .js .why-card, .js .qs-card, .js .process-step { opacity: 1 !important; transform: none !important; }
+      .js .why-card, .js .qs-card, .js .process-step,
+      .kfg-note, .kfg-row .bf-val { opacity: 1 !important; transform: none !important; }
       .hero-grid, .hero-glow { transform: none !important; }
     }
   </style>
@@ -975,7 +1071,7 @@
     <a href="#process">Prozess</a>
     <a href="#pricing">Preise</a>
     <a href="#quick-services">Klein-Services</a>
-    <a href="#analyse" class="nav-cta">Gratis Analyse</a>
+    <a href="#analyse" class="nav-cta" id="navCta" data-einstieg="nav">Gratis Analyse</a>
   </div>
   <button type="button" class="hamburger" id="hamburger" onclick="openMenu()" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
     <span></span><span></span><span></span>
@@ -1014,7 +1110,7 @@
       </p>
 
       <div class="hero-btns">
-        <a href="#analyse" class="btn-primary"><span>Kostenlose Analyse starten</span><span class="arrow">&rarr;</span></a>
+        <a href="#analyse" class="btn-primary" data-einstieg="hero"><span>Kostenlose Analyse starten</span><span class="arrow">&rarr;</span></a>
         <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Website-Modernisierung."
            target="_blank" rel="noopener" class="btn-whatsapp">Via WhatsApp schreiben</a>
       </div>
@@ -1043,6 +1139,7 @@
         Diese Felder sind leer, weil wir Ihre Zahlen noch nicht kennen.<br>
         Genau daf&uuml;r ist die Analyse da &ndash; kostenlos, R&uuml;ckmeldung in 24 Stunden.
       </p>
+      <a class="befund-cta" href="#analyse" data-einstieg="hero-blatt">Blatt ausf&uuml;llen &rarr;</a>
     </aside>
   </div>
 </section>
@@ -1267,7 +1364,7 @@
     <div class="section-header text-center reveal">
       <div class="sec-index"><span class="sec-no">06</span><span class="sec-rule"></span><span class="sec-name">Preise</span></div>
       <h2 class="section-title">Faire Preise. Keine Überraschungen.</h2>
-      <p class="section-sub">Transparent, flexibel und auf Ihr Budget abgestimmt. Sie wissen immer, was Sie bezahlen.</p>
+      <p class="section-sub">Die meisten Projekte liegen zwischen CHF 490 und CHF 2&rsquo;500 &ndash; einmalig, mit Festpreis vor dem Start. Sie wissen immer, was Sie bezahlen.</p>
     </div>
     <div class="pricing-grid">
       <div class="price-card panel">
@@ -1281,10 +1378,10 @@
           <li><span class="chk">✓</span> Kontaktformular</li>
           <li><span class="chk">✓</span> 1 Revisionsrunde</li>
         </ul>
-        <a href="#analyse" class="btn-price">Jetzt anfragen</a>
+        <a href="#analyse" class="btn-price" data-einstieg="preis-starter">Jetzt anfragen</a>
       </div>
       <div class="price-card featured panel">
-        <div class="featured-badge">⭐ BELIEBT</div>
+        <div class="featured-badge">Unsere Empfehlung</div>
         <div class="price-name">Pro</div>
         <div class="price-title">Modernisierung</div>
         <div class="price-amount">ab CHF 990<span> /einmalig</span></div>
@@ -1296,7 +1393,7 @@
           <li><span class="chk">✓</span> 3 Revisionsrunden</li>
           <li><span class="chk">✓</span> 30 Tage Support</li>
         </ul>
-        <a href="#analyse" class="btn-price featured-btn">Jetzt starten →</a>
+        <a href="#analyse" class="btn-price featured-btn" data-einstieg="preis-pro">Jetzt starten →</a>
       </div>
       <div class="price-card panel">
         <div class="price-name">Premium</div>
@@ -1316,6 +1413,7 @@
     <p class="pricing-note">
       Nicht sicher, welches Paket passt? <a href="#analyse">Starten Sie mit der kostenlosen Analyse</a> –
       wir empfehlen Ihnen das Richtige, ganz unverbindlich.
+      Etwas Kleines? <a href="#quick-services">Einzelne Handgriffe gibt es ab CHF 60 &rarr;</a>
     </p>
   </div>
 </section>
@@ -1348,13 +1446,139 @@
     <div class="form-wrapper panel reveal">
       <div class="form-header">
         <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Kostenlose Analyse</span></div>
-        <h2 class="section-title" style="font-size:1.8rem">Ihre kostenlose Website-Analyse</h2>
-        <p style="color:var(--muted);font-size:0.9rem;margin-top:0.5rem">
-          Wir analysieren Ihre Website und melden uns innerhalb von 24 Stunden mit konkretem Feedback.
+        <h2 class="section-title" style="font-size:1.8rem">Füllen Sie Ihr Aufnahmeblatt aus.</h2>
+        <p style="color:var(--muted);font-size:0.95rem;margin-top:0.5rem">
+          Sechs Zeilen. Fünf davon in gut zwei Minuten, ohne Tippen &ndash; die Messwerte tragen wir nach.
         </p>
       </div>
-      <form id="analyseForm" name="analyse-lead" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+
+      <div class="kfg-jsonly kfg-head">
+        <div class="kfg-chain" aria-hidden="true">
+          <div class="kfg-chain-fill" id="kfgChainFill"></div>
+        </div>
+        <p class="kfg-count" id="kfgCount" aria-live="polite">1 von 6 Zeilen steht schon.</p>
+      </div>
+
+      <div class="kfg-jsonly kfg-body">
+        <div class="kfg-stage" id="kfgStage">
+
+          <div class="kfg-step" data-step="1">
+            <h3 class="kfg-q" tabindex="-1">Was für ein Betrieb sind Sie?</h3>
+            <p class="kfg-hint">Damit wir wissen, mit welchen Augen wir Ihre Website anschauen.</p>
+            <div class="kfg-opts" role="radiogroup" aria-label="Betriebsart">
+              <button type="button" class="kfg-opt" data-val="handwerk" data-short="Handwerk &amp; Bau"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">Handwerk &amp; Bau</span><span class="kfg-opt-sub">Schreinerei, Sanitär, Elektro, Malerei</span></button>
+              <button type="button" class="kfg-opt" data-val="praxis" data-short="Gesundheit &amp; Praxis"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Gesundheit &amp; Praxis</span><span class="kfg-opt-sub">Arzt, Zahnarzt, Physio, Therapie</span></button>
+              <button type="button" class="kfg-opt" data-val="beratung" data-short="Beratung &amp; Treuhand"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Beratung &amp; Treuhand</span><span class="kfg-opt-sub">Treuhand, Anwalt, Architektur, Coaching</span></button>
+              <button type="button" class="kfg-opt" data-val="gastro" data-short="Gastro, Hotel &amp; Laden"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Gastro, Hotel &amp; Laden</span><span class="kfg-opt-sub">Restaurant, Hotel, Ladengeschäft</span></button>
+              <button type="button" class="kfg-opt" data-val="dienst" data-short="Dienstleistung vor Ort"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Dienstleistung vor Ort</span><span class="kfg-opt-sub">Garage, Reinigung, Gärtnerei, Fahrschule</span></button>
+              <button type="button" class="kfg-opt" data-val="anderes" data-short="Etwas anderes"><span class="kfg-opt-no">06</span><span class="kfg-opt-title">Etwas anderes</span><span class="kfg-opt-sub">passt nichts davon &ndash; auch gut</span></button>
+            </div>
+            <p class="kfg-note" aria-live="polite"></p>
+            <div class="kfg-nav"><span></span><span class="kfg-nav-hint">Karte anklicken genügt</span></div>
+          </div>
+
+          <div class="kfg-step" data-step="2" hidden>
+            <h3 class="kfg-q" tabindex="-1">Was hat Sie hierher gebracht?</h3>
+            <p class="kfg-hint">Mehrfachauswahl. Kreuzen Sie an, was zutrifft &ndash; auch wenn es unangenehm ist.</p>
+            <div class="kfg-opts" role="group" aria-label="Anlass">
+              <button type="button" class="kfg-opt kfg-multi" data-val="veraltet" data-short="veraltet"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">Die Seite sieht veraltet aus</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="mobil" data-short="Handy"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Auf dem Handy stimmt die Darstellung nicht</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="speed" data-short="Ladezeit"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Sie lädt langsam</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="google" data-short="Google"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Wir werden bei Google kaum gefunden</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="anfragen" data-short="Anfragen"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Es kommen zu wenige Anfragen</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="sicherheit" data-short="Sicherheit"><span class="kfg-opt-no">06</span><span class="kfg-opt-title">Ich weiss nicht, ob sie noch sicher und revDSG-konform ist</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="keine" data-short="Noch keine Website"><span class="kfg-opt-no">07</span><span class="kfg-opt-title">Wir haben noch gar keine Website</span></button>
+              <button type="button" class="kfg-opt kfg-multi" data-val="anderes" data-short="Anderes"><span class="kfg-opt-no">08</span><span class="kfg-opt-title">Etwas anderes stört mich</span></button>
+            </div>
+            <p class="kfg-note" aria-live="polite"></p>
+            <div class="kfg-nav">
+              <button type="button" class="kfg-back">&larr; Zurück</button>
+              <button type="button" class="kfg-next" data-next="Weiter &rarr;" data-empty="Nichts davon &ndash; trotzdem weiter &rarr;">Nichts davon &ndash; trotzdem weiter &rarr;</button>
+            </div>
+          </div>
+
+          <div class="kfg-step" data-step="3" hidden>
+            <h3 class="kfg-q" tabindex="-1">Wann wurde Ihre Website zuletzt richtig überarbeitet?</h3>
+            <p class="kfg-hint">Grobe Schätzung genügt.</p>
+            <div class="kfg-opts" role="radiogroup" aria-label="Letzter Umbau">
+              <button type="button" class="kfg-opt" data-val="12m" data-short="In den letzten 12 Monaten"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">In den letzten 12 Monaten</span></button>
+              <button type="button" class="kfg-opt" data-val="1-3j" data-short="Vor 1&ndash;3 Jahren"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Vor 1 bis 3 Jahren</span></button>
+              <button type="button" class="kfg-opt" data-val="3plus" data-short="Vor mehr als 3 Jahren"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Vor mehr als 3 Jahren</span></button>
+              <button type="button" class="kfg-opt" data-val="unbekannt" data-short="Weiss nicht mehr"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Weiss ich ehrlich gesagt nicht mehr</span></button>
+              <button type="button" class="kfg-opt" data-val="keine" data-short="Noch keine"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Wir haben (noch) keine</span></button>
+            </div>
+            <p class="kfg-note" aria-live="polite"></p>
+            <div class="kfg-nav"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
+          </div>
+
+          <div class="kfg-step" data-step="4" hidden>
+            <h3 class="kfg-q" tabindex="-1">Was soll in einem halben Jahr anders sein?</h3>
+            <p class="kfg-hint">Das Wichtigste. Danach richten wir die Analyse aus.</p>
+            <div class="kfg-opts" role="radiogroup" aria-label="Ziel">
+              <button type="button" class="kfg-opt" data-val="anfragen" data-short="Mehr passende Anfragen"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">Mehr Anfragen</span><span class="kfg-opt-sub">und zwar von Kunden, die wirklich zu uns passen</span></button>
+              <button type="button" class="kfg-opt" data-val="serioes" data-short="Seriöser Auftritt"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">Endlich seriös aussehen</span><span class="kfg-opt-sub">so, wie wir tatsächlich arbeiten</span></button>
+              <button type="button" class="kfg-opt" data-val="aufwand" data-short="Weniger Aufwand"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Weniger Aufwand</span><span class="kfg-opt-sub">Termine und Anfragen sollen strukturiert reinkommen</span></button>
+              <button type="button" class="kfg-opt" data-val="region" data-short="Regional gefunden werden"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">In der Region gefunden werden</span><span class="kfg-opt-sub">wenn jemand in der Nähe sucht</span></button>
+              <button type="button" class="kfg-opt" data-val="ruhe" data-short="Ruhe haben"><span class="kfg-opt-no">05</span><span class="kfg-opt-title">Ruhe haben</span><span class="kfg-opt-sub">aktuell, sicher, nichts, worum ich mich kümmern muss</span></button>
+            </div>
+            <p class="kfg-note" aria-live="polite"></p>
+            <div class="kfg-nav"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
+          </div>
+
+          <div class="kfg-step" data-step="5" hidden>
+            <h3 class="kfg-q" tabindex="-1">Wann möchten Sie das angehen?</h3>
+            <p class="kfg-hint">Ehrlich gesagt &ndash; es ändert nichts an der Analyse.</p>
+            <div class="kfg-opts" role="radiogroup" aria-label="Zeitrahmen">
+              <button type="button" class="kfg-opt" data-val="sofort" data-short="So bald wie möglich"><span class="kfg-opt-no">01</span><span class="kfg-opt-title">So bald wie möglich</span></button>
+              <button type="button" class="kfg-opt" data-val="1-3m" data-short="In 1&ndash;3 Monaten"><span class="kfg-opt-no">02</span><span class="kfg-opt-title">In den nächsten 1 bis 3 Monaten</span></button>
+              <button type="button" class="kfg-opt" data-val="jahr" data-short="Dieses Jahr, ohne Eile"><span class="kfg-opt-no">03</span><span class="kfg-opt-title">Dieses Jahr noch, ohne Eile</span></button>
+              <button type="button" class="kfg-opt" data-val="infos" data-short="Sammle nur Informationen"><span class="kfg-opt-no">04</span><span class="kfg-opt-title">Ich sammle im Moment nur Informationen</span></button>
+            </div>
+            <p class="kfg-note" aria-live="polite"></p>
+            <div class="kfg-nav"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
+          </div>
+
+          <div class="kfg-step" data-step="6" hidden>
+            <h3 class="kfg-q" tabindex="-1">Ihr Aufnahmeblatt ist ausgefüllt. Wohin sollen wir das Feedback schicken?</h3>
+            <p class="kfg-hint">Fünf von sechs Zeilen stehen. Es fehlt nur noch, wohin die Rückmeldung soll.</p>
+            <div class="kfg-plan" id="kfgPlan"></div>
+            <div class="kfg-nav kfg-nav-top"><button type="button" class="kfg-back">&larr; Zurück</button><span></span></div>
+          </div>
+
+        </div>
+
+        <aside class="kfg-blatt" aria-live="polite" aria-atomic="false" aria-label="Ihr Aufnahmeblatt">
+          <header class="befund-head">
+            <span class="befund-title" id="kfgBlattNr">Aufnahmeblatt</span>
+            <span class="befund-state" id="kfgBlattState">angelegt</span>
+          </header>
+          <ol class="kfg-rows" id="kfgRows">
+            <li class="kfg-row filled" data-row="00"><span class="bf-no">00</span><span class="bf-label">Eingang</span><span class="bf-val" id="kfgRow00">&mdash;</span></li>
+            <li class="kfg-row" data-row="01"><span class="bf-no">01</span><span class="bf-label">Ihr Betrieb</span><span class="bf-val">&mdash;</span></li>
+            <li class="kfg-row" data-row="02"><span class="bf-no">02</span><span class="bf-label">Was Sie stört</span><span class="bf-val">&mdash;</span></li>
+            <li class="kfg-row" data-row="03"><span class="bf-no">03</span><span class="bf-label">Letzter Umbau</span><span class="bf-val">&mdash;</span></li>
+            <li class="kfg-row" data-row="04"><span class="bf-no">04</span><span class="bf-label">Ihr Ziel</span><span class="bf-val">&mdash;</span></li>
+            <li class="kfg-row" data-row="05"><span class="bf-no">05</span><span class="bf-label">Zeitrahmen</span><span class="bf-val">&mdash;</span></li>
+            <li class="kfg-row" data-row="06"><span class="bf-no">06</span><span class="bf-label">Kontakt</span><span class="bf-val">&mdash;</span></li>
+          </ol>
+          <p class="kfg-blatt-b">Teil B &middot; messen wir &middot; Rückmeldung in 24 Stunden</p>
+        </aside>
+      </div>
+
+      <p class="kfg-jsonly kfg-foot">Kostenlos, unverbindlich. Zum Schluss brauchen wir: Name, E-Mail und Ihre Website-Adresse. Sonst nichts.</p>
+
+      <form id="analyseForm"      <form id="analyseForm" name="analyse-lead" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
         <input type="hidden" name="form-name" value="analyse-lead" />
+        <input type="hidden" name="blatt_nr" id="hf_blatt" value="" />
+        <input type="hidden" name="branche" id="hf_branche" value="" />
+        <input type="hidden" name="anlass" id="hf_anlass" value="" />
+        <input type="hidden" name="letzter_umbau" id="hf_umbau" value="" />
+        <input type="hidden" name="ziel" id="hf_ziel" value="" />
+        <input type="hidden" name="zeitrahmen" id="hf_zeit" value="" />
+        <input type="hidden" name="hat_website" id="hf_hatweb" value="ja" />
+        <input type="hidden" name="einstieg" id="hf_einstieg" value="" />
+        <input type="hidden" name="dauer_sek" id="hf_dauer" value="" />
+        <input type="hidden" name="quiz_version" value="v1" />
         <div class="form-grid">
           <div class="field">
             <label for="fname">Ihr Name *</label>
@@ -1392,17 +1616,26 @@
           Ihre Angaben gehen ausschliesslich an uns – kein Newsletter, keine Weitergabe.
           Details in der <a href="datenschutz.html" style="color:var(--cyan); text-decoration:none;">Datenschutzerklärung</a>.
         </p>
-        <div class="form-divider">oder</div>
-        <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20meine%20Website%20kostenlos%20analysieren%20lassen." target="_blank" class="btn-wa-form">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Lieber direkt per WhatsApp schreiben
-        </a>
-      </form>
+      </form>      </form>
+      <p class="kfg-alt">Lieber kurz fragen statt ausfüllen? <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20h%C3%A4tte%20eine%20kurze%20Frage%20zu%20meiner%20Website." target="_blank" rel="noopener">Schreiben Sie uns &rarr;</a></p>
       <div class="success-msg" id="successMsg">
-        <h3>Perfekt! Ihre Analyse ist unterwegs.</h3>
-        <p>Wir melden uns innerhalb von 24 Stunden mit einem ausführlichen Feedback zu Ihrer Website.</p>
+        <h3>Eingegangen. <span id="qtNr" style="font-variant-numeric:tabular-nums"></span></h3>
+        <p>Ihr Aufnahmeblatt liegt bei uns &ndash; vollständig, mit allem, was Sie eingetragen haben.</p>
+        <p><strong id="qtFrist" style="color:var(--ink)"></strong><br>
+        <span style="font-size:.85rem">Das ist keine Floskel &ndash; das ist unsere Frist, nicht Ihre.</span></p>
+        <p>Was Sie bekommen: die fünf Messwerte, dazu was wir zuerst ändern würden und was das kostet.
+        Kein Verkaufsgespräch, keine Nachfassmails.</p>
+        <div class="qt-actions">
+          <button type="button" class="btn-price" onclick="window.print()">Blatt drucken oder als PDF sichern</button>
+          <a class="btn-price" id="qtWa" target="_blank" rel="noopener" href="#">Blatt-Nr. per WhatsApp schicken</a>
+        </div>
+        <p style="font-size:.8rem;color:var(--ink-2);margin-top:1rem">Sie müssen jetzt nichts weiter tun.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- QUICK SERVICES -->    </div>
   </div>
 </section>
 
@@ -1868,8 +2101,246 @@ function getSupabase(){
   return _sbPromise;
 }
 
-// ── FORM ──
+// ── ANALYSE-KONFIGURATOR ──
 const _formLoadedAt = Date.now();
+const KFG = (() => {
+  const qs = (s, c) => (c || document).querySelector(s);
+  const qsa = (s, c) => [...(c || document).querySelectorAll(s)];
+  const stage = qs('#kfgStage');
+  if (!stage) return null;
+
+  const FEEDBACK1 = {
+    handwerk: 'Notiert. Bei Handwerksbetrieben schauen wir zuerst auf zwei Sachen: ob man Ihre Arbeiten sieht, und ob man Sie vom Handy aus erreicht.',
+    praxis: 'Notiert. Bei Praxen zählt die erste Sekunde: Erreichbarkeit, Öffnungszeiten, Vertrauen. Da schauen wir zuerst hin.',
+    beratung: 'Notiert. Bei Beratung und Treuhand entscheidet die Seriosität der Darstellung. Genau das prüfen wir zuerst.',
+    gastro: 'Notiert. Bei Gastro und Laden schauen wir zuerst auf Google-Eintrag, Öffnungszeiten und Karte — der Weg, den Ihre Kunden wirklich gehen.',
+    dienst: 'Notiert. Bei Dienstleistern vor Ort zählt: Findet man Sie in der Region, und kann man Sie in zwei Klicks anfragen?',
+    anderes: 'Auch gut. Dann schauen wir ohne Schablone — das ist uns ohnehin lieber.'
+  };
+  const FEEDBACK3 = {
+    '12m': 'Gut. Dann schauen wir eher auf Feinheiten als auf Grundsätzliches.',
+    '1-3j': 'Notiert. In der Spanne ist meistens die Technik noch in Ordnung und die Darstellung nicht mehr.',
+    '3plus': 'Notiert. In drei Jahren hat sich vor allem eines verändert: wie Ihre Kunden suchen — die meisten heute vom Handy aus.',
+    unbekannt: 'Kein Problem. Das sehen wir der Seite an — das ist unsere Arbeit, nicht Ihre.',
+    keine: 'Verstanden. Dann ist es kein Umbau, sondern ein Anfang. Das Blatt bleibt dasselbe.'
+  };
+  const FEEDBACK5 = { infos: 'Auch dann bekommen Sie Ihr Feedback. Ohne Verkaufsgespräch, ohne Nachfassen. Wenn es später passt, wissen Sie, wo wir sind.' };
+  const EINSTIEG_LABEL = { nav: 'Menü', 'nav-mobil': 'Menü', hero: 'Startseite', 'hero-blatt': 'das Aufnahmeblatt', 'preis-starter': 'Paket Starter', 'preis-pro': 'Paket Pro', 'preis-note': 'Preisübersicht', direkt: 'direkten Aufruf' };
+  const PLAN = {
+    anfragen: 'Wie eine Anfrage bei Ihnen ankommt · Auffindbarkeit bei Google · Mobile Darstellung',
+    serioes: 'Gesamteindruck & Vertrauen · Mobile Darstellung · Aktualität der Inhalte',
+    aufwand: 'Wie eine Anfrage bei Ihnen ankommt · Formulare & Abläufe · Ladezeit',
+    region: 'Auffindbarkeit in der Region · Google-Eintrag · Mobile Darstellung',
+    ruhe: 'Sicherheit & revDSG · Technik-Stand · Ladezeit'
+  };
+
+  const state = { step: 1, branche: '', anlass: [], umbau: '', ziel: '', zeit: '', nr: '', t0: Date.now(), einstieg: '' };
+
+  function makeNr() {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    return 'AB-' + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + '-' +
+      p(d.getHours()) + p(d.getMinutes()) + 'ABCDEFGHKMNPRSTWXZ'[Math.floor(Math.random() * 18)];
+  }
+
+  const LS = 'wup_blatt_v1';
+  function save() {
+    try { localStorage.setItem(LS, JSON.stringify({ step: state.step, branche: state.branche, anlass: state.anlass, umbau: state.umbau, ziel: state.ziel, zeit: state.zeit, nr: state.nr, einstieg: state.einstieg, ts: Date.now() })); } catch (e) {}
+  }
+  function load() {
+    try {
+      const d = JSON.parse(localStorage.getItem(LS) || 'null');
+      if (d && Date.now() - d.ts < 7 * 864e5) return d;
+    } catch (e) {}
+    return null;
+  }
+  const saved = load();
+  if (saved) { Object.assign(state, saved); state.t0 = Date.now(); }
+  if (!state.nr) state.nr = makeNr();
+  if (!state.einstieg) state.einstieg = 'direkt';
+
+  qsa('a[data-einstieg]').forEach(a => a.addEventListener('click', () => {
+    if (state.step === 1 && !state.branche) { state.einstieg = a.dataset.einstieg; row00(); save(); }
+    const f = qs('#hf_einstieg'); if (f) f.value = state.einstieg;
+  }));
+
+  const rows = {};
+  qsa('.kfg-row').forEach(r => { rows[r.dataset.row] = r; });
+  const blattNr = qs('#kfgBlattNr'), blattState = qs('#kfgBlattState'),
+        chain = qs('#kfgChainFill'), count = qs('#kfgCount'), form = qs('#analyseForm');
+
+  function row00() {
+    const d = new Date(), p = n => String(n).padStart(2, '0');
+    setVal('00', p(d.getDate()) + '.' + p(d.getMonth() + 1) + '. · über ' + (EINSTIEG_LABEL[state.einstieg] || 'direkten Aufruf'), false);
+  }
+  function setVal(row, text, animate) {
+    const el = rows[row].querySelector('.bf-val');
+    if (animate !== false) el.classList.add('entering');
+    el.textContent = text;
+    if (animate !== false) {
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('entering')));
+    }
+    rows[row].classList.add('filled');
+  }
+  function filledCount() {
+    return 1 + ['branche', 'umbau', 'ziel', 'zeit'].filter(k => state[k]).length + (state.anlass.length ? 1 : 0);
+  }
+  function shortOf(stepSel, val) {
+    const o = qsa('.kfg-opt', qs(stepSel)).find(x => x.dataset.val === val);
+    return o ? o.dataset.short : val;
+  }
+  function sync() {
+    blattNr.textContent = 'Aufnahmeblatt ' + state.nr;
+    const n = Math.min(filledCount(), 6);
+    chain.style.transform = 'scaleX(' + Math.max(n, 1) / 6 + ')';
+    count.textContent = (state.step === 1 && n === 1) ? '1 von 6 Zeilen steht schon.' : 'Zeile ' + Math.min(state.step, 6) + ' von 6';
+    blattState.textContent = state.step >= 6 ? 'Teil A · fast vollständig' : (n > 1 ? 'in Arbeit' : 'angelegt');
+    qsa('.kfg-row').forEach(r => r.classList.remove('active'));
+    const act = rows['0' + Math.min(state.step, 6)];
+    if (act && !act.classList.contains('filled')) act.classList.add('active');
+    const hf = { hf_blatt: state.nr, hf_branche: state.branche, hf_anlass: state.anlass.join(','),
+      hf_umbau: state.umbau, hf_ziel: state.ziel, hf_zeit: state.zeit,
+      hf_hatweb: (state.anlass.includes('keine') || state.umbau === 'keine') ? 'nein' : 'ja',
+      hf_einstieg: state.einstieg };
+    Object.keys(hf).forEach(id => { const f = qs('#' + id); if (f) f.value = hf[id]; });
+    const nav = qs('#navCta');
+    if (nav && nav.textContent.indexOf('eingegangen') === -1) {
+      const started = state.branche || state.anlass.length;
+      nav.textContent = started ? ('Aufnahmeblatt · ' + n + ' von 6 →') : 'Gratis Analyse';
+    }
+  }
+  function note(stepEl, text) {
+    const el = stepEl.querySelector('.kfg-note');
+    if (!el) return;
+    el.classList.remove('show');
+    el.textContent = text || '';
+    if (text) requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+  }
+  function go(n) {
+    state.step = n;
+    qsa('.kfg-step', stage).forEach(s => { s.hidden = +s.dataset.step !== n; });
+    if (n === 6) {
+      form.classList.add('kfg-live');
+      const kw = state.anlass.includes('keine') || state.umbau === 'keine';
+      const urlLabel = qs('label[for=furl]');
+      if (kw && urlLabel) {
+        urlLabel.innerHTML = 'Wo findet man Sie heute im Netz? <span style="color:var(--muted)">(optional)</span>';
+      }
+      const plan = qs('#kfgPlan');
+      if (plan) plan.innerHTML = '<strong>Aufgrund Ihrer Angaben schauen wir bei Ihnen zuerst auf:</strong>' +
+        (PLAN[state.ziel] || 'Mobile Darstellung · Ladezeit · Wie eine Anfrage bei Ihnen ankommt') +
+        '<em>Das ist noch keine Messung — das ist unser Plan für die Messung.</em>';
+      qs('.kfg-step[data-step="6"]').appendChild(form);
+    } else if (form) {
+      form.classList.remove('kfg-live');
+    }
+    const q = qs('.kfg-step[data-step="' + n + '"] .kfg-q');
+    if (q) q.focus({ preventScroll: true });
+    sync(); save();
+  }
+
+  stage.addEventListener('click', e => {
+    const opt = e.target.closest('.kfg-opt');
+    const back = e.target.closest('.kfg-back');
+    const next = e.target.closest('.kfg-next');
+    if (back) { go(Math.max(1, state.step - 1)); return; }
+    if (next) { go(state.step + 1); return; }
+    if (!opt) return;
+    const stepEl = opt.closest('.kfg-step');
+    const n = +stepEl.dataset.step;
+    if (opt.classList.contains('kfg-multi')) {
+      opt.classList.toggle('sel');
+      opt.setAttribute('aria-pressed', String(opt.classList.contains('sel')));
+      const selOpts = qsa('.kfg-opt.sel', stepEl);
+      state.anlass = selOpts.map(o => o.dataset.val);
+      const shorts = selOpts.map(o => o.dataset.short);
+      if (shorts.length) setVal('02', shorts.join(' · '));
+      else { rows['02'].querySelector('.bf-val').textContent = '—'; rows['02'].classList.remove('filled'); }
+      note(stepEl, state.anlass.length + (state.anlass.length === 1 ? ' Punkt notiert.' : ' Punkte notiert.'));
+      const nx = stepEl.querySelector('.kfg-next');
+      nx.textContent = state.anlass.length ? ('Weiter → · ' + state.anlass.length + ' angekreuzt') : nx.dataset.empty;
+      sync(); save();
+      return;
+    }
+    qsa('.kfg-opt', stepEl).forEach(o => { o.classList.remove('sel'); o.setAttribute('aria-checked', 'false'); });
+    opt.classList.add('sel'); opt.setAttribute('aria-checked', 'true');
+    const v = opt.dataset.val, s = opt.dataset.short;
+    if (n === 1) { state.branche = v; setVal('01', s); note(stepEl, FEEDBACK1[v]); }
+    if (n === 3) { state.umbau = v; setVal('03', s); note(stepEl, FEEDBACK3[v]); }
+    if (n === 4) { state.ziel = v; setVal('04', s); }
+    if (n === 5) { state.zeit = v; setVal('05', s); if (FEEDBACK5[v]) note(stepEl, FEEDBACK5[v]); }
+    sync(); save();
+    const delay = (n === 1 || n === 3 || (n === 5 && FEEDBACK5[v])) ? 1600 : 420;
+    setTimeout(() => { if (state.step === n) go(n + 1); }, delay);
+  });
+
+  stage.addEventListener('keydown', e => {
+    if (e.key >= '1' && e.key <= '8') {
+      const stepEl = qs('.kfg-step:not([hidden])', stage);
+      if (!stepEl) return;
+      const o = qsa('.kfg-opt', stepEl)[+e.key - 1];
+      if (o) { e.preventDefault(); o.click(); }
+    }
+    if (e.altKey && e.key === 'ArrowLeft') go(Math.max(1, state.step - 1));
+  });
+
+  row00();
+  if (state.branche) setVal('01', shortOf('.kfg-step[data-step="1"]', state.branche), false);
+  if (state.anlass.length) setVal('02', state.anlass.map(v => shortOf('.kfg-step[data-step="2"]', v)).join(' · '), false);
+  if (state.umbau) setVal('03', shortOf('.kfg-step[data-step="3"]', state.umbau), false);
+  if (state.ziel) setVal('04', shortOf('.kfg-step[data-step="4"]', state.ziel), false);
+  if (state.zeit) setVal('05', shortOf('.kfg-step[data-step="5"]', state.zeit), false);
+  if (saved && state.anlass.length) {
+    qsa('.kfg-opt', qs('.kfg-step[data-step="2"]')).forEach(o => {
+      if (state.anlass.includes(o.dataset.val)) o.classList.add('sel');
+    });
+  }
+  go(Math.min(state.step, 6));
+
+  return {
+    state,
+    serialize(lead) {
+      const d = new Date(), p = x => String(x).padStart(2, '0');
+      const clean = t => String(t || '').replace(/[|,]/g, ' ');
+      const anlassShorts = state.anlass.map(v => shortOf('.kfg-step[data-step="2"]', v)).join('; ');
+      const kopf = 'AUFNAHMEBLATT ' + state.nr + ' · ' + p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear() +
+        ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' · Eingang: ' + (EINSTIEG_LABEL[state.einstieg] || 'direkt');
+      const planTxt = (PLAN[state.ziel] || 'Mobile Darstellung · Ladezeit · Anfrageweg').replace(/&amp;/g, '&').split(' · ').join('; ');
+      const lines = [kopf, '',
+        '01 Betrieb         ' + (shortOf('.kfg-step[data-step="1"]', state.branche) || '—'),
+        '02 Was stört       ' + (anlassShorts || '—'),
+        '03 Letzter Umbau   ' + (shortOf('.kfg-step[data-step="3"]', state.umbau) || '—'),
+        '04 Ziel            ' + (shortOf('.kfg-step[data-step="4"]', state.ziel) || '—'),
+        '05 Zeitrahmen      ' + (shortOf('.kfg-step[data-step="5"]', state.zeit) || '—'),
+        '06 Mitteilung      ' + (lead.nachricht || '—'), '',
+        'Erste Prüfpunkte   ' + planTxt, '', '--',
+        'q=v1|branche=' + clean(state.branche) + '|anlass=' + state.anlass.map(clean).join(',') +
+        '|umbau=' + clean(state.umbau) + '|ziel=' + clean(state.ziel) + '|zeit=' + clean(state.zeit) +
+        '|blatt=' + state.nr + '|einstieg=' + clean(state.einstieg) +
+        '|dauer=' + Math.round((Date.now() - state.t0) / 1000) + '|steps=6/6'];
+      return lines.join('\n').slice(0, 4000);
+    },
+    finish() {
+      try { localStorage.removeItem(LS); } catch (e) {}
+      const d = new Date(Date.now() + 24 * 3600 * 1000);
+      if (d.getDay() === 6) d.setDate(d.getDate() + 2);
+      if (d.getDay() === 0) d.setDate(d.getDate() + 1);
+      const tage = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+      const mon = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+      const p = x => String(x).padStart(2, '0');
+      const nrEl = qs('#qtNr'); if (nrEl) nrEl.textContent = 'Blatt-Nr. ' + state.nr;
+      const frEl = qs('#qtFrist');
+      if (frEl) frEl.textContent = 'Teil B füllen wir. Sie hören von uns bis ' + tage[d.getDay()] + ', ' +
+        d.getDate() + '. ' + mon[d.getMonth()] + ', ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' Uhr.';
+      const wa = qs('#qtWa');
+      if (wa) wa.href = 'https://wa.me/41784464832?text=' + encodeURIComponent('Hallo, ich habe soeben das Aufnahmeblatt ' + state.nr + ' abgeschickt.');
+      qsa('.kfg-row').forEach((r, i) => setTimeout(() => r.classList.add('flash'), i * 60));
+      if (blattState) blattState.textContent = 'eingegangen';
+      const f = qs('#hf_dauer'); if (f) f.value = String(Math.round((Date.now() - state.t0) / 1000));
+      const nav = qs('#navCta'); if (nav) nav.textContent = 'Blatt eingegangen ✓';
+    }
+  };
+})();
 document.getElementById('analyseForm').addEventListener('submit', async function(e){
   e.preventDefault();
 
@@ -1888,6 +2359,8 @@ document.getElementById('analyseForm').addEventListener('submit', async function
     { id: 'femail', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
     { id: 'furl', check: v => {
       const s = v.trim();
+      const kw = document.getElementById('hf_hatweb') && document.getElementById('hf_hatweb').value === 'nein';
+      if (kw) return true;
       if (s.length < 4) return false;
       try { new URL(/^https?:\/\//i.test(s) ? s : 'https://' + s); return true; }
       catch { return false; }
@@ -1917,6 +2390,12 @@ document.getElementById('analyseForm').addEventListener('submit', async function
     website_url: document.getElementById('furl').value.trim(),
     nachricht:   document.getElementById('fmsg').value.trim() || null
   };
+  if (KFG) {
+    const kw = document.getElementById('hf_hatweb') && document.getElementById('hf_hatweb').value === 'nein';
+    if (kw && !lead.website_url) lead.website_url = 'keine Website vorhanden';
+    lead.nachricht = KFG.serialize(lead);
+    if (document.getElementById('hf_dauer')) document.getElementById('hf_dauer').value = String(Math.round((Date.now() - KFG.state.t0) / 1000));
+  }
 
   // Parallel an Netlify Forms senden (löst die E-Mail-Benachrichtigung aus) —
   // fire-and-forget, damit der Lead auch bei einem Supabase-Ausfall ankommt
@@ -1926,7 +2405,17 @@ document.getElementById('analyseForm').addEventListener('submit', async function
     body: new URLSearchParams({
       'form-name': 'analyse-lead',
       name: lead.name, email: lead.email,
-      website_url: lead.website_url, nachricht: lead.nachricht || ''
+      website_url: lead.website_url, nachricht: lead.nachricht || '',
+      blatt_nr: (document.getElementById('hf_blatt') || {}).value || '',
+      branche: (document.getElementById('hf_branche') || {}).value || '',
+      anlass: (document.getElementById('hf_anlass') || {}).value || '',
+      letzter_umbau: (document.getElementById('hf_umbau') || {}).value || '',
+      ziel: (document.getElementById('hf_ziel') || {}).value || '',
+      zeitrahmen: (document.getElementById('hf_zeit') || {}).value || '',
+      hat_website: (document.getElementById('hf_hatweb') || {}).value || '',
+      einstieg: (document.getElementById('hf_einstieg') || {}).value || '',
+      dauer_sek: (document.getElementById('hf_dauer') || {}).value || '',
+      quiz_version: 'v1'
     }).toString()
   }).catch(() => {});
 
@@ -1949,7 +2438,10 @@ document.getElementById('analyseForm').addEventListener('submit', async function
   }
 
   document.getElementById('analyseForm').style.display = 'none';
+  const _stage = document.getElementById('kfgStage');
+  if (_stage) { [...document.querySelectorAll('.kfg-step')].forEach(s => s.hidden = true); }
   document.getElementById('successMsg').style.display = 'block';
+  if (KFG) KFG.finish();
 });
 
 // Clear error on input
