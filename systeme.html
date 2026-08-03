@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Systembibliothek – Der Werkzeugraum | WebUpgrade Pro</title>
+  <meta name="description" content="Digitale Systeme für Schweizer KMU – mit Ablauf, Nutzen, Grenzen und Mini-Demo. Anfragen, Offerten, Termine, Dokumente, Freigaben und mehr.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="canonical" href="https://webupgradepro.ch/systeme.html">
+  <style>
+    :root {
+      --bg: #020817; --bg2: #050e1f; --panel: #060f22;
+      --line-1: rgba(148,177,224,0.10); --line-2: rgba(148,177,224,0.20); --line-3: rgba(148,177,224,0.38);
+      --ink: #eef2f8; --ink-2: #9fb0c9;
+      --mark: #38bdf8; --signal: #f0a92c;
+      --mono: ui-monospace,'SF Mono','Cascadia Mono','Roboto Mono',Consolas,monospace;
+      --e-out-expo: cubic-bezier(.16,1,.3,1); --e-out-quart: cubic-bezier(.25,1,.5,1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-padding-top: 84px; }
+    body { font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif; background: var(--bg);
+      color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: var(--mark); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--mark); border-radius: 3px; }
+    :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+    /* Nav */
+    .top { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: .9rem 2rem; background: rgba(2,8,23,.95); border-bottom: 1px solid var(--line-2); }
+    .top-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .top-logo img { display: block; }
+    .top-logo .sym { height: 30px; width: auto; }
+    .top-logo .word { height: 18px; width: auto; }
+    .top-back { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-2); text-decoration: none; }
+    .top-back:hover { color: var(--ink); }
+
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 8.5rem 2rem 4rem; }
+
+    /* Kopf */
+    .lib-kicker { font-family: var(--mono); font-size: .72rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--mark); }
+    h1 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.5px;
+      line-height: 1.15; margin: .6rem 0 1rem; }
+    .lib-sub { color: var(--ink-2); max-width: 62ch; }
+    .lib-honest { margin-top: 1rem; font-size: .84rem; color: var(--ink-2); }
+    .chip-demo { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; color: var(--signal);
+      border: 1px solid var(--signal); padding: .1rem .45rem; margin-right: .5rem; }
+
+    /* Layout: Regal + Blätter */
+    .lib { display: grid; grid-template-columns: 250px 1fr; gap: 2.5rem; margin-top: 3rem; align-items: start; }
+    .regal { position: sticky; top: 92px; }
+    .regal-grp { border-top: 1px solid var(--line-2); padding: 1rem 0 1.2rem; }
+    .regal-grp h2 { font-family: var(--mono); font-size: .66rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--ink-2); font-weight: 500; margin-bottom: .6rem; }
+    .regal-grp button { display: block; width: 100%; text-align: left; background: transparent; border: 0;
+      color: var(--ink-2); font-family: 'Inter', sans-serif; font-size: .84rem; padding: .3rem 0 .3rem .9rem;
+      cursor: pointer; position: relative; transition: color 200ms var(--e-out-quart); }
+    .regal-grp button::before { content: ''; position: absolute; left: 0; top: .55em; width: 5px; height: 5px;
+      border: 1px solid var(--line-3); transition: background-color 200ms, border-color 200ms; }
+    .regal-grp button:hover { color: var(--ink); }
+    .regal-grp button.is-on { color: var(--mark); }
+    .regal-grp button.is-on::before { background: var(--mark); border-color: var(--mark); }
+    .regal-count { font-family: var(--mono); font-size: .7rem; color: var(--ink-2); padding: 1rem 0 0; }
+    .regal-reset { margin-top: .6rem; background: transparent; border: 1px solid var(--line-3); border-radius: 2px;
+      color: var(--ink-2); font-size: .74rem; padding: .35rem .7rem; cursor: pointer; }
+    .regal-reset:hover { color: var(--ink); border-color: var(--ink-2); }
+
+    /* Systemblatt */
+    .blatt { border: 1px solid var(--line-2); background: var(--panel); margin-bottom: 1.6rem; }
+    .blatt[hidden] { display: none !important; }
+    .blatt-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+      padding: 1.2rem 1.5rem; cursor: pointer; border: 0; width: 100%; background: transparent;
+      text-align: left; color: var(--ink); font-family: 'Inter', sans-serif; }
+    .blatt-no { font-family: var(--mono); font-size: .7rem; color: var(--mark); letter-spacing: .1em; }
+    .blatt-title { font-size: 1.05rem; font-weight: 700; }
+    .blatt-meta { margin-left: auto; display: flex; gap: .5rem; flex-wrap: wrap; }
+    .blatt-tag { font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-2); border: 1px solid var(--line-2); padding: .15rem .5rem; }
+    .blatt-arrow { font-family: var(--mono); color: var(--ink-2); transition: transform 300ms var(--e-out-quart); }
+    .blatt.is-open .blatt-arrow { transform: rotate(90deg); }
+    .blatt-problem { padding: 0 1.5rem 1.1rem; color: var(--ink-2); font-size: .9rem; max-width: 70ch; }
+    .blatt-body { display: none; border-top: 1px solid var(--line-2); }
+    .blatt.is-open .blatt-body { display: block; }
+    .blatt-grid { display: grid; grid-template-columns: 1.2fr 1fr; }
+    .blatt-cell { padding: 1.3rem 1.5rem; min-width: 0; }
+    .blatt-cell + .blatt-cell { border-left: 1px solid var(--line-2); }
+    .blatt h3 { font-family: var(--mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-2); font-weight: 500; margin: 0 0 .6rem; }
+    .blatt h3:not(:first-child) { margin-top: 1.2rem; }
+    .blatt ol, .blatt ul { list-style: none; }
+    .blatt-ablauf li { position: relative; padding: .3rem 0 .3rem 1.8rem; font-size: .87rem; counter-increment: ab; }
+    .blatt-ablauf { counter-reset: ab; }
+    .blatt-ablauf li::before { content: counter(ab, decimal-leading-zero); position: absolute; left: 0; top: .42rem;
+      font-family: var(--mono); font-size: .64rem; color: var(--mark); }
+    .blatt-ablauf li.mensch::after { content: 'MENSCH'; font-family: var(--mono); font-size: .56rem;
+      letter-spacing: .1em; color: var(--signal); border: 1px solid var(--signal);
+      padding: .06rem .3rem; margin-left: .45rem; vertical-align: middle; }
+    .blatt-dots li { position: relative; padding: .25rem 0 .25rem 1.1rem; font-size: .85rem; color: var(--ink-2); }
+    .blatt-dots li::before { content: ''; position: absolute; left: 0; top: .68em; width: 5px; height: 5px;
+      border: 1px solid var(--line-3); }
+    .blatt-dots.limits li::before { border-color: var(--signal); }
+    .blatt-nutzen { font-size: .89rem; color: var(--ink); max-width: 62ch; }
+
+    /* Mini-Demo */
+    .mini { border: 1px solid var(--line-2); margin-top: .4rem; }
+    .mini-head { display: flex; justify-content: space-between; align-items: center;
+      padding: .6rem .9rem; border-bottom: 1px solid var(--line-2); }
+    .mini-head span { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--ink-2); }
+    .mini-status { color: var(--mark) !important; }
+    .mini-steps { padding: .5rem .9rem .7rem; }
+    .mini-steps li { display: none; font-size: .84rem; padding: .25rem 0; }
+    .mini-steps li.is-now { display: block; }
+    .mini-steps li em { display: block; font-style: normal; font-size: .74rem; color: var(--ink-2); }
+    .mini-btn { margin: 0 .9rem .9rem; background: transparent; border: 1px solid var(--mark); border-radius: 2px;
+      color: var(--mark); font-size: .8rem; padding: .45rem .9rem; cursor: pointer;
+      transition: background-color 200ms var(--e-out-quart); }
+    .mini-btn:hover { background: rgba(56,189,248,.08); }
+    .mini-btn.gold { border-color: var(--signal); color: var(--signal); }
+
+    .blatt-foot { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      padding: 1.1rem 1.5rem; border-top: 1px solid var(--line-2); }
+    .blatt-cta { display: inline-block; background: var(--mark); color: #04121f; text-decoration: none;
+      font-weight: 600; font-size: .88rem; padding: .6rem 1.2rem; border-radius: 2px; }
+    .blatt-foot small { color: var(--ink-2); font-size: .74rem; }
+
+    .lib-leer { color: var(--ink-2); padding: 2rem 0; }
+    .lib-leer[hidden] { display: none; }
+
+    footer { border-top: 1px solid var(--line-2); margin-top: 4rem;
+      padding: 1.6rem 2rem; display: flex; gap: 1.5rem; flex-wrap: wrap;
+      font-size: .8rem; color: var(--ink-2); }
+    footer a { color: var(--ink-2); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .wrap { padding: 7rem 1.2rem 3rem; }
+      .lib { grid-template-columns: 1fr; gap: 1.5rem; }
+      .regal { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
+      .regal-count, .regal-reset { grid-column: 1 / -1; }
+      .blatt-grid { grid-template-columns: 1fr; }
+      .blatt-cell + .blatt-cell { border-left: 0; border-top: 1px solid var(--line-2); }
+      .blatt-meta { margin-left: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top">
+  <a class="top-logo" href="index.html" aria-label="Zur Startseite">
+    <img class="sym" src="img/logo-symbol.svg" alt="" width="30" height="30">
+    <img class="word" src="img/logo-wordmark.png" alt="WebUpgrade Pro" height="18">
+  </a>
+  <a class="top-back" href="index.html#systeme">&larr; Zur Hauptseite</a>
+</nav>
+
+<main class="wrap">
+  <span class="lib-kicker">Systembibliothek</span>
+  <h1>Der Werkzeugraum</h1>
+  <p class="lib-sub">Acht Systeme, die Schweizer Betriebe wirklich weiterbringen &ndash; jedes mit Ablauf,
+  Nutzen, n&ouml;tigen Daten, menschlichen Entscheidungen und ehrlichen Grenzen.
+  Filtern Sie nach Branche und Kategorie, klappen Sie auf, probieren Sie den Mini-Durchlauf.</p>
+  <p class="lib-honest"><span class="chip-demo">DEMO</span>Alle Durchl&auml;ufe laufen nur in Ihrem Browser.
+  Es wird nichts gesendet, nichts gespeichert, nichts gebucht.</p>
+
+  <div class="lib">
+    <aside class="regal" aria-label="Filter">
+      <div class="regal-grp" data-dim="branche">
+        <h2>Branche</h2>
+        <button type="button" class="is-on" data-f="alle">Alle Branchen</button>
+        <button type="button" data-f="handwerk">Handwerk</button>
+        <button type="button" data-f="praxis">Praxis</button>
+        <button type="button" data-f="treuhand">Treuhand / B&uuml;ro</button>
+      </div>
+      <div class="regal-grp" data-dim="kat">
+        <h2>Kategorie</h2>
+        <button type="button" class="is-on" data-f="alle">Alle Kategorien</button>
+        <button type="button" data-f="anfragen">Anfragen</button>
+        <button type="button" data-f="angebote">Angebote</button>
+        <button type="button" data-f="termine">Termine</button>
+        <button type="button" data-f="dokumente">Dokumente</button>
+        <button type="button" data-f="freigaben">Freigaben</button>
+        <button type="button" data-f="service">Kundenservice</button>
+        <button type="button" data-f="reporting">Daten &amp; Reporting</button>
+        <button type="button" data-f="bewertungen">Bewertungen</button>
+      </div>
+      <div class="regal-grp" data-dim="groesse">
+        <h2>Komplexit&auml;t</h2>
+        <button type="button" class="is-on" data-f="alle">Alle</button>
+        <button type="button" data-f="klein">Klein &ndash; schnell eingef&uuml;hrt</button>
+        <button type="button" data-f="mittel">Mittel</button>
+        <button type="button" data-f="gross">Gross &ndash; mehrere Abl&auml;ufe</button>
+      </div>
+      <div class="regal-grp" data-dim="auto">
+        <h2>Automatisierungsgrad</h2>
+        <button type="button" class="is-on" data-f="alle">Alle</button>
+        <button type="button" data-f="hoch">Hoch &ndash; Mensch gibt nur frei</button>
+        <button type="button" data-f="mittel">Mittel &ndash; Mensch entscheidet &ouml;fter</button>
+      </div>
+      <p class="regal-count" id="libCount">8 von 8 Systemen</p>
+      <button type="button" class="regal-reset" id="libReset">Filter zur&uuml;cksetzen</button>
+    </aside>
+
+    <div id="libList">
+
+      <!-- 01 Anfrage-Aufnahme -->
+      <article class="blatt" data-branche="handwerk praxis treuhand" data-kat="anfragen" data-groesse="klein" data-auto="hoch">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-01</span>
+          <span class="blatt-title">Anfrage-Aufnahme</span>
+          <span class="blatt-meta"><span class="blatt-tag">Anfragen</span><span class="blatt-tag">klein</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">Anfragen kommen per Telefon, E-Mail und Zuruf &ndash; und niemand weiss,
+        was schon beantwortet ist und was liegen bleibt.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Anfrage kommt strukturiert herein &ndash; Formular, E-Mail oder Notiz</li>
+                <li>Pflichtangaben werden gepr&uuml;ft, Fehlendes automatisch nachgefragt</li>
+                <li>Anliegen wird kategorisiert und der richtigen Person zugewiesen</li>
+                <li class="mensch">Antwortvorschlag wird freigegeben</li>
+                <li>Best&auml;tigung geht raus, Nachfassen ist geplant</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Anfrage eingegangen|Website · strukturiert erfasst","Daten geprüft|Telefonnummer fehlte – Rückfrage lief automatisch","Zugewiesen|Direkt bei der richtigen Person","FREIGABE|Der Betrieb entscheidet – nicht die Maschine","Bestätigung versendet|Kunde weiss: angekommen, so geht es weiter"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Keine Anfrage geht unter, jede bekommt schnell eine erste Antwort &ndash; auch wenn gerade niemand Zeit hat.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Kontakt und Anliegen</li><li>Ihre Zust&auml;ndigkeiten</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>E-Mail</li><li>Kalender</li><li>bestehende Ablage</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>WhatsApp-Eingang</li><li>Offerten-Strecke direkt anschliessen</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Telefonanrufe muss weiterhin jemand notieren</li><li>Kategorien m&uuml;ssen am Anfang sauber definiert werden</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="anfrage-aufnahme">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: die Freigabe der Antwort bleibt bei Ihnen.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 Offerten-Strecke -->
+      <article class="blatt" data-branche="handwerk treuhand" data-kat="angebote" data-groesse="mittel" data-auto="mittel">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-02</span>
+          <span class="blatt-title">Offerten-Strecke</span>
+          <span class="blatt-meta"><span class="blatt-tag">Angebote</span><span class="blatt-tag">mittel</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">Offerten entstehen in Word, dauern Tage und niemand weiss, ob der Kunde sie
+        &uuml;berhaupt geöffnet hat.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Leistungen werden gew&auml;hlt &ndash; Abh&auml;ngigkeiten pr&uuml;ft das System</li>
+                <li>Preise und Bedingungen werden zusammengesetzt</li>
+                <li class="mensch">Interne Freigabe der Offerte</li>
+                <li>PDF entsteht und wird versendet</li>
+                <li>Reaktion wird erfasst, Nachfassaufgabe entsteht automatisch</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Leistungen gewählt|3 Positionen · Abhängigkeiten geprüft","Offerte kalkuliert|Preise und Bedingungen zusammengesetzt","FREIGABE|Chef prüft – erst dann geht etwas raus","Offerte versendet|Als PDF, sauber formatiert","Nachfassen geplant|Ohne Antwort in 5 Tagen: Erinnerung"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Offerten in Stunden statt Tagen &ndash; und das Nachfassen passiert, statt vergessen zu gehen.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Ihre Leistungen und Preislogik</li><li>Ihre Offerten-Vorlage</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>E-Mail</li><li>Buchhaltung (bei Zusage)</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Zusage startet automatisch das Onboarding</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Sonderf&auml;lle brauchen weiterhin Handarbeit</li><li>Preislogik muss einmal sauber erfasst werden</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="offerten-strecke">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: keine Offerte verl&auml;sst das Haus ohne Freigabe.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 Termin-System -->
+      <article class="blatt" data-branche="handwerk praxis" data-kat="termine" data-groesse="klein" data-auto="hoch">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-03</span>
+          <span class="blatt-title">Termin-System</span>
+          <span class="blatt-meta"><span class="blatt-tag">Termine</span><span class="blatt-tag">klein</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">Terminvereinbarung heisst heute: dreimal hin- und hertelefonieren &ndash;
+        und trotzdem erscheint jemand nicht.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Vorfragen kl&auml;ren die passende Terminart</li>
+                <li>Nur wirklich freie Zeiten werden angeboten</li>
+                <li>Termin wird reserviert, Vorbereitung erzeugt</li>
+                <li>Erinnerungen gehen automatisch raus</li>
+                <li>Nach dem Termin wird der n&auml;chste Schritt ausgel&ouml;st</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Terminart erkannt|Erstgespräch · 45 Minuten","2 Vorschläge gezeigt|Nur Zeiten, die wirklich frei sind","Termin reserviert|Mit Vorbereitung für beide Seiten","Erinnerung geplant|24 Stunden vorher, automatisch","Nachgang ausgelöst|Zusammenfassung an die richtige Person"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Weniger Telefonrunden, weniger vergessene Termine &ndash; und jeder Termin beginnt vorbereitet.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Ihre Terminarten und Dauern</li><li>Ihr Kalender</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>Kalender</li><li>E-Mail / SMS</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Anzahlung bei No-Show-Risiko</li><li>Video-Termine</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Der Kalender muss gepflegt sein &ndash; sonst stimmen die Zeiten nicht</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="termin-system">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: welche Zeiten &uuml;berhaupt angeboten werden.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 Dokumenten-Portal -->
+      <article class="blatt" data-branche="treuhand praxis" data-kat="dokumente" data-groesse="mittel" data-auto="mittel">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-04</span>
+          <span class="blatt-title">Dokumenten-Portal</span>
+          <span class="blatt-meta"><span class="blatt-tag">Dokumente</span><span class="blatt-tag">mittel</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">Unterlagen kommen als E-Mail-Anh&auml;nge, in drei Versionen, und die wichtigste fehlt &ndash;
+        kurz vor der Frist.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Kunde l&auml;dt Unterlagen in ein Portal &ndash; nicht ins Postfach</li>
+                <li>Dokumenttyp wird erkannt, Angaben werden ausgelesen</li>
+                <li>Unsicherheiten werden markiert</li>
+                <li class="mensch">Kritische Angaben werden best&auml;tigt</li>
+                <li>Fehlendes wird automatisch angemahnt, alles ist archiviert</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Upload eingegangen|Lohnausweis.pdf · dem Mandanten zugeordnet","Typ erkannt|Angaben ausgelesen, 1 Unsicherheit markiert","PRÜFUNG|Mensch bestätigt die markierte Angabe","Fehlende Unterlage angemahnt|Freundlich, automatisch, mit Frist","Archiviert|Auffindbar statt vergraben"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Schluss mit der Unterlagen-Jagd: Das Portal sammelt, pr&uuml;ft, mahnt und dokumentiert.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Ihre Unterlagen-Checklisten</li><li>Fristen pro Auftragsart</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>Ablage / DMS</li><li>E-Mail</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Automatische Berichte aus den Daten</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Erkennung ist nie 100% &ndash; kritische Angaben pr&uuml;ft immer ein Mensch</li><li>Sensible Daten brauchen klare Zugriffsregeln</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="dokumenten-portal">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: jede kritische Angabe wird best&auml;tigt, nicht geraten.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 Freigabe-Ordnung -->
+      <article class="blatt" data-branche="handwerk treuhand" data-kat="freigaben" data-groesse="klein" data-auto="hoch">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-05</span>
+          <span class="blatt-title">Freigabe-Ordnung</span>
+          <span class="blatt-meta"><span class="blatt-tag">Freigaben</span><span class="blatt-tag">klein</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">&laquo;Hast du das gesehen?&raquo; per Zuruf &ndash; und am Ende weiss niemand,
+        wer wann was freigegeben hat.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Entwurf entsteht &ndash; Offerte, Plan oder Dokument</li>
+                <li>Die zust&auml;ndige Person wird benachrichtigt</li>
+                <li class="mensch">Kommentieren, &auml;ndern oder freigeben</li>
+                <li>Freigabe wird mit Zeitpunkt dokumentiert</li>
+                <li>Erst danach wird versendet oder ver&ouml;ffentlicht</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Entwurf bereit|Offerte 2026-118 wartet auf Prüfung","Zuständige benachrichtigt|Genau eine Person – nicht alle","FREIGABE|Kommentar oder Freigabe – dokumentiert","Beleg erstellt|Wer, wann, was – nachvollziehbar","Versendet|Nichts geht raus ohne Freigabe"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Klare Verantwortung statt Zuruf: Jede Freigabe ist dokumentiert und nichts geht ungepr&uuml;ft raus.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Wer darf was freigeben</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>E-Mail</li><li>Team-Chat</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Mehrstufige Freigaben f&uuml;r grosse Betr&auml;ge</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Funktioniert nur, wenn die Rollen einmal klar definiert werden</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="freigabe-ordnung">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: die Freigabe selbst &ndash; genau darum geht es.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 Reklamations-Fall -->
+      <article class="blatt" data-branche="handwerk praxis treuhand" data-kat="service" data-groesse="mittel" data-auto="mittel">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-06</span>
+          <span class="blatt-title">Reklamations-Fall</span>
+          <span class="blatt-meta"><span class="blatt-tag">Kundenservice</span><span class="blatt-tag">mittel</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">Eine Reklamation landet im falschen Postfach, wird zu sp&auml;t beantwortet &ndash;
+        und aus einem kleinen Problem wird ein verlorener Kunde.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Kunde beschreibt das Problem, l&auml;dt Fotos hoch</li>
+                <li>Dringlichkeit wird erkannt, Fall erh&auml;lt Referenznummer</li>
+                <li>Zust&auml;ndige Abteilung wird bestimmt, Kunde erh&auml;lt Best&auml;tigung</li>
+                <li class="mensch">L&ouml;sung wird entschieden und dokumentiert</li>
+                <li>Abschluss mit Zufriedenheits-Nachfrage</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Fall eingegangen|R-2026-031 · mit 2 Fotos","Dringlichkeit erkannt|Hoch – Termin diese Woche betroffen","Bestätigung versendet|Kunde weiss: Fall ist erfasst, so geht es weiter","ENTSCHEIDUNG|Lösung entscheidet der Betrieb – dokumentiert","Abgeschlossen|Mit Zufriedenheits-Nachfrage"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Aus Reklamationen werden gel&ouml;ste F&auml;lle statt verlorene Kunden &ndash; weil nichts liegen bleibt.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Ihre Zust&auml;ndigkeiten</li><li>Dringlichkeits-Regeln</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>E-Mail</li><li>Auftragsdaten</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Auswertung: h&auml;ufigste Ursachen sichtbar machen</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Die L&ouml;sung selbst bleibt Handarbeit &ndash; das System sorgt f&uuml;r Tempo und &Uuml;berblick</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="reklamations-fall">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: wie dem Kunden geholfen wird.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 07 Status-Dashboard -->
+      <article class="blatt" data-branche="handwerk treuhand" data-kat="reporting" data-groesse="gross" data-auto="hoch">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-07</span>
+          <span class="blatt-title">Status-Dashboard</span>
+          <span class="blatt-meta"><span class="blatt-tag">Daten &amp; Reporting</span><span class="blatt-tag">gross</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">&laquo;Wie weit sind wir?&raquo; kann heute niemand beantworten, ohne drei Leute zu fragen
+        und zwei Listen zu &ouml;ffnen.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Alle Vorg&auml;nge melden ihren Status an einen Ort</li>
+                <li>Offene F&auml;lle, Fristen und Engp&auml;sse werden sichtbar</li>
+                <li>Warnschwellen melden sich, bevor es brennt</li>
+                <li class="mensch">Priorit&auml;ten setzt weiterhin der Betrieb</li>
+                <li>Wochen&uuml;bersicht entsteht automatisch</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Stand aktualisiert|14 offene Vorgänge · 2 mit Frist diese Woche","Engpass sichtbar|Montage-Team überbucht in KW 33","Warnung ausgelöst|Frist-Vorgang seit 3 Tagen ohne Bewegung","ENTSCHEIDUNG|Priorität setzt der Betrieb – mit vollem Bild","Wochenübersicht erstellt|Automatisch, jeden Freitag"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Eine Antwort auf &laquo;Wie weit sind wir?&raquo; &ndash; jederzeit, ohne Nachfragen, ohne Listen-Archäologie.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Status aus den laufenden Systemen</li><li>Ihre Warnschwellen</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>Anfragen, Offerten, Termine, F&auml;lle</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Kundensicht: &laquo;Wo steht mein Auftrag?&raquo;</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Lebt von gepflegten Vorg&auml;ngen &ndash; darum geh&ouml;ren die anderen Systeme zuerst</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="status-dashboard">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: was wichtig ist, entscheidet der Betrieb.</small>
+          </div>
+        </div>
+      </article>
+
+      <!-- 08 Bewertungs-Nachlauf -->
+      <article class="blatt" data-branche="handwerk praxis" data-kat="bewertungen" data-groesse="klein" data-auto="hoch">
+        <button type="button" class="blatt-head" aria-expanded="false">
+          <span class="blatt-no">S-08</span>
+          <span class="blatt-title">Bewertungs-Nachlauf</span>
+          <span class="blatt-meta"><span class="blatt-tag">Bewertungen</span><span class="blatt-tag">klein</span></span>
+          <span class="blatt-arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="blatt-problem">Zufriedene Kunden bewerten nie, unzufriedene sofort &ndash; weil niemand
+        systematisch nachfragt.</p>
+        <div class="blatt-body">
+          <div class="blatt-grid">
+            <div class="blatt-cell">
+              <h3>Ablauf</h3>
+              <ol class="blatt-ablauf">
+                <li>Auftrag wird abgeschlossen</li>
+                <li>Kunde erh&auml;lt eine kurze Feedback-Frage</li>
+                <li>Zufrieden? Dann folgt die Bitte um eine Bewertung</li>
+                <li class="mensch">Kritik landet zuerst intern &ndash; und wird behandelt</li>
+                <li>Abschluss wird dokumentiert</li>
+              </ol>
+              <h3>Mini-Durchlauf</h3>
+              <div class="mini" data-mini='["Auftrag abgeschlossen|Feedback-Frage geht automatisch raus","Antwort: zufrieden|Bitte um Google-Bewertung folgt","Antwort: kritisch|Landet intern – nicht im Netz","BEHANDLUNG|Der Betrieb meldet sich persönlich","Dokumentiert|Jedes Feedback hat einen Abschluss"]'></div>
+            </div>
+            <div class="blatt-cell">
+              <h3>Nutzen</h3>
+              <p class="blatt-nutzen">Mehr echte Bewertungen von zufriedenen Kunden &ndash; und Kritik wird zuerst gel&ouml;st statt ver&ouml;ffentlicht.</p>
+              <h3>N&ouml;tige Daten</h3>
+              <ul class="blatt-dots"><li>Abschluss-Signal aus dem Auftrag</li><li>Ihr Google-Profil</li></ul>
+              <h3>Integrationen</h3>
+              <ul class="blatt-dots"><li>E-Mail / SMS</li><li>Google Business</li></ul>
+              <h3>Erweiterungen</h3>
+              <ul class="blatt-dots"><li>Auswertung wiederkehrender Kritikpunkte</li></ul>
+              <h3>Grenzen &amp; Risiken</h3>
+              <ul class="blatt-dots limits"><li>Bewertungen d&uuml;rfen nie gekauft oder gefiltert erzwungen werden &ndash; nur ehrlich nachgefragt</li></ul>
+            </div>
+          </div>
+          <div class="blatt-foot">
+            <a class="blatt-cta" href="index.html#analyse" data-lib="bewertungs-nachlauf">F&uuml;r meinen Betrieb anfragen &rarr;</a>
+            <small>Menschliche Entscheidung: auf Kritik antwortet ein Mensch.</small>
+          </div>
+        </div>
+      </article>
+
+      <p class="lib-leer" id="libLeer" hidden>Kein System passt zu dieser Filter-Kombination.
+      Setzen Sie einen Filter zur&uuml;ck &ndash; oder fragen Sie uns direkt: genau daf&uuml;r ist die
+      <a href="index.html#analyse">Analyse</a> da.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>&copy; 2026 WebUpgrade Pro &middot; Z&uuml;rich</span>
+  <a href="index.html">Startseite</a>
+  <a href="impressum.html">Impressum</a>
+  <a href="datenschutz.html">Datenschutz</a>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+  // ── Filter ──
+  const dims = ['branche', 'kat', 'groesse', 'auto'];
+  const state = { branche: 'alle', kat: 'alle', groesse: 'alle', auto: 'alle' };
+  const blaetter = [...document.querySelectorAll('.blatt')];
+  const countEl = document.getElementById('libCount');
+  const leerEl = document.getElementById('libLeer');
+
+  function apply() {
+    let n = 0;
+    blaetter.forEach(b => {
+      const ok = dims.every(d => state[d] === 'alle' || (b.dataset[d] || '').split(' ').includes(state[d]));
+      b.hidden = !ok;
+      if (ok) n++;
+    });
+    countEl.textContent = n + ' von ' + blaetter.length + ' Systemen';
+    leerEl.hidden = n > 0;
+  }
+  document.querySelectorAll('.regal-grp').forEach(grp => {
+    grp.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-f]');
+      if (!btn) return;
+      grp.querySelectorAll('button').forEach(b => b.classList.remove('is-on'));
+      btn.classList.add('is-on');
+      state[grp.dataset.dim] = btn.dataset.f;
+      apply();
+    });
+  });
+  document.getElementById('libReset').addEventListener('click', () => {
+    dims.forEach(d => { state[d] = 'alle'; });
+    document.querySelectorAll('.regal-grp').forEach(grp => {
+      grp.querySelectorAll('button').forEach((b, i) => b.classList.toggle('is-on', i === 0));
+    });
+    apply();
+  });
+
+  // ── Aufklappen ──
+  document.querySelectorAll('.blatt-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const blatt = head.closest('.blatt');
+      const open = blatt.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // ── Mini-Durchlauf ──
+  document.querySelectorAll('.mini').forEach(mini => {
+    let steps;
+    try { steps = JSON.parse(mini.dataset.mini); } catch (e) { return; }
+    const head = document.createElement('div');
+    head.className = 'mini-head';
+    head.innerHTML = '<span>Mini-Durchlauf · DEMO</span><span class="mini-status">bereit</span>';
+    const ol = document.createElement('ol');
+    ol.className = 'mini-steps';
+    steps.forEach(raw => {
+      const [t, d] = raw.split('|');
+      const li = document.createElement('li');
+      const strong = document.createElement('strong'); strong.textContent = t;
+      const em = document.createElement('em'); em.textContent = d || '';
+      li.appendChild(strong); li.appendChild(em);
+      ol.appendChild(li);
+    });
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'mini-btn'; btn.textContent = 'Durchlauf starten';
+    mini.appendChild(head); mini.appendChild(ol); mini.appendChild(btn);
+    const status = head.querySelector('.mini-status');
+    let i = -1;
+    btn.addEventListener('click', () => {
+      i++;
+      if (i >= steps.length) {
+        i = -1;
+        [...ol.children].forEach(li => li.classList.remove('is-now'));
+        status.textContent = 'bereit';
+        btn.textContent = 'Durchlauf starten';
+        btn.classList.remove('gold');
+        return;
+      }
+      [...ol.children].forEach((li, k) => li.classList.toggle('is-now', k === i));
+      const t = steps[i].split('|')[0];
+      const human = t === t.toUpperCase() && /[A-ZÄÖÜ]/.test(t);
+      status.textContent = human ? 'menschliche Entscheidung' : 'Schritt ' + (i + 1) + ' von ' + steps.length;
+      btn.classList.toggle('gold', human);
+      btn.textContent = i === steps.length - 1 ? 'Abschliessen' : (human ? 'Entscheiden →' : 'Weiter →');
+    });
+  });
+
+  // ── Geteilter Funnel-Zustand (§12): Auswahl merken, nie Kontaktdaten ──
+  document.querySelectorAll('[data-lib]').forEach(a => {
+    a.addEventListener('click', () => {
+      try {
+        localStorage.setItem('wup_demo_v1', JSON.stringify({ v: 'bibliothek:' + a.dataset.lib, t: Date.now() }));
+      } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
