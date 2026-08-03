@@ -1795,6 +1795,46 @@
     }
     @media (max-width: 560px) { .fl-grid { grid-template-columns: 1fr; } }
 
+    /* ── BRANCHEN-SIMULATION ── */
+    .bs { margin-top: 2rem; padding: 0; overflow: hidden; }
+    .bs-switch { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line-2); }
+    .bs-tab { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-2); background: transparent; border: 0; border-bottom: 2px solid transparent;
+      padding: .9rem 1rem; cursor: pointer; transition: color 260ms var(--e-out-quart), border-color 260ms var(--e-out-quart); }
+    .bs-tab + .bs-tab { border-left: 1px solid var(--line-2); }
+    .bs-tab.is-on { color: var(--mark); border-bottom-color: var(--mark); }
+    .bs-body { display: grid; grid-template-columns: 1fr 1.15fr 1fr; }
+    .bs-cell { padding: 1.4rem 1.6rem 1.6rem; border-right: 1px solid var(--line-2); min-width: 0; }
+    .bs-cell:last-child { border-right: 0; }
+    .bs-h { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-2); margin: 0 0 .9rem; }
+    .bs-list, .bs-states { list-style: none; margin: 0; padding: 0; }
+    .bs-list li { padding: .5rem .7rem; margin-bottom: .5rem; border: 1px solid var(--line-2);
+      border-radius: 2px; font-size: .86rem; color: var(--ink); }
+    .bs-list li em { display: block; font-style: normal; font-size: .74rem; color: var(--ink-2); margin-top: .15rem; }
+    .bs-flow { list-style: none; margin: 0; padding: 0; counter-reset: bsf; }
+    .bs-flow li { position: relative; counter-increment: bsf; padding: .42rem 0 .42rem 2rem; font-size: .86rem; color: var(--ink); }
+    .bs-flow li::before { content: counter(bsf, decimal-leading-zero); position: absolute; left: 0; top: .52rem;
+      font-family: var(--mono); font-size: .66rem; color: var(--mark); letter-spacing: .06em; }
+    .bs-flow li.bs-human { color: var(--ink); }
+    .bs-flow li.bs-human::after { content: 'MENSCH'; font-family: var(--mono); font-size: .58rem;
+      letter-spacing: .1em; color: var(--signal); border: 1px solid var(--signal); padding: .08rem .35rem;
+      margin-left: .5rem; vertical-align: middle; }
+    .bs-states li { display: inline-block; font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+      color: var(--mark); border: 1px solid var(--line-3); padding: .25rem .55rem; margin: 0 .4rem .45rem 0; }
+    .bs-nutzen { margin: 1rem 0 0; padding-top: .9rem; border-top: 1px solid var(--line-2);
+      font-size: .86rem; color: var(--ink); }
+    .bs-hinweis { margin: .6rem 0 0; font-size: .74rem; color: var(--ink-2); }
+    .bs-foot { border-top: 1px solid var(--line-2); }
+    .bs-cell > * { opacity: 1; }
+    .bs-body.is-swap .bs-cell > * { opacity: 0; transform: translateY(6px); transition: none; }
+    .bs-body .bs-cell > * { transition: opacity 360ms var(--e-out-quart), transform 360ms var(--e-out-quart); }
+    @media (max-width: 900px) {
+      .bs-body { grid-template-columns: 1fr; }
+      .bs-cell { border-right: 0; border-bottom: 1px solid var(--line-2); padding: 1.2rem; }
+      .bs-cell:last-child { border-bottom: 0; }
+    }
+
     /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -2783,6 +2823,44 @@
         <span><strong>Intelligent:</strong> 1 Frage zu Beginn &middot; nur relevante Folgefragen &middot; jede Frage begr&uuml;ndet</span>
       </p>
       <p class="sr-only" role="status" aria-live="polite" id="flSay"></p>
+    </div>
+
+
+    <!-- BRANCHEN-SIMULATION (§9) -->
+    <div class="bs panel reveal" id="branchen">
+      <header class="ps-head">
+        <span class="db-kicker">Branchen-Simulation</span>
+        <h3 class="db-title">Wechseln Sie die Branche &ndash; und das ganze System denkt anders</h3>
+        <p class="db-sub">Nicht nur Farben und Bilder: andere Fragen, andere Abl&auml;ufe, andere Statusw&ouml;rter,
+        anderer Nutzen. Genau das unterscheidet ein System von einer Vorlage.</p>
+      </header>
+
+      <div class="bs-switch" role="group" aria-label="Branche w&auml;hlen">
+        <button type="button" class="bs-tab is-on" aria-pressed="true" data-b="schreinerei">Schreinerei</button>
+        <button type="button" class="bs-tab" aria-pressed="false" data-b="praxis">Praxis</button>
+        <button type="button" class="bs-tab" aria-pressed="false" data-b="treuhand">Treuhand</button>
+      </div>
+
+      <div class="bs-body" id="bsBody">
+        <div class="bs-cell">
+          <h4 class="bs-h">So fragt das System</h4>
+          <ul class="bs-list" id="bsFragen"></ul>
+        </div>
+        <div class="bs-cell">
+          <h4 class="bs-h">So l&auml;uft der Prozess</h4>
+          <ol class="bs-flow" id="bsFlow"></ol>
+        </div>
+        <div class="bs-cell">
+          <h4 class="bs-h">So spricht der Status</h4>
+          <ul class="bs-states" id="bsStates"></ul>
+          <p class="bs-nutzen" id="bsNutzen"></p>
+          <p class="bs-hinweis" id="bsHinweis" hidden></p>
+        </div>
+      </div>
+
+      <div class="ps-actions bs-foot">
+        <a class="db-cta" href="#analyse" id="bsCta" data-einstieg="branchen-simulation">F&uuml;r meine Branche durchdenken &rarr;</a>
+      </div>
     </div>
 
   </div>
@@ -4084,6 +4162,107 @@ window.wupDemo = {
   });
 
   document.getElementById('flAgain').addEventListener('click', () => showStep(1));
+})();
+
+// ── BRANCHEN-SIMULATION (§9) ──
+(() => {
+  const root = document.getElementById('branchen');
+  if (!root) return;
+  const body = document.getElementById('bsBody');
+  const B = {
+    schreinerei: {
+      fragen: [
+        ['Worum geht es?', 'Möbel · Innenausbau · Reparatur'],
+        ['Haben Sie Masse oder Fotos?', 'Direkt hochladen – spart den ersten Termin'],
+        ['Bis wann soll es fertig sein?', 'Steuert Priorität und Aufmass-Termin']
+      ],
+      flow: [
+        ['Projektanfrage mit Fotos und Massen', false],
+        ['Aufmass-Termin vorgeschlagen', false],
+        ['Offerte kalkuliert und geprüft', false],
+        ['Freigabe durch den Kunden', true],
+        ['Produktionsstatus sichtbar', false],
+        ['Montage bestätigt · Abschluss dokumentiert', false]
+      ],
+      states: ['eingegangen', 'Aufmass geplant', 'Offerte offen', 'freigegeben', 'in Produktion', 'montiert'],
+      nutzen: 'Weniger Anfahrten, keine vergessenen Masse: Die Anfrage kommt mit Fotos und Massen an, bevor jemand ins Auto steigt.'
+    },
+    praxis: {
+      fragen: [
+        ['Welche Terminart brauchen Sie?', 'Erstgespräch · Kontrolle · Akut'],
+        ['Waren Sie schon bei uns?', 'Steuert, welche Unterlagen nötig sind'],
+        ['Gibt es Vorbefunde?', 'Nur falls vorhanden – sicher übermittelt']
+      ],
+      flow: [
+        ['Terminart und Vorabfragen erfasst', false],
+        ['Passende Zeiten vorgeschlagen', false],
+        ['Unterlagen sicher angefragt', false],
+        ['Vorbereitung für die Sprechstunde', false],
+        ['Prüfung sensibler Angaben', true],
+        ['Erinnerung und Nachsorge geplant', false]
+      ],
+      states: ['angefragt', 'Termin bestätigt', 'Unterlagen offen', 'vorbereitet', 'in Behandlung', 'Nachsorge läuft'],
+      nutzen: 'Ruhigere Anmeldung, vollständige Unterlagen: Das Telefon klingelt seltener, und die Sprechstunde beginnt vorbereitet.',
+      hinweis: 'Sensible Daten bleiben unter menschlicher Kontrolle – das System bereitet vor, entschieden wird in der Praxis.'
+    },
+    treuhand: {
+      fragen: [
+        ['Was steht an?', 'Abschluss · Steuern · Lohn · Beratung'],
+        ['Welche Unterlagen liegen vor?', 'Upload-Portal statt E-Mail-Anhänge'],
+        ['Welche Frist gilt?', 'Das System überwacht sie mit']
+      ],
+      flow: [
+        ['Mandanten-Onboarding mit Checkliste', false],
+        ['Dokumente im Portal gesammelt', false],
+        ['Fehlende Unterlagen automatisch angemahnt', false],
+        ['Fristen überwacht · Status sichtbar', false],
+        ['Freigabe des Abschlusses', true],
+        ['Bericht erstellt · wiederkehrend geplant', false]
+      ],
+      states: ['onboarding', 'Unterlagen offen', 'in Bearbeitung', 'Frist überwacht', 'zur Freigabe', 'abgeschlossen'],
+      nutzen: 'Keine Unterlagen-Jagd per E-Mail: Das Portal sammelt, mahnt und dokumentiert – die Fachleute rechnen statt nachzufragen.'
+    }
+  };
+
+  function li(html) { const el = document.createElement('li'); el.innerHTML = html; return el; }
+  function render(key) {
+    const d = B[key];
+    const fragen = document.getElementById('bsFragen');
+    const flow = document.getElementById('bsFlow');
+    const states = document.getElementById('bsStates');
+    fragen.innerHTML = ''; flow.innerHTML = ''; states.innerHTML = '';
+    d.fragen.forEach(([q, why]) => {
+      const el = li('');
+      const strong = document.createElement('strong'); strong.textContent = q;
+      const em = document.createElement('em'); em.textContent = why;
+      el.appendChild(strong); el.appendChild(em);
+      fragen.appendChild(el);
+    });
+    d.flow.forEach(([t, human]) => {
+      const el = li('');
+      el.textContent = t;
+      if (human) el.classList.add('bs-human');
+      flow.appendChild(el);
+    });
+    d.states.forEach(t => { const el = li(''); el.textContent = t; states.appendChild(el); });
+    document.getElementById('bsNutzen').textContent = d.nutzen;
+    const hw = document.getElementById('bsHinweis');
+    hw.hidden = !d.hinweis;
+    if (d.hinweis) hw.textContent = d.hinweis;
+  }
+  render('schreinerei');
+
+  root.querySelector('.bs-switch').addEventListener('click', e => {
+    const btn = e.target.closest('.bs-tab');
+    if (!btn || btn.classList.contains('is-on')) return;
+    root.querySelectorAll('.bs-tab').forEach(b => { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('is-on'); btn.setAttribute('aria-pressed', 'true');
+    body.classList.add('is-swap');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      render(btn.dataset.b);
+      body.classList.remove('is-swap');
+    }));
+  });
 })();
 
 // ── SYSTEME ZUM ANFASSEN ──
