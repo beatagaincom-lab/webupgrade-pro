@@ -107,6 +107,8 @@
     /* scroll-behavior: smooth removed — Lenis handles all scrolling */
     html.lenis, html.lenis body { height: auto; }
 
+    html { scroll-padding-top: 90px; }
+
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
@@ -1583,6 +1585,95 @@
       .tk-perf::after  { right: -1.2rem; }
     }
 
+    /* ── DER DIGITALE BETRIEB ── */
+    .db { margin-bottom: 2.6rem; padding: 0; overflow: hidden; }
+    .db-head { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+      padding: 1.6rem 1.8rem 1.4rem; border-bottom: 1px solid var(--line-2);
+      background: linear-gradient(90deg, rgba(6,15,34,.97) 0%, rgba(6,15,34,.97) 55%, rgba(6,15,34,.55) 100%),
+                  url('img/hero-werkstatt.webp') right center / cover no-repeat; }
+    .db-kicker { font: 600 .68rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--mark); }
+    .db-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -.4px; margin: .35rem 0 .4rem; }
+    .db-sub { font-size: .92rem; color: var(--ink-2); line-height: 1.6; max-width: 34em; }
+    .db-controls { display: flex; flex-direction: column; gap: .8rem; align-items: flex-end; justify-content: center; }
+    .db-kanal { display: flex; gap: .4rem; }
+    .db-k { background: rgba(2,8,23,.55); border: 1px solid var(--line-2); border-radius: 2px;
+      color: var(--ink-2); font: 600 .78rem/1 'Inter', sans-serif; padding: .5rem .8rem; cursor: pointer;
+      transition: border-color .25s var(--e-out-quart), color .25s var(--e-out-quart); }
+    .db-k.is-on { border-color: var(--mark); color: var(--mark); }
+    .db-start { background: var(--mark); color: #04121f; border: none; border-radius: 2px;
+      font: 700 .95rem/1 'Inter', sans-serif; padding: .9rem 1.5rem; cursor: pointer;
+      transition: background-color .25s var(--e-out-quart), transform 70ms linear; }
+    .db-start:hover { background: #5ecbfa; }
+    .db-start:active { transform: scale(.972); }
+    .db-start[disabled] { opacity: .45; cursor: default; }
+
+    .db-body { display: grid; grid-template-columns: 7fr 5fr; gap: 0; }
+    .db-rail { list-style: none; margin: 0; padding: 1.4rem 1.8rem 1.6rem; border-right: 1px solid var(--line-2); }
+    .db-phase { font: 600 .66rem/1 var(--mono); letter-spacing: .2em; text-transform: uppercase;
+      color: var(--ink-2); margin: 1.1rem 0 .5rem; padding-left: 1.9rem; }
+    .db-phase:first-child { margin-top: 0; }
+    .db-st { position: relative; display: grid; grid-template-columns: 1.1rem auto 1fr auto;
+      align-items: baseline; gap: .7rem; padding: .55rem 0 .55rem .1rem; opacity: .38;
+      transition: opacity 300ms var(--e-out-quart); }
+    .db-st.on { opacity: 1; }
+    .db-dot { width: 9px; height: 9px; border: 1px solid var(--line-3); background: none;
+      border-radius: 0; align-self: center; transition: background-color 260ms var(--e-out-quart), border-color 260ms var(--e-out-quart); }
+    .db-st.on .db-dot { background: var(--mark); border-color: var(--mark); }
+    .db-st.db-warn.on .db-dot { background: var(--signal); border-color: var(--signal); }
+    .db-st.db-human.on .db-dot { background: var(--signal); border-color: var(--signal); }
+    .db-who { font: 600 .62rem/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid var(--line-2); padding: .1rem .4rem; color: var(--ink-2); white-space: nowrap; }
+    .db-st.on .db-auto { color: var(--mark); border-color: rgba(56,189,248,.4); }
+    .db-st.on .db-mensch { color: var(--signal); border-color: rgba(240,169,44,.5); }
+    .db-txt strong { display: block; font-size: .92rem; font-weight: 600; color: var(--ink); }
+    .db-txt em { display: block; font-style: normal; font-size: .78rem; color: var(--ink-2); line-height: 1.5; }
+    .db-state { font: 600 .66rem/1.5 var(--mono); letter-spacing: .06em; color: var(--ink-2);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart); }
+    .db-st.on .db-state { opacity: 1; transform: none; }
+    .db-st.done .db-state { color: var(--mark); }
+    .db-st.db-warn.on .db-state, .db-st.db-human.on:not(.done) .db-state { color: var(--signal); }
+    .db-free { margin-top: .5rem; background: var(--signal); color: #1d1204; border: none; border-radius: 2px;
+      font: 700 .85rem/1 'Inter', sans-serif; padding: .65rem 1.1rem; cursor: pointer;
+      transition: transform 70ms linear, background-color .25s var(--e-out-quart); }
+    .db-free:hover { background: #ffc257; }
+    .db-free:active { transform: scale(.972); }
+
+    .db-card { padding: 1.4rem 1.6rem; background: rgba(2,8,23,.45); }
+    .db-card-head { display: flex; justify-content: space-between; align-items: baseline;
+      font: 600 .7rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-2); padding-bottom: .8rem; border-bottom: 1px solid var(--line-2); }
+    .db-status { color: var(--signal); }
+    .db-fields { margin: .4rem 0 0; }
+    .db-fields > div { display: flex; justify-content: space-between; gap: 1rem;
+      padding: .5rem 0; border-bottom: 1px solid var(--line-1); }
+    .db-fields dt { font-size: .78rem; color: var(--ink-2); }
+    .db-fields dd { font: 600 .78rem/1.5 var(--mono); color: var(--ink); text-align: right; margin: 0;
+      transition: opacity var(--t-entry) var(--e-out-quart), transform var(--t-entry) var(--e-out-quart); }
+    .db-fields dd.entering { opacity: 0; transform: translateY(8px); }
+    .db-result { margin-top: 1.2rem; border-left: 2px solid var(--signal); padding-left: 1rem; }
+    .db-result-line { font-size: .9rem; color: var(--ink); }
+    .db-result-line strong { font-family: var(--mono); }
+    .db-result-note { font-size: .76rem; color: var(--ink-2); margin: .4rem 0 .9rem; }
+    .db-cta { display: inline-block; background: var(--mark); color: #04121f; border-radius: 2px;
+      font: 700 .85rem/1 'Inter', sans-serif; padding: .7rem 1.1rem; text-decoration: none; margin-right: .8rem; }
+    .db-cta:hover { background: #5ecbfa; }
+    .db-reset { background: none; border: none; color: var(--ink-2); font: 500 .8rem/1 'Inter', sans-serif;
+      cursor: pointer; padding: .5rem 0; }
+    .db-reset:hover { color: var(--ink); }
+    .db-tools-label { font: 600 .85rem/1.5 'Inter', sans-serif; color: var(--ink-2); margin: 0 0 .9rem; }
+
+    @media (max-width: 900px) {
+      .db-body { grid-template-columns: 1fr; }
+      .db-rail { border-right: 0; border-bottom: 1px solid var(--line-2); padding: 1.2rem 1.2rem 1.4rem; }
+      .db-head { padding: 1.3rem 1.2rem 1.1rem;
+        background: linear-gradient(rgba(6,15,34,.96), rgba(6,15,34,.96)), url('img/hero-werkstatt.webp') center / cover no-repeat; }
+      .db-controls { align-items: stretch; width: 100%; }
+      .db-start { width: 100%; }
+      .db-card { padding: 1.2rem; }
+      .db-state { display: none; }
+    }
+
     /* ── STILLE MESSACHSE    /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -1973,6 +2064,71 @@
         Alles läuft direkt in Ihrem Browser. Es wird nichts gesendet, nichts gespeichert, nichts gebucht.
       </p>
     </div>
+
+    <!-- DER DIGITALE BETRIEB -->
+    <div class="db panel reveal" id="db">
+      <header class="db-head">
+        <div>
+          <span class="db-kicker">Live-Durchlauf</span>
+          <h3 class="db-title">Der digitale Betrieb</h3>
+          <p class="db-sub">Eine Kundin fragt bei einer Schreinerei einen Einbauschrank an.
+          L&ouml;sen Sie die Anfrage aus &ndash; und sehen Sie, was ein modernes System daraus macht.</p>
+        </div>
+        <div class="db-controls">
+          <div class="db-kanal" role="radiogroup" aria-label="Eingangskanal">
+            <button type="button" class="db-k is-on" data-k="Website">Website</button>
+            <button type="button" class="db-k" data-k="E-Mail">E-Mail</button>
+            <button type="button" class="db-k" data-k="WhatsApp">WhatsApp</button>
+          </div>
+          <button type="button" class="db-start" id="dbStart">Anfrage ausl&ouml;sen &rarr;</button>
+        </div>
+      </header>
+
+      <div class="db-body">
+        <ol class="db-rail" id="dbRail">
+          <li class="db-phase">Eingang</li>
+          <li class="db-st" data-i="0"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Anfrage eingegangen</strong><em id="dbKanalTxt">&uuml;ber die Website &middot; 14:32</em></span><span class="db-state"></span></li>
+          <li class="db-st" data-i="1"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Daten gepr&uuml;ft</strong><em>Name, Telefon, Anliegen vollst&auml;ndig</em></span><span class="db-state"></span></li>
+          <li class="db-st db-warn" data-i="2"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Information fehlt: Foto der Nische</strong><em>R&uuml;ckfrage wird automatisch versendet &ndash; freundlich, mit Beispielbild</em></span><span class="db-state"></span></li>
+          <li class="db-st" data-i="3"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Antwort eingetroffen</strong><em>2 Fotos erhalten &ndash; Vorgang wird fortgesetzt</em></span><span class="db-state"></span></li>
+          <li class="db-phase">Zuordnung</li>
+          <li class="db-st" data-i="4"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Kategorisiert &amp; priorisiert</strong><em>Offerte M&ouml;belbau &middot; Dringlichkeit: normal, diese Woche</em></span><span class="db-state"></span></li>
+          <li class="db-st" data-i="5"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Zust&auml;ndigkeit bestimmt</strong><em>M. Brunner &ndash; M&ouml;belbau, am wenigsten offene Vorg&auml;nge</em></span><span class="db-state"></span></li>
+          <li class="db-st" data-i="6"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Kundendatensatz angelegt</strong><em>Kontakt, Anliegen, Fotos &ndash; alles an einem Ort</em></span><span class="db-state"></span></li>
+          <li class="db-phase">Reaktion</li>
+          <li class="db-st" data-i="7"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Interne Aufgabe erstellt</strong><em>&laquo;Aufmass-Termin vorschlagen&raquo; &ndash; mit allen Unterlagen verkn&uuml;pft</em></span><span class="db-state"></span></li>
+          <li class="db-st db-human" data-i="8"><span class="db-dot"></span><span class="db-who db-mensch">Mensch</span><span class="db-txt"><strong>Bestätigung wartet auf Freigabe</strong><em>Antwortvorschlag liegt bereit &ndash; hier entscheidet der Betrieb, nicht die Maschine</em>
+            <button type="button" class="db-free" id="dbFree" hidden>Freigeben &rarr;</button></span><span class="db-state"></span></li>
+          <li class="db-st" data-i="9"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Best&auml;tigung &amp; Terminvorschlag versendet</strong><em>Kundin erh&auml;lt Antwort mit 2 Terminoptionen</em></span><span class="db-state"></span></li>
+          <li class="db-phase">Abschluss</li>
+          <li class="db-st" data-i="10"><span class="db-dot"></span><span class="db-who db-auto">Automatik</span><span class="db-txt"><strong>Im Dashboard &middot; Follow-up geplant</strong><em>Ohne Antwort in 3 Tagen: freundliche Erinnerung &ndash; automatisch</em></span><span class="db-state"></span></li>
+        </ol>
+
+        <aside class="db-card" aria-live="polite">
+          <header class="db-card-head">
+            <span>Vorgang <span id="dbNr">&mdash;</span></span>
+            <span class="db-status" id="dbStatus">bereit</span>
+          </header>
+          <dl class="db-fields">
+            <div><dt>Eingang</dt><dd data-f="eingang">&mdash;</dd></div>
+            <div><dt>Kundin</dt><dd data-f="kunde">&mdash;</dd></div>
+            <div><dt>Anliegen</dt><dd data-f="anliegen">&mdash;</dd></div>
+            <div><dt>Unterlagen</dt><dd data-f="docs">&mdash;</dd></div>
+            <div><dt>Kategorie</dt><dd data-f="kat">&mdash;</dd></div>
+            <div><dt>Zust&auml;ndig</dt><dd data-f="wer">&mdash;</dd></div>
+            <div><dt>N&auml;chster Schritt</dt><dd data-f="next">&mdash;</dd></div>
+          </dl>
+          <div class="db-result" id="dbResult" hidden>
+            <p class="db-result-line"><strong>9</strong> Schritte automatisch &middot; <strong>1</strong> menschliche Entscheidung &middot; <strong>0</strong> Doppeleingaben</p>
+            <p class="db-result-note">Antwort beim Kunden in Minuten statt am n&auml;chsten Arbeitstag &ndash; Annahme, abh&auml;ngig vom Betrieb.</p>
+            <a class="db-cta" href="#analyse" data-einstieg="digitaler-betrieb">Wie s&auml;he das bei Ihrem Betrieb aus? &rarr;</a>
+            <button type="button" class="db-reset" id="dbReset">Nochmals ansehen</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <p class="db-tools-label">Und hier drei Werkzeuge daraus &ndash; einzeln zum Ausprobieren:</p>
 
     <div class="sys-tabs" role="tablist" aria-label="Drei Systeme zum Ausprobieren">
       <button type="button" role="tab" id="tab-termin" aria-controls="pan-termin" aria-selected="true" tabindex="0" class="sys-tab is-active">
@@ -3093,6 +3249,96 @@ function getSupabase(){
   }
   return _sbPromise;
 }
+
+// ── DER DIGITALE BETRIEB ──
+(() => {
+  const root = document.getElementById('db');
+  if (!root) return;
+  const dq = (s) => root.querySelector(s);
+  const dqa = (s) => [...root.querySelectorAll(s)];
+  const startBtn = dq('#dbStart'), freeBtn = dq('#dbFree'), resetBtn = dq('#dbReset');
+  const statusEl = dq('#dbStatus'), nrEl = dq('#dbNr'), resultEl = dq('#dbResult');
+  const sts = dqa('.db-st');
+  let kanal = 'Website';
+  let timers = [];
+  let running = false;
+  const T = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+  dqa('.db-k').forEach(b => b.addEventListener('click', () => {
+    dqa('.db-k').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+    kanal = b.dataset.k;
+    const t = dq('#dbKanalTxt');
+    if (t) t.textContent = (kanal === 'E-Mail' ? 'per E-Mail' : kanal === 'WhatsApp' ? 'per WhatsApp' : 'über die Website') + ' · 14:32';
+  }));
+
+  const STATES = ['eingegangen', 'geprüft', 'Information fehlt', 'fortgesetzt', 'zugewiesen', 'zugewiesen', 'angelegt', 'erstellt', 'wartet auf Freigabe', 'versendet', 'abgeschlossen'];
+  function setField(f, val) {
+    const el = dq('[data-f="' + f + '"]');
+    if (!el) return;
+    el.classList.add('entering');
+    el.textContent = val;
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('entering')));
+  }
+  function setStatus(t) { if (statusEl) statusEl.textContent = t; }
+  function activate(i) {
+    const st = sts[i];
+    if (!st) return;
+    st.classList.add('on');
+    const state = st.querySelector('.db-state');
+    if (state) state.textContent = STATES[i] || '';
+  }
+  function done(i) { const st = sts[i]; if (st) st.classList.add('done'); }
+
+  const SCRIPT = [
+    { i: 0, wait: 500, run: () => { setStatus('eingegangen'); setField('eingang', (kanal) + ' · 14:32'); setField('kunde', 'L. Steiner, Uster'); setField('anliegen', 'Einbauschrank Flur'); } },
+    { i: 1, wait: 800, run: () => { setStatus('wird geprüft'); } },
+    { i: 2, wait: 900, run: () => { setStatus('Information fehlt'); setField('docs', 'Foto fehlt → angefragt'); } },
+    { i: 3, wait: 1500, run: () => { setStatus('wird geprüft'); setField('docs', '2 Fotos erhalten'); done(2); } },
+    { i: 4, wait: 900, run: () => { setStatus('kategorisiert'); setField('kat', 'Offerte Möbelbau · normal'); } },
+    { i: 5, wait: 750, run: () => { setStatus('zugewiesen'); setField('wer', 'M. Brunner'); } },
+    { i: 6, wait: 750, run: () => { setField('next', 'Aufmass-Termin vorschlagen'); } },
+    { i: 7, wait: 750, run: () => {} },
+    { i: 8, wait: 800, run: () => { setStatus('wartet auf Freigabe'); if (freeBtn) freeBtn.hidden = false; } }
+  ];
+  const AFTER_FREE = [
+    { i: 9, wait: 350, run: () => { setStatus('versendet'); done(8); setField('next', 'Termin: 2 Vorschläge offen'); } },
+    { i: 10, wait: 900, run: () => { setStatus('abgeschlossen'); if (resultEl) resultEl.hidden = false; running = false; } }
+  ];
+  function play(list, k) {
+    if (k >= list.length) return;
+    const step = list[k];
+    T(() => {
+      activate(step.i);
+      step.run();
+      for (let j = 0; j < step.i; j++) if (!sts[j].classList.contains('db-human') || sts[j].classList.contains('done')) done(j);
+      play(list, k + 1);
+    }, step.wait);
+  }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    sts.forEach(s => s.classList.remove('on', 'done'));
+    dqa('.db-fields dd').forEach(d => { d.textContent = '—'; });
+    if (freeBtn) freeBtn.hidden = true;
+    if (resultEl) resultEl.hidden = true;
+    setStatus('bereit'); if (nrEl) nrEl.textContent = '—';
+    running = false;
+    if (startBtn) startBtn.disabled = false;
+  }
+  if (startBtn) startBtn.addEventListener('click', () => {
+    if (running) return;
+    reset();
+    running = true;
+    startBtn.disabled = true;
+    if (nrEl) nrEl.textContent = 'V-2026-118';
+    play(SCRIPT, 0);
+  });
+  if (freeBtn) freeBtn.addEventListener('click', () => {
+    freeBtn.hidden = true;
+    play(AFTER_FREE, 0);
+  });
+  if (resetBtn) resetBtn.addEventListener('click', reset);
+})();
 
 // ── SYSTEME ZUM ANFASSEN ──
 // Drei anfassbare Demo-Systeme (Termin / Offerte / Freigabe) in einem Tab-Register.
