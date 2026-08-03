@@ -1674,7 +1674,81 @@
       .db-state { display: none; }
     }
 
-    /* ── STILLE MESSACHSE    /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
+    /* ── PROZESS-STUDIO + VORHER/NACHHER ── */
+    .ps-build[hidden], .ps-actions[hidden], .ps-sim[hidden], .ps-eval[hidden], .vn-out[hidden] { display: none !important; }
+    .ps, .vn { margin-top: 2rem; padding: 0; overflow: hidden; }
+    .ps-head { padding: 1.6rem 1.8rem 1.3rem; border-bottom: 1px solid var(--line-2); }
+    .ps-head .db-sub { max-width: 60ch; }
+    .ps-build { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .ps-col { border: 0; border-right: 1px solid var(--line-2); margin: 0; padding: 1.2rem 1.4rem 1.4rem; min-width: 0; }
+    .ps-col:last-child { border-right: 0; }
+    .ps-col legend { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--ink-2); padding: 0 0 .4rem; float: left; width: 100%; }
+    .ps-hint { color: var(--ink-2); opacity: .6; text-transform: none; letter-spacing: .04em; margin-left: .4rem; }
+    .ps-chips { clear: both; display: flex; flex-wrap: wrap; gap: .45rem; padding-top: .55rem; }
+    .ps-chip { font-family: 'Inter', sans-serif; font-size: .82rem; color: var(--ink-2);
+      background: transparent; border: 1px solid var(--line-3); padding: .42rem .7rem; border-radius: 2px;
+      cursor: pointer; transition: color 260ms var(--e-out-quart), border-color 260ms var(--e-out-quart),
+      background-color 260ms var(--e-out-quart), transform 260ms var(--e-out-quart); }
+    .ps-chip:hover { color: var(--ink); border-color: var(--ink-2); }
+    .ps-chip.is-on { color: var(--mark); border-color: var(--mark); background: rgba(56,189,248,.07); }
+    .ps-chip:active { transform: scale(.97); }
+    .ps-actions { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
+      padding: 1.1rem 1.8rem 1.4rem; border-top: 1px solid var(--line-2); }
+    .ps-count { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; color: var(--ink-2); }
+    .ps-sim { border-top: 1px solid var(--line-2); }
+    .ps-rail { border-right: 0; }
+    .ps-eval { padding: 1.4rem 1.8rem 1.6rem; border-top: 1px solid var(--line-2); }
+    .ps-eval-list { display: grid; gap: 0; margin: .9rem 0 .4rem; }
+    .ps-eval-list > div { display: grid; grid-template-columns: 200px 1fr; gap: 1rem;
+      padding: .55rem 0; border-bottom: 1px solid var(--line-1); }
+    .ps-eval-list dt { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--ink-2); padding-top: .15rem; }
+    .ps-eval-list dd { font-size: .88rem; color: var(--ink); }
+    /* Vorher/Nachher */
+    .vn-pick { display: flex; flex-wrap: wrap; gap: .45rem; padding: 1.3rem 1.8rem .4rem; }
+    .vn-out { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-2); }
+    .vn-side { padding: 1.4rem 1.8rem 1.6rem; min-width: 0; }
+    .vn-today { border-right: 1px solid var(--line-2); }
+    .vn-h { font-family: var(--mono); font-size: .7rem; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--ink-2); margin: 0 0 1rem; }
+    .vn-system .vn-h { color: var(--mark); }
+    .vn-chain { list-style: none; margin: 0 0 1.2rem; padding: 0; }
+    .vn-chain li { position: relative; padding: .5rem 0 .5rem 1.6rem; font-size: .88rem; color: var(--ink); }
+    .vn-chain li::before { content: ''; position: absolute; left: 5px; top: 0; bottom: 0; width: 1px; background: var(--line-2); }
+    .vn-chain li:first-child::before { top: 50%; }
+    .vn-chain li:last-child::before { bottom: 50%; }
+    .vn-chain li::after { content: ''; position: absolute; left: 2px; top: calc(50% - 3px);
+      width: 7px; height: 7px; background: var(--panel); border: 1px solid var(--ink-2); }
+    .vn-chain-sys li::after { border-color: var(--mark); background: rgba(56,189,248,.15); }
+    .vn-chain .vn-sysname { display: inline-block; font-family: var(--mono); font-size: .62rem;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin-left: .55rem;
+      border: 1px solid var(--line-3); padding: .1rem .4rem; vertical-align: middle; }
+    .vn-chain .vn-flag { display: block; font-size: .74rem; color: var(--signal); margin-top: .15rem; }
+    .vn-chain li.vn-hop::after { border-color: var(--signal); }
+    .vn-chain li { opacity: 0; transform: translateY(6px);
+      transition: opacity 320ms var(--e-out-quart), transform 320ms var(--e-out-quart); }
+    .vn-chain li.is-in { opacity: 1; transform: none; }
+    .vn-stats { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--line-2); }
+    .vn-stats > div { display: flex; justify-content: space-between; gap: 1rem;
+      padding: .5rem 0; border-bottom: 1px solid var(--line-1); }
+    .vn-stats dt { font-size: .82rem; color: var(--ink-2); }
+    .vn-stats dd { font-family: var(--mono); font-size: .8rem; color: var(--ink); margin: 0; white-space: nowrap; }
+    .vn-stats .vn-bad dd { color: var(--signal); }
+    .vn-stats .vn-good dd { color: var(--mark); }
+    .vn-foot { grid-column: 1 / -1; padding: 1.2rem 1.8rem 1.5rem; border-top: 1px solid var(--line-2); }
+    .vn-foot .db-cta { margin-top: .8rem; }
+    @media (max-width: 900px) {
+      .ps-build { grid-template-columns: 1fr; }
+      .ps-col { border-right: 0; border-bottom: 1px solid var(--line-2); }
+      .ps-col:last-child { border-bottom: 0; }
+      .ps-head, .ps-actions, .ps-eval, .vn-side, .vn-foot { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .vn-pick { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .vn-out { grid-template-columns: 1fr; }
+      .vn-today { border-right: 0; border-bottom: 1px solid var(--line-2); }
+    }
+
+    /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
     .rail-line { position: absolute; left: 8px; top: 0; bottom: 0; width: 1px; background: var(--line-1); }
@@ -2451,6 +2525,135 @@
       </div>
 
     </div>
+
+    <p class="db-tools-label">Und jetzt Sie: Stellen Sie den Ablauf zusammen, der zu Ihrem Betrieb passt.</p>
+
+    <!-- PROZESS-STUDIO (§6) -->
+    <div class="ps panel reveal" id="studio">
+      <header class="ps-head">
+        <span class="db-kicker">Prozess-Studio</span>
+        <h3 class="db-title">Bauen Sie Ihren eigenen Prozess</h3>
+        <p class="db-sub">W&auml;hlen Sie Eingang, Verarbeitung und Ergebnis &ndash; dann l&auml;uft Ihr Prozess
+        live durch, inklusive der Stellen, an denen ein Mensch entscheidet.</p>
+      </header>
+
+      <div class="ps-build" id="psBuild">
+        <fieldset class="ps-col">
+          <legend>1 &middot; Eingang <span class="ps-hint">eine Auswahl</span></legend>
+          <div class="ps-chips" data-grp="in" role="group" aria-label="Eingang w&auml;hlen">
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="webform">Websiteformular</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="email">E-Mail</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="whatsapp">WhatsApp</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="tel">Telefonnotiz</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="qr">QR-Code</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="bestellung">Bestellung</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="termin">Terminbuchung</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="upload">Datei-Upload</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="intern">Mitarbeiter-Eingabe</button>
+          </div>
+        </fieldset>
+        <fieldset class="ps-col">
+          <legend>2 &middot; Verarbeitung <span class="ps-hint">mehrere m&ouml;glich</span></legend>
+          <div class="ps-chips" data-grp="work" role="group" aria-label="Verarbeitung w&auml;hlen">
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="pruefen">Daten pr&uuml;fen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="ergaenzen">Informationen erg&auml;nzen</button>
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="kat">Kategorisieren</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="prio">Priorisieren</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="preis">Preis berechnen</button>
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="wer">Zust&auml;ndigkeit bestimmen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="satz">Datensatz anlegen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="doc">Dokument erzeugen</button>
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="frei">Freigabe verlangen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="task">Aufgabe erstellen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="tvor">Termin vorbereiten</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="ki">KI-Auswertung</button>
+          </div>
+        </fieldset>
+        <fieldset class="ps-col">
+          <legend>3 &middot; Ergebnis <span class="ps-hint">mehrere m&ouml;glich</span></legend>
+          <div class="ps-chips" data-grp="out" role="group" aria-label="Ergebnis w&auml;hlen">
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="best">Best&auml;tigung senden</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="offerte">Angebot erzeugen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="buchung">Termin buchen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="pdf">PDF erstellen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="team">Team benachrichtigen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="crm">CRM aktualisieren</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="dash">Dashboard aktualisieren</button>
+            <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="follow">Follow-up planen</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="rechnung">Rechnung vorbereiten</button>
+            <button type="button" class="ps-chip" aria-pressed="false" data-v="archiv">Archivieren</button>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="ps-actions" id="psActions">
+        <button type="button" class="db-start" id="psRun">Prozess simulieren &rarr;</button>
+        <span class="ps-count" id="psCount">1 Eingang &middot; 4 Verarbeitungsschritte &middot; 2 Ergebnisse</span>
+      </div>
+
+      <div class="ps-sim" id="psSim" hidden>
+        <ol class="db-rail ps-rail" id="psRail"></ol>
+        <div class="ps-eval" id="psEval" hidden>
+          <p class="db-result-line" id="psEvalLine"></p>
+          <dl class="ps-eval-list">
+            <div><dt>Entfernte Fehlerquellen</dt><dd id="psEvalErr">&mdash;</dd></div>
+            <div><dt>Daf&uuml;r n&ouml;tig</dt><dd id="psEvalNeed">&mdash;</dd></div>
+            <div><dt>Verbindbar mit</dt><dd id="psEvalSys">&mdash;</dd></div>
+          </dl>
+          <p class="db-result-note">Die Simulation zeigt einen typischen Ablauf, keine Messung.
+          Was bei Ihrem Betrieb realistisch ist, kl&auml;ren wir in der Analyse &ndash; ohne erfundene Zahlen.</p>
+          <a class="db-cta" href="#analyse" data-einstieg="prozess-studio">Diesen Prozess f&uuml;r meinen Betrieb anfragen &rarr;</a>
+          <button type="button" class="db-reset" id="psAgain">Neu zusammenstellen</button>
+        </div>
+      </div>
+      <p class="sr-only" role="status" aria-live="polite" id="psSay"></p>
+    </div>
+
+    <!-- VORHER / NACHHER (§7) -->
+    <div class="vn panel reveal" id="vergleich">
+      <header class="ps-head">
+        <span class="db-kicker">Vorher / Nachher</span>
+        <h3 class="db-title">Wie viel Handarbeit steckt heute in Ihrem Ablauf?</h3>
+        <p class="db-sub">W&auml;hlen Sie die Schritte, die es bei Ihnen heute gibt.
+        Dann sehen Sie denselben Ablauf mit einem System &ndash; nebeneinander.</p>
+      </header>
+
+      <div class="vn-pick" id="vnPick">
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="anruf">Kunde ruft an</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="notiz">Mitarbeiter schreibt Notiz</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="excel">Daten in Excel &uuml;bertragen</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="word">Angebot in Word erstellt</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="pdf">PDF exportiert</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="mail">E-Mail geschrieben</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="kal">Termin separat eingetragen</button>
+        <button type="button" class="ps-chip is-on" aria-pressed="true" data-v="erinner">Erinnerung manuell erstellt</button>
+        <button type="button" class="ps-chip" aria-pressed="false" data-v="rueckruf">R&uuml;ckruf, weil etwas fehlt</button>
+        <button type="button" class="ps-chip" aria-pressed="false" data-v="ordner">Unterlagen im Ordner gesucht</button>
+      </div>
+
+      <div class="ps-actions">
+        <button type="button" class="db-start" id="vnRun">Vergleichen &rarr;</button>
+      </div>
+
+      <div class="vn-out" id="vnOut" hidden>
+        <div class="vn-side vn-today">
+          <h4 class="vn-h">Heute</h4>
+          <ol class="vn-chain" id="vnChainA"></ol>
+          <dl class="vn-stats" id="vnStatsA"></dl>
+        </div>
+        <div class="vn-side vn-system">
+          <h4 class="vn-h">Mit einem System</h4>
+          <ol class="vn-chain vn-chain-sys" id="vnChainB"></ol>
+          <dl class="vn-stats" id="vnStatsB"></dl>
+        </div>
+        <div class="vn-foot">
+          <p class="db-result-note">Annahme: Die gew&auml;hlten Schritte laufen &uuml;ber ein zentrales System.
+          Ihr tats&auml;chlicher Ablauf wird in der Analyse erfasst &ndash; nicht gesch&auml;tzt.</p>
+          <a class="db-cta" href="#analyse" data-einstieg="vorher-nachher">Meinen Ablauf pr&uuml;fen lassen &rarr;</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -3338,6 +3541,307 @@ function getSupabase(){
     play(AFTER_FREE, 0);
   });
   if (resetBtn) resetBtn.addEventListener('click', reset);
+})();
+
+// ── PROZESS-STUDIO (§6) ──
+(() => {
+  const root = document.getElementById('studio');
+  if (!root) return;
+  const build = document.getElementById('psBuild');
+  const actions = document.getElementById('psActions');
+  const sim = document.getElementById('psSim');
+  const rail = document.getElementById('psRail');
+  const evalBox = document.getElementById('psEval');
+  const say = document.getElementById('psSay');
+  const countEl = document.getElementById('psCount');
+  let timers = [];
+  const T = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const clearT = () => { timers.forEach(clearTimeout); timers = []; };
+
+  const IN = {
+    webform:   { t: 'Anfrage über das Websiteformular', d: 'Strukturiert erfasst – alle Pflichtangaben dabei', s: 'eingegangen' },
+    email:     { t: 'E-Mail eingegangen', d: 'Betreff und Absender erkannt, dem Vorgang zugeordnet', s: 'eingegangen' },
+    whatsapp:  { t: 'WhatsApp-Nachricht eingegangen', d: 'Nachricht und Fotos übernommen', s: 'eingegangen' },
+    tel:       { t: 'Telefonnotiz erfasst', d: 'Kurznotiz im System statt auf dem Zettel', s: 'erfasst' },
+    qr:        { t: 'QR-Code gescannt', d: 'Kunde landet direkt im richtigen Formular', s: 'eingegangen' },
+    bestellung:{ t: 'Bestellung eingegangen', d: 'Positionen und Menge strukturiert übernommen', s: 'eingegangen' },
+    termin:    { t: 'Terminbuchung eingegangen', d: 'Wunschtermin und Anliegen erfasst', s: 'eingegangen' },
+    upload:    { t: 'Datei hochgeladen', d: 'Dokument liegt beim Vorgang, nicht im Postfach', s: 'eingegangen' },
+    intern:    { t: 'Mitarbeiter-Eingabe', d: 'Intern erfasst – gleiche Struktur wie von aussen', s: 'erfasst' }
+  };
+  const WORK = [
+    ['pruefen',  { t: 'Daten geprüft', d: 'Pflichtangaben vollständig? Format korrekt?', s: 'geprüft' }],
+    ['ergaenzen',{ t: 'Informationen ergänzt', d: 'Bekannte Kundendaten automatisch dazugelegt', s: 'ergänzt' }],
+    ['kat',      { t: 'Kategorisiert', d: 'Anliegen einem Typ zugeordnet', s: 'zugeordnet' }],
+    ['prio',     { t: 'Priorisiert', d: 'Dringlichkeit anhand klarer Regeln gesetzt', s: 'priorisiert' }],
+    ['preis',    { t: 'Preis berechnet', d: 'Optionen und Bedingungen zusammengesetzt', s: 'berechnet' }],
+    ['wer',      { t: 'Zuständigkeit bestimmt', d: 'Landet direkt bei der richtigen Person', s: 'zugewiesen' }],
+    ['satz',     { t: 'Datensatz angelegt', d: 'Kontakt, Anliegen, Unterlagen – an einem Ort', s: 'angelegt' }],
+    ['doc',      { t: 'Dokument erzeugt', d: 'Vorlage mit den erfassten Daten gefüllt', s: 'erstellt' }],
+    ['ki',       { t: 'KI-Auswertung', d: 'Anliegen zusammengefasst, Unsicherheiten markiert', s: 'ausgewertet' }],
+    ['task',     { t: 'Aufgabe erstellt', d: 'Mit Frist und allen Unterlagen verknüpft', s: 'erstellt' }],
+    ['tvor',     { t: 'Termin vorbereitet', d: 'Passende Zeiten und Unterlagen bereitgelegt', s: 'vorbereitet' }],
+    ['frei',     { t: 'Wartet auf Freigabe', d: 'Vorschlag liegt bereit – hier entscheidet der Betrieb', s: 'wartet auf Freigabe', human: true }]
+  ];
+  const OUT = [
+    ['best',    { t: 'Bestätigung versendet', d: 'Kunde weiss sofort: angekommen, so geht es weiter', s: 'versendet' }],
+    ['offerte', { t: 'Angebot erzeugt', d: 'Aus den erfassten Daten – ohne Abtippen', s: 'erstellt' }],
+    ['buchung', { t: 'Termin gebucht', d: 'Direkt im Kalender, mit Erinnerung', s: 'gebucht' }],
+    ['pdf',     { t: 'PDF erstellt', d: 'Sauber formatiert, beim Vorgang abgelegt', s: 'erstellt' }],
+    ['team',    { t: 'Team benachrichtigt', d: 'Die Richtigen wissen Bescheid – ohne Rundmail', s: 'informiert' }],
+    ['crm',     { t: 'CRM aktualisiert', d: 'Kundenhistorie wächst von allein', s: 'aktualisiert' }],
+    ['dash',    { t: 'Dashboard aktualisiert', d: 'Stand jederzeit sichtbar, ohne Nachfragen', s: 'aktuell' }],
+    ['follow',  { t: 'Follow-up geplant', d: 'Ohne Antwort: freundliche Erinnerung – automatisch', s: 'geplant' }],
+    ['rechnung',{ t: 'Rechnung vorbereitet', d: 'Positionen übernommen, bereit zur Kontrolle', s: 'vorbereitet' }],
+    ['archiv',  { t: 'Archiviert', d: 'Auffindbar statt vergraben', s: 'archiviert' }]
+  ];
+  const ERRMAP = { pruefen: 'unvollständige Angaben', ergaenzen: 'verstreute Kundendaten', satz: 'doppelte Dateneingabe',
+    wer: 'liegengebliebene Anfragen', doc: 'Abtippfehler in Dokumenten', crm: 'veraltete Kundendaten',
+    follow: 'vergessenes Nachfassen', buchung: 'Doppelbuchungen', kal: '', team: 'verlorene Zurufe' };
+  const NEEDMAP = { webform: 'ein Web-Formular', email: 'ein überwachtes Postfach', whatsapp: 'ein WhatsApp-Business-Zugang',
+    tel: 'eine kurze Eingabemaske', qr: 'ein QR-Code am richtigen Ort', upload: 'ein Upload-Portal',
+    doc: 'Ihre Dokumentvorlagen', preis: 'Ihre Preislogik', buchung: 'Ihr Kalender', crm: 'eine zentrale Kundenablage' };
+  const SYSMAP = { best: 'E-Mail', buchung: 'Kalender', crm: 'CRM', rechnung: 'Buchhaltung', team: 'Team-Chat', dash: 'Dashboard' };
+
+  function selected(grp) {
+    return [...root.querySelectorAll('.ps-chips[data-grp="' + grp + '"] .ps-chip.is-on')].map(b => b.dataset.v);
+  }
+  function updateCount() {
+    const w = selected('work').length, o = selected('out').length;
+    countEl.textContent = '1 Eingang · ' + w + ' Verarbeitungsschritt' + (w === 1 ? '' : 'e') + ' · ' + o + ' Ergebnis' + (o === 1 ? '' : 'se');
+  }
+  root.querySelectorAll('.ps-chips').forEach(grpEl => {
+    grpEl.addEventListener('click', e => {
+      const btn = e.target.closest('.ps-chip');
+      if (!btn) return;
+      if (grpEl.dataset.grp === 'in') {
+        grpEl.querySelectorAll('.ps-chip').forEach(b => { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+        btn.classList.add('is-on'); btn.setAttribute('aria-pressed', 'true');
+      } else {
+        const on = btn.classList.toggle('is-on');
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+      updateCount();
+    });
+  });
+
+  function row(kind, human, warn) {
+    const li = document.createElement('li');
+    li.className = 'db-st' + (human ? ' db-human' : '') + (warn ? ' db-warn' : '');
+    li.innerHTML = '<span class="db-dot"></span><span class="db-who ' + (human ? 'db-mensch">Mensch' : 'db-auto">Automatik') +
+      '</span><span class="db-txt"><strong></strong><em></em></span><span class="db-state"></span>';
+    li.querySelector('strong').textContent = kind.t;
+    li.querySelector('em').textContent = kind.d;
+    return li;
+  }
+  function phase(name) {
+    const li = document.createElement('li');
+    li.className = 'db-phase';
+    li.textContent = name;
+    return li;
+  }
+  function activate(li, state) {
+    li.classList.add('on');
+    li.querySelector('.db-state').textContent = state;
+    T(() => li.classList.add('done'), 420);
+  }
+
+  function runSim() {
+    clearT();
+    const inKey = selected('in')[0] || 'webform';
+    const workKeys = selected('work');
+    const outKeys = selected('out');
+    rail.innerHTML = '';
+    evalBox.hidden = true;
+    const steps = [];
+    rail.appendChild(phase('Eingang'));
+    steps.push({ li: rail.appendChild(row(IN[inKey])), s: IN[inKey].s, wait: 500 });
+    const workSel = WORK.filter(([k]) => workKeys.includes(k));
+    if (workSel.length) rail.appendChild(phase('Verarbeitung'));
+    workSel.forEach(([k, w]) => {
+      if (k === 'pruefen') {
+        steps.push({ li: rail.appendChild(row(w)), s: w.s, wait: 750 });
+        const warn = rail.appendChild(row({ t: 'Angabe unvollständig: Telefonnummer', d: 'Rückfrage wird automatisch versendet – freundlich formuliert' }, false, true));
+        steps.push({ li: warn, s: 'Rückfrage läuft', wait: 900 });
+        const fix = rail.appendChild(row({ t: 'Antwort eingetroffen – korrigiert', d: 'Vorgang läuft weiter, nichts bleibt liegen' }));
+        steps.push({ li: fix, s: 'fortgesetzt', wait: 800 });
+      } else if (w.human) {
+        const li = rail.appendChild(row(w, true));
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'db-free'; btn.textContent = 'Freigeben →'; btn.hidden = true;
+        li.querySelector('.db-txt').appendChild(btn);
+        steps.push({ li, s: w.s, wait: 750, freeBtn: btn });
+      } else {
+        steps.push({ li: rail.appendChild(row(w)), s: w.s, wait: 750 });
+      }
+    });
+    if (outKeys.length) rail.appendChild(phase('Ergebnis'));
+    OUT.filter(([k]) => outKeys.includes(k)).forEach(([k, o]) => {
+      steps.push({ li: rail.appendChild(row(o)), s: o.s, wait: 650 });
+    });
+
+    build.hidden = true; actions.hidden = true; sim.hidden = false;
+    say.textContent = 'Simulation läuft';
+    let idx = 0;
+    const auto = steps.filter(st => !st.freeBtn).length;
+    const humans = steps.length - auto;
+    function next() {
+      if (idx >= steps.length) { finish(auto, humans, inKey, workKeys, outKeys); return; }
+      const st = steps[idx++];
+      T(() => {
+        activate(st.li, st.s);
+        if (st.freeBtn) {
+          st.freeBtn.hidden = false;
+          say.textContent = 'Wartet auf Ihre Freigabe';
+          st.freeBtn.addEventListener('click', () => {
+            st.freeBtn.hidden = true;
+            st.li.querySelector('.db-state').textContent = 'freigegeben';
+            next();
+          }, { once: true });
+        } else {
+          next();
+        }
+      }, st.wait);
+    }
+    next();
+  }
+
+  function finish(auto, humans, inKey, workKeys, outKeys) {
+    const errs = [...new Set([...workKeys, ...outKeys].map(k => ERRMAP[k]).filter(Boolean))].slice(0, 4);
+    const needs = [...new Set([inKey, ...workKeys, ...outKeys].map(k => NEEDMAP[k]).filter(Boolean))].slice(0, 4);
+    const sys = [...new Set(outKeys.map(k => SYSMAP[k]).filter(Boolean))];
+    document.getElementById('psEvalLine').innerHTML =
+      '<strong>' + auto + '</strong> Schritte automatisch · <strong>' + humans + '</strong> menschliche Entscheidung' + (humans === 1 ? '' : 'en');
+    document.getElementById('psEvalErr').textContent = errs.length ? errs.join(', ') : 'hängt von den gewählten Schritten ab';
+    document.getElementById('psEvalNeed').textContent = needs.length ? needs.join(', ') : 'eine zentrale Erfassung';
+    document.getElementById('psEvalSys').textContent = sys.length ? sys.join(', ') : 'E-Mail, Kalender, Ablage – je nach Betrieb';
+    evalBox.hidden = false;
+    say.textContent = 'Simulation abgeschlossen';
+  }
+
+  document.getElementById('psRun').addEventListener('click', runSim);
+  document.getElementById('psAgain').addEventListener('click', () => {
+    clearT();
+    sim.hidden = true; build.hidden = false; actions.hidden = false;
+    rail.innerHTML = ''; evalBox.hidden = true;
+    say.textContent = '';
+  });
+})();
+
+// ── VORHER/NACHHER (§7) ──
+(() => {
+  const root = document.getElementById('vergleich');
+  if (!root) return;
+  const pick = document.getElementById('vnPick');
+  const out = document.getElementById('vnOut');
+  const chainA = document.getElementById('vnChainA');
+  const chainB = document.getElementById('vnChainB');
+  const statsA = document.getElementById('vnStatsA');
+  const statsB = document.getElementById('vnStatsB');
+  let timers = [];
+  const T = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+  const STEPS = {
+    anruf:   { t: 'Kunde ruft an', sys: 'Telefon' },
+    notiz:   { t: 'Mitarbeiter schreibt Notiz', sys: 'Zettel', re: true },
+    excel:   { t: 'Daten in Excel übertragen', sys: 'Excel', re: true },
+    word:    { t: 'Angebot in Word erstellt', sys: 'Word', re: true },
+    pdf:     { t: 'PDF exportiert', sys: 'PDF' },
+    mail:    { t: 'E-Mail geschrieben', sys: 'E-Mail', re: true },
+    kal:     { t: 'Termin separat eingetragen', sys: 'Kalender', re: true },
+    erinner: { t: 'Erinnerung manuell erstellt', sys: 'Kopf/Kalender', wait: true },
+    rueckruf:{ t: 'Rückruf, weil etwas fehlt', sys: 'Telefon', wait: true },
+    ordner:  { t: 'Unterlagen im Ordner gesucht', sys: 'Ablage', wait: true }
+  };
+  const ORDER = ['anruf', 'notiz', 'rueckruf', 'excel', 'ordner', 'word', 'pdf', 'mail', 'kal', 'erinner'];
+
+  pick.addEventListener('click', e => {
+    const btn = e.target.closest('.ps-chip');
+    if (!btn) return;
+    const on = btn.classList.toggle('is-on');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
+  function statRow(dt, dd, cls) {
+    const div = document.createElement('div');
+    if (cls) div.className = cls;
+    const a = document.createElement('dt'); a.textContent = dt;
+    const b = document.createElement('dd'); b.textContent = dd;
+    div.appendChild(a); div.appendChild(b);
+    return div;
+  }
+
+  function runVn() {
+    timers.forEach(clearTimeout); timers = [];
+    const keys = ORDER.filter(k => {
+      const b = pick.querySelector('.ps-chip[data-v="' + k + '"]');
+      return b && b.classList.contains('is-on');
+    });
+    if (!keys.length) return;
+    chainA.innerHTML = ''; chainB.innerHTML = ''; statsA.innerHTML = ''; statsB.innerHTML = '';
+
+    let hops = 0, res = 0, waits = 0, prevSys = null;
+    keys.forEach(k => {
+      const st = STEPS[k];
+      const li = document.createElement('li');
+      li.textContent = st.t;
+      const badge = document.createElement('span');
+      badge.className = 'vn-sysname'; badge.textContent = st.sys;
+      li.appendChild(badge);
+      if (prevSys && prevSys !== st.sys) {
+        hops++;
+        li.classList.add('vn-hop');
+      }
+      if (st.re) {
+        res++;
+        const f = document.createElement('span');
+        f.className = 'vn-flag'; f.textContent = 'Daten nochmals eingegeben – mögliche Fehlerquelle';
+        li.appendChild(f);
+      }
+      if (st.wait) {
+        waits++;
+        const f = document.createElement('span');
+        f.className = 'vn-flag'; f.textContent = 'Wartepunkt – hier bleibt es liegen';
+        li.appendChild(f);
+      }
+      prevSys = st.sys;
+      chainA.appendChild(li);
+    });
+
+    const SYSCHAIN = [
+      ['Anfrage einmal zentral erfasst', 'System'],
+      ['Automatisch geprüft, zugeordnet, vorbereitet', 'System'],
+      ['Dokumente und Antwort aus denselben Daten', 'System'],
+      ['Status sichtbar · Erinnerungen automatisch', 'System']
+    ];
+    SYSCHAIN.forEach(([t, sys]) => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      const badge = document.createElement('span');
+      badge.className = 'vn-sysname'; badge.textContent = sys;
+      li.appendChild(badge);
+      chainB.appendChild(li);
+    });
+
+    statsA.appendChild(statRow('Manuelle Schritte', String(keys.length), 'vn-bad'));
+    statsA.appendChild(statRow('Systemwechsel', String(hops), 'vn-bad'));
+    statsA.appendChild(statRow('Wiederholte Dateneingaben', String(res), 'vn-bad'));
+    statsA.appendChild(statRow('Wartepunkte', String(waits), 'vn-bad'));
+    statsA.appendChild(statRow('Status sichtbar?', 'erst auf Nachfrage'));
+    statsB.appendChild(statRow('Manuelle Schritte', '1–2 (Eingabe + Freigabe)', 'vn-good'));
+    statsB.appendChild(statRow('Systemwechsel', '0', 'vn-good'));
+    statsB.appendChild(statRow('Wiederholte Dateneingaben', '0', 'vn-good'));
+    statsB.appendChild(statRow('Wartepunkte', 'überwacht statt vergessen', 'vn-good'));
+    statsB.appendChild(statRow('Status sichtbar?', 'jederzeit'));
+
+    out.hidden = false;
+    const all = [...chainA.children, ...chainB.children];
+    all.forEach((li, i) => T(() => li.classList.add('is-in'), 90 * i + 60));
+    requestAnimationFrame(() => {
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+  document.getElementById('vnRun').addEventListener('click', runVn);
 })();
 
 // ── SYSTEME ZUM ANFASSEN ──
