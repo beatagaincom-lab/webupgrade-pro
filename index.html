@@ -601,13 +601,17 @@
     .qs-intro-right {
       border: 1px solid var(--line-2); border-radius: 2px;
       padding: 1.2rem 1.8rem; display: flex; align-items: center; gap: 1rem;
-      flex-shrink: 0;
+      flex-shrink: 0; max-width: 100%; box-sizing: border-box;
     }
     .qs-intro-right .tag {
       font: 700 1.8rem/1 var(--mono); letter-spacing: -1px;
       color: var(--signal); white-space: nowrap;
     }
-    .qs-intro-right p { font-size: 0.82rem; color: var(--muted); max-width: 180px; line-height: 1.5; }
+    .qs-intro-right p { font-size: 0.82rem; color: var(--muted); max-width: 180px; line-height: 1.5; min-width: 0; }
+    @media (max-width: 560px) {
+      .qs-intro-right { padding: 1rem 1.1rem; gap: .8rem; }
+      .qs-intro-right p { max-width: none; }
+    }
     .qs-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1rem;
@@ -1852,6 +1856,54 @@
       .bs-cell:last-child { border-bottom: 0; }
     }
 
+    /* ── WERKBANK: eine Auswahl, immer nur EIN offenes Werkzeug ── */
+    .wb-pane[hidden], .wb-bar[hidden] { display: none !important; }
+    .wb-lead-1 { display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap;
+      margin: 0 0 1.1rem; font-size: .95rem; color: var(--ink-2); }
+    .wb-lead-2 { margin-top: 3.2rem; }
+    .wb-step { font-family: var(--mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--mark); border: 1px solid var(--mark); padding: .18rem .5rem; white-space: nowrap; }
+    .wb-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      border: 1px solid var(--line-2); background: var(--panel); }
+    .wb-grp { padding: 1.1rem 1.2rem 1.2rem; border-right: 1px solid var(--line-2); min-width: 0; }
+    .wb-grp:last-child { border-right: 0; }
+    .wb-grp-h { font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-2); font-weight: 500; margin: 0 0 .7rem; }
+    .wb-card { display: block; width: 100%; text-align: left; cursor: pointer;
+      background: transparent; border: 1px solid var(--line-2); border-left: 2px solid var(--acc, var(--line-3));
+      border-radius: 2px; padding: .6rem .75rem; margin-bottom: .5rem; font-family: 'Inter', sans-serif;
+      transition: border-color 260ms var(--e-out-quart), background-color 260ms var(--e-out-quart); }
+    .wb-card:last-child { margin-bottom: 0; }
+    .wb-card:hover { background: rgba(148,177,224,0.05); border-color: var(--line-3); border-left-color: var(--acc); }
+    .wb-card.is-on { background: color-mix(in srgb, var(--acc) 12%, transparent); border-color: var(--acc); }
+    .wb-card-name { display: block; font-size: .92rem; font-weight: 700; color: var(--ink); }
+    .wb-card.is-on .wb-card-name { color: var(--acc); }
+    .wb-card-desc { display: block; font-size: .76rem; color: var(--ink-2); margin-top: .1rem; line-height: 1.4; }
+    .wb-mehr { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap;
+      margin-top: .9rem; padding: .85rem 1.2rem; border: 1px solid var(--line-2); border-radius: 2px;
+      text-decoration: none; transition: border-color 260ms var(--e-out-quart), background-color 260ms var(--e-out-quart); }
+    .wb-mehr:hover { border-color: var(--mark); background: rgba(56,189,248,.05); }
+    .wb-mehr-txt { font-size: .84rem; color: var(--ink-2); }
+    .wb-mehr-txt strong { color: var(--ink); font-weight: 700; margin-right: .3rem; }
+    .wb-mehr-go { font-family: var(--mono); font-size: .74rem; letter-spacing: .08em;
+      color: var(--mark); white-space: nowrap; }
+    .wb-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      margin-top: 1.6rem; padding: .6rem .2rem .5rem; border-bottom: 1px solid var(--line-2); }
+    .wb-bar-name { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--ink-2); }
+    .wb-close { background: transparent; border: 1px solid var(--line-3); border-radius: 2px;
+      color: var(--ink-2); font-size: .76rem; padding: .3rem .7rem; cursor: pointer;
+      transition: color 200ms var(--e-out-quart), border-color 200ms var(--e-out-quart); }
+    .wb-close:hover { color: var(--ink); border-color: var(--ink-2); }
+    .wb-panes > .wb-pane > .panel:first-child,
+    .wb-panes > .wb-pane > .sys-tabs { margin-top: 1.2rem; }
+    @media (max-width: 900px) {
+      .wb-menu { grid-template-columns: 1fr; }
+      .wb-grp { border-right: 0; border-bottom: 1px solid var(--line-2); }
+      .wb-grp:last-child { border-bottom: 0; }
+      .wb-lead-2 { margin-top: 2.4rem; }
+    }
+
     /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -2234,14 +2286,17 @@
       <div class="sec-index"><span class="sec-no">05</span><span class="sec-rule"></span><span class="sec-name">Systeme zum Anfassen</span></div>
       <h2 class="section-title">Nicht erklärt. Ausprobiert.</h2>
       <p class="section-sub">
-        Klicken Sie sich durch – genau so fühlt sich das für Ihre Kunden an.
-        Drei Systeme, die Schweizer Betriebe jeden Tag brauchen: ein Termin, eine Offerte, eine Freigabe.
+        Zuerst schauen Sie einem System bei der Arbeit zu. Danach probieren Sie selbst aus &ndash;
+        ein Werkzeug nach dem anderen, nie alles auf einmal.
       </p>
       <p class="sys-honest">
         <span class="sys-chip">DEMO</span>
         Alles läuft direkt in Ihrem Browser. Es wird nichts gesendet, nichts gespeichert, nichts gebucht.
       </p>
     </div>
+
+    <p class="wb-lead-1"><span class="wb-step">Schritt 1</span>
+      Eine Anfrage kommt herein &ndash; sehen Sie zu, was ein System daraus macht.</p>
 
     <!-- DER DIGITALE BETRIEB -->
     <div class="db panel reveal" id="db">
@@ -2306,7 +2361,63 @@
       </div>
     </div>
 
-    <p class="db-tools-label">Und hier drei Werkzeuge daraus &ndash; einzeln zum Ausprobieren:</p>
+    <div class="wb" id="werkbank">
+      <p class="wb-lead-1 wb-lead-2"><span class="wb-step">Schritt 2</span>
+        Jetzt Sie. W&auml;hlen Sie ein Werkzeug &ndash; es &ouml;ffnet sich darunter, und nur dieses.</p>
+
+      <div class="wb-menu">
+        <div class="wb-grp">
+          <h4 class="wb-grp-h">Werkzeuge im Einsatz</h4>
+          <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-termin" style="--acc:#fb923c">
+            <span class="wb-card-name">Termin buchen</span>
+            <span class="wb-card-desc">Der Kunde bucht selbst, Best&auml;tigung sofort</span>
+          </button>
+          <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-offerte" style="--acc:#34d399">
+            <span class="wb-card-name">Offerte rechnen</span>
+            <span class="wb-card-desc">Konfigurator mit Richtpreis statt R&uuml;ckruf</span>
+          </button>
+          <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-status" style="--acc:#f472b6">
+            <span class="wb-card-name">Auftrag freigeben</span>
+            <span class="wb-card-desc">Kundenportal mit Status und Freigabe</span>
+          </button>
+        </div>
+        <div class="wb-grp">
+          <h4 class="wb-grp-h">Selbst zusammenstellen</h4>
+          <button type="button" class="wb-card" data-open="studio" style="--acc:#38bdf8">
+            <span class="wb-card-name">Prozess-Studio</span>
+            <span class="wb-card-desc">Ihren eigenen Ablauf bauen und laufen lassen</span>
+          </button>
+          <button type="button" class="wb-card" data-open="vergleich" style="--acc:#2dd4bf">
+            <span class="wb-card-name">Vorher / Nachher</span>
+            <span class="wb-card-desc">Wie viel Handarbeit heute drinsteckt</span>
+          </button>
+        </div>
+        <div class="wb-grp">
+          <h4 class="wb-grp-h">Unterschiede sehen</h4>
+          <button type="button" class="wb-card" data-open="labor" style="--acc:#a78bfa">
+            <span class="wb-card-name">Formular-Labor</span>
+            <span class="wb-card-desc">Typisches gegen intelligentes Formular</span>
+          </button>
+          <button type="button" class="wb-card" data-open="branchen" style="--acc:#a3e635">
+            <span class="wb-card-name">Branchen-Simulation</span>
+            <span class="wb-card-desc">Wie anders ein System je Branche denkt</span>
+          </button>
+        </div>
+      </div>
+
+      <a class="wb-mehr" href="systeme.html">
+        <span class="wb-mehr-txt"><strong>Noch mehr Systeme?</strong>
+          Im Werkzeugraum liegen acht weitere &ndash; jedes mit Ablauf, Nutzen und ehrlichen Grenzen.</span>
+        <span class="wb-mehr-go">Werkzeugraum &ouml;ffnen &rarr;</span>
+      </a>
+
+      <div class="wb-bar" id="wbBar" hidden>
+        <span class="wb-bar-name" id="wbBarName"></span>
+        <button type="button" class="wb-close" id="wbClose">Schliessen &times;</button>
+      </div>
+
+      <div class="wb-panes">
+      <div class="wb-pane" data-wb="werkzeuge" hidden>
 
     <div class="sys-tabs" role="tablist" aria-label="Drei Systeme zum Ausprobieren">
       <button type="button" role="tab" id="tab-termin" aria-controls="pan-termin" aria-selected="true" tabindex="0" class="sys-tab is-active">
@@ -2630,9 +2741,10 @@
 
     </div>
 
-    <p class="db-tools-label">Und jetzt Sie: Stellen Sie den Ablauf zusammen, der zu Ihrem Betrieb passt.</p>
+    </div>
 
-    <!-- PROZESS-STUDIO (§6) -->
+      <!-- PROZESS-STUDIO (§6) -->
+      <div class="wb-pane" data-wb="studio" hidden>
     <div class="ps panel reveal" id="studio">
       <header class="ps-head">
         <span class="db-kicker">Prozess-Studio</span>
@@ -2713,7 +2825,10 @@
       <p class="sr-only" role="status" aria-live="polite" id="psSay"></p>
     </div>
 
-    <!-- VORHER / NACHHER (§7) -->
+    </div>
+
+      <!-- VORHER / NACHHER (§7) -->
+      <div class="wb-pane" data-wb="vergleich" hidden>
     <div class="vn panel reveal" id="vergleich">
       <header class="ps-head">
         <span class="db-kicker">Vorher / Nachher</span>
@@ -2759,7 +2874,10 @@
     </div>
 
 
-    <!-- FORMULAR-LABOR (§8) -->
+    </div>
+
+      <!-- FORMULAR-LABOR (§8) -->
+      <div class="wb-pane" data-wb="labor" hidden>
     <div class="fl panel reveal" id="labor">
       <header class="ps-head">
         <span class="db-kicker">Formular-Labor</span>
@@ -2843,7 +2961,10 @@
     </div>
 
 
-    <!-- BRANCHEN-SIMULATION (§9) -->
+    </div>
+
+      <!-- BRANCHEN-SIMULATION (§9) -->
+      <div class="wb-pane" data-wb="branchen" hidden>
     <div class="bs panel reveal" id="branchen" data-b="schreinerei">
       <header class="ps-head">
         <span class="db-kicker">Branchen-Simulation</span>
@@ -2878,6 +2999,10 @@
       <div class="ps-actions bs-foot">
         <a class="db-cta" href="#analyse" id="bsCta" data-einstieg="branchen-simulation">F&uuml;r meine Branche durchdenken &rarr;</a>
         <a class="bs-lib" href="systeme.html">Mehr Systeme im Werkzeugraum &rarr;</a>
+      </div>
+    </div>
+
+      </div>
       </div>
     </div>
 
@@ -4284,6 +4409,47 @@ window.wupDemo = {
   });
 })();
 
+// ── WERKBANK: immer nur EIN Werkzeug offen ──
+(() => {
+  const wb = document.getElementById('werkbank');
+  if (!wb) return;
+  const bar = document.getElementById('wbBar');
+  const barName = document.getElementById('wbBarName');
+  const panes = [...wb.querySelectorAll('.wb-pane')];
+  const cards = [...wb.querySelectorAll('.wb-card')];
+
+  function close() {
+    panes.forEach(p => { p.hidden = true; });
+    cards.forEach(c => { c.classList.remove('is-on'); c.setAttribute('aria-expanded', 'false'); });
+    bar.hidden = true;
+  }
+  function open(card) {
+    const key = card.dataset.open;
+    panes.forEach(p => { p.hidden = p.dataset.wb !== key; });
+    cards.forEach(c => {
+      const on = c === card;
+      c.classList.toggle('is-on', on);
+      c.setAttribute('aria-expanded', on ? 'true' : 'false');
+    });
+    const pane = panes.find(p => p.dataset.wb === key);
+    // Reveal-Beobachter feuert in versteckten Containern nicht — hier direkt sichtbar schalten
+    if (pane) pane.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    if (card.dataset.tab) {
+      const tab = document.getElementById(card.dataset.tab);
+      if (tab && !tab.classList.contains('is-active')) tab.click();
+    }
+    barName.textContent = card.querySelector('.wb-card-name').textContent;
+    bar.hidden = false;
+  }
+  cards.forEach(card => {
+    card.setAttribute('aria-expanded', 'false');
+    card.addEventListener('click', () => {
+      if (card.classList.contains('is-on')) close(); else open(card);
+    });
+  });
+  document.getElementById('wbClose').addEventListener('click', close);
+})();
+
 // ── SYSTEME ZUM ANFASSEN ──
 // Drei anfassbare Demo-Systeme (Termin / Offerte / Freigabe) in einem Tab-Register.
 // Eigener Namensraum (IIFE) — keine Kollision mit Konfigurator- oder Formular-Code.
@@ -4867,7 +5033,8 @@ const KFG = (() => {
   if (!state.einstieg) state.einstieg = 'direkt';
 
   qsa('a[data-einstieg]').forEach(a => a.addEventListener('click', () => {
-    if (state.step === 1 && !state.branche) { state.einstieg = a.dataset.einstieg; row00(); save(); }
+    // Herkunft übernehmen, solange der Besucher noch nichts beantwortet hat (Deckblatt = Schritt 0)
+    if (state.step <= 1 && !state.branche) { state.einstieg = a.dataset.einstieg; row00(); save(); }
     const f = qs('#hf_einstieg'); if (f) f.value = state.einstieg;
   }));
 
