@@ -62,26 +62,42 @@
     .regal-grp button::before { content: ''; position: absolute; left: 0; top: .55em; width: 5px; height: 5px;
       border: 1px solid var(--line-3); transition: background-color 200ms, border-color 200ms; }
     .regal-grp button:hover { color: var(--ink); }
-    .regal-grp button.is-on { color: var(--mark); }
-    .regal-grp button.is-on::before { background: var(--mark); border-color: var(--mark); }
+    .regal-grp button.is-on { color: var(--acc, var(--mark)); }
+    .regal-grp button.is-on::before { background: var(--acc, var(--mark)); border-color: var(--acc, var(--mark)); }
     .regal-count { font-family: var(--mono); font-size: .7rem; color: var(--ink-2); padding: 1rem 0 0; }
     .regal-reset { margin-top: .6rem; background: transparent; border: 1px solid var(--line-3); border-radius: 2px;
       color: var(--ink-2); font-size: .74rem; padding: .35rem .7rem; cursor: pointer; }
     .regal-reset:hover { color: var(--ink); border-color: var(--ink-2); }
 
-    /* Systemblatt */
-    .blatt { border: 1px solid var(--line-2); background: var(--panel); margin-bottom: 1.6rem; }
+    /* ── Farbcode: jede Kategorie ein eigener Werkzeug-Ton.
+          Gold (--signal) bleibt ausschliesslich menschlichen Entscheidungen vorbehalten. ── */
+    .blatt[data-kat="anfragen"],    .regal-grp[data-dim="kat"] button[data-f="anfragen"]    { --acc: #38bdf8; }
+    .blatt[data-kat="angebote"],    .regal-grp[data-dim="kat"] button[data-f="angebote"]    { --acc: #34d399; }
+    .blatt[data-kat="termine"],     .regal-grp[data-dim="kat"] button[data-f="termine"]     { --acc: #fb923c; }
+    .blatt[data-kat="dokumente"],   .regal-grp[data-dim="kat"] button[data-f="dokumente"]   { --acc: #a78bfa; }
+    .blatt[data-kat="freigaben"],   .regal-grp[data-dim="kat"] button[data-f="freigaben"]   { --acc: #f472b6; }
+    .blatt[data-kat="service"],     .regal-grp[data-dim="kat"] button[data-f="service"]     { --acc: #f87171; }
+    .blatt[data-kat="reporting"],   .regal-grp[data-dim="kat"] button[data-f="reporting"]   { --acc: #2dd4bf; }
+    .blatt[data-kat="bewertungen"], .regal-grp[data-dim="kat"] button[data-f="bewertungen"] { --acc: #a3e635; }
+    .regal-grp[data-dim="kat"] button:not([data-f="alle"])::before { border-color: var(--acc); }
+
+    /* Systemblatt — jedes System hat seine eigene Akzentfarbe (--acc) */
+    .blatt { border: 1px solid var(--line-2); border-left: 2px solid var(--acc, var(--mark));
+      background: var(--panel); margin-bottom: 1.6rem; }
     .blatt[hidden] { display: none !important; }
     .blatt-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
       padding: 1.2rem 1.5rem; cursor: pointer; border: 0; width: 100%; background: transparent;
       text-align: left; color: var(--ink); font-family: 'Inter', sans-serif; }
-    .blatt-no { font-family: var(--mono); font-size: .7rem; color: var(--mark); letter-spacing: .1em; }
+    .blatt-no { font-family: var(--mono); font-size: .7rem; color: var(--acc, var(--mark)); letter-spacing: .1em; }
     .blatt-title { font-size: 1.05rem; font-weight: 700; }
     .blatt-meta { margin-left: auto; display: flex; gap: .5rem; flex-wrap: wrap; }
     .blatt-tag { font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
       color: var(--ink-2); border: 1px solid var(--line-2); padding: .15rem .5rem; }
+    .blatt-meta .blatt-tag:first-child { color: var(--acc, var(--mark));
+      border-color: color-mix(in srgb, var(--acc, var(--mark)) 45%, transparent); }
     .blatt-arrow { font-family: var(--mono); color: var(--ink-2); transition: transform 300ms var(--e-out-quart); }
-    .blatt.is-open .blatt-arrow { transform: rotate(90deg); }
+    .blatt.is-open .blatt-arrow { transform: rotate(90deg); color: var(--acc, var(--mark)); }
+    .blatt.is-open .blatt-head { background: color-mix(in srgb, var(--acc, var(--mark)) 6%, transparent); }
     .blatt-problem { padding: 0 1.5rem 1.1rem; color: var(--ink-2); font-size: .9rem; max-width: 70ch; }
     .blatt-body { display: none; border-top: 1px solid var(--line-2); }
     .blatt.is-open .blatt-body { display: block; }
@@ -95,14 +111,15 @@
     .blatt-ablauf li { position: relative; padding: .3rem 0 .3rem 1.8rem; font-size: .87rem; counter-increment: ab; }
     .blatt-ablauf { counter-reset: ab; }
     .blatt-ablauf li::before { content: counter(ab, decimal-leading-zero); position: absolute; left: 0; top: .42rem;
-      font-family: var(--mono); font-size: .64rem; color: var(--mark); }
+      font-family: var(--mono); font-size: .64rem; color: var(--acc, var(--mark)); }
     .blatt-ablauf li.mensch::after { content: 'MENSCH'; font-family: var(--mono); font-size: .56rem;
       letter-spacing: .1em; color: var(--signal); border: 1px solid var(--signal);
       padding: .06rem .3rem; margin-left: .45rem; vertical-align: middle; }
     .blatt-dots li { position: relative; padding: .25rem 0 .25rem 1.1rem; font-size: .85rem; color: var(--ink-2); }
     .blatt-dots li::before { content: ''; position: absolute; left: 0; top: .68em; width: 5px; height: 5px;
       border: 1px solid var(--line-3); }
-    .blatt-dots.limits li::before { border-color: var(--signal); }
+    /* Grenzen sprechen im Text, nicht in Gold – Gold bleibt der menschlichen Entscheidung */
+    .blatt-dots.limits li::before { border-color: var(--ink-2); transform: rotate(45deg); }
     .blatt-nutzen { font-size: .89rem; color: var(--ink); max-width: 62ch; }
 
     /* Mini-Demo */
@@ -111,20 +128,22 @@
       padding: .6rem .9rem; border-bottom: 1px solid var(--line-2); }
     .mini-head span { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em;
       text-transform: uppercase; color: var(--ink-2); }
-    .mini-status { color: var(--mark) !important; }
+    .mini-status { color: var(--acc, var(--mark)) !important; }
     .mini-steps { padding: .5rem .9rem .7rem; }
     .mini-steps li { display: none; font-size: .84rem; padding: .25rem 0; }
     .mini-steps li.is-now { display: block; }
     .mini-steps li em { display: block; font-style: normal; font-size: .74rem; color: var(--ink-2); }
-    .mini-btn { margin: 0 .9rem .9rem; background: transparent; border: 1px solid var(--mark); border-radius: 2px;
-      color: var(--mark); font-size: .8rem; padding: .45rem .9rem; cursor: pointer;
+    .mini-btn { margin: 0 .9rem .9rem; background: transparent; border: 1px solid var(--acc, var(--mark));
+      border-radius: 2px; color: var(--acc, var(--mark)); font-size: .8rem; padding: .45rem .9rem; cursor: pointer;
       transition: background-color 200ms var(--e-out-quart); }
-    .mini-btn:hover { background: rgba(56,189,248,.08); }
-    .mini-btn.gold { border-color: var(--signal); color: var(--signal); }
+    .mini-btn:hover { background: color-mix(in srgb, var(--acc, var(--mark)) 12%, transparent); }
+    /* Der menschliche Moment ist der einzige gefüllte Knopf – erkennbar bei jeder Akzentfarbe */
+    .mini-btn.gold { border-color: var(--signal); background: var(--signal); color: #1a1204; font-weight: 600; }
+    .mini-btn.gold:hover { background: #ffc04d; }
 
     .blatt-foot { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
       padding: 1.1rem 1.5rem; border-top: 1px solid var(--line-2); }
-    .blatt-cta { display: inline-block; background: var(--mark); color: #04121f; text-decoration: none;
+    .blatt-cta { display: inline-block; background: var(--acc, var(--mark)); color: #04121f; text-decoration: none;
       font-weight: 600; font-size: .88rem; padding: .6rem 1.2rem; border-radius: 2px; }
     .blatt-foot small { color: var(--ink-2); font-size: .74rem; }
 

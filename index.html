@@ -1164,6 +1164,12 @@
                        transition: transform 320ms var(--e-out-expo); }
     .sys-tab.is-active::before { transform: scaleX(1); }
 
+    /* ── Werkzeug-Farbcode: jedes System sein eigener Ton (gleiche Logik wie im Werkzeugraum).
+          Gold (--signal) bleibt überall der menschlichen Entscheidung vorbehalten. ── */
+    #tab-termin,  #pan-termin  { --mark: #fb923c; --blue: #fb923c; --blue-light: #fb923c; --cyan: #fb923c; }
+    #tab-offerte, #pan-offerte { --mark: #34d399; --blue: #34d399; --blue-light: #34d399; --cyan: #34d399; }
+    #tab-status,  #pan-status  { --mark: #f472b6; --blue: #f472b6; --blue-light: #f472b6; --cyan: #f472b6; }
+
     /* ── Stage & Panels ── */
     .sys-stage { border: 1px solid var(--line-2); border-top: 0; background: var(--panel); }
     .sys-pan[hidden] { display: none !important; }
@@ -1223,7 +1229,8 @@
     .sys-opt label i { font: 600 .74rem/1 var(--mono); color: var(--ink-2); font-style: normal;
                        font-variant-numeric: tabular-nums; }
     .sys-opt label:hover { border-color: var(--line-3); }
-    .sys-opt input:checked + label { border-color: var(--mark); background: rgba(56,189,248,.05); }
+    .sys-opt input:checked + label { border-color: var(--mark);
+      background: color-mix(in srgb, var(--mark) 8%, transparent); }
     .sys-opt label::before { content: ''; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 2px;
                              background: var(--mark); transform: scaleY(0); transform-origin: 50% 0;
                              transition: transform 320ms var(--e-out-expo); }
@@ -1240,7 +1247,10 @@
               font: 700 .95rem/1.25 'Inter', sans-serif; min-height: 3rem;
               transition: background-color .25s var(--e-out-quart), opacity .25s var(--e-out-quart); }
     .sys-go:disabled { opacity: .4; cursor: not-allowed; }
-    .sys-go:not(:disabled):hover { background: #5ecbfa; }
+    .sys-go:not(:disabled):hover { background: color-mix(in srgb, var(--mark) 80%, #fff); }
+    /* Die Freigabe bleibt überall gold – sie ist die menschliche Entscheidung, nicht eine Systemaktion */
+    #pan-status .sys-go { background: var(--signal); color: #1a1204; }
+    #pan-status .sys-go:not(:disabled):hover { background: #ffc04d; }
     .sys-go:not(:disabled):active { transform: scale(.972); transition-duration: 70ms; }
     .sys-go-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
                   gap: .4rem; transition: opacity 200ms var(--e-out-quart); }
@@ -1803,6 +1813,10 @@
       padding: .9rem 1rem; cursor: pointer; transition: color 260ms var(--e-out-quart), border-color 260ms var(--e-out-quart); }
     .bs-tab + .bs-tab { border-left: 1px solid var(--line-2); }
     .bs-tab.is-on { color: var(--mark); border-bottom-color: var(--mark); }
+    /* Jede Branche denkt anders – und sieht anders aus */
+    #branchen[data-b="schreinerei"] { --mark: #fb923c; }
+    #branchen[data-b="praxis"]      { --mark: #2dd4bf; }
+    #branchen[data-b="treuhand"]    { --mark: #a78bfa; }
     .bs-body { display: grid; grid-template-columns: 1fr 1.15fr 1fr; }
     .bs-cell { padding: 1.4rem 1.6rem 1.6rem; border-right: 1px solid var(--line-2); min-width: 0; }
     .bs-cell:last-child { border-right: 0; }
@@ -2830,7 +2844,7 @@
 
 
     <!-- BRANCHEN-SIMULATION (§9) -->
-    <div class="bs panel reveal" id="branchen">
+    <div class="bs panel reveal" id="branchen" data-b="schreinerei">
       <header class="ps-head">
         <span class="db-kicker">Branchen-Simulation</span>
         <h3 class="db-title">Wechseln Sie die Branche &ndash; und das ganze System denkt anders</h3>
@@ -4262,6 +4276,7 @@ window.wupDemo = {
     root.querySelectorAll('.bs-tab').forEach(b => { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
     btn.classList.add('is-on'); btn.setAttribute('aria-pressed', 'true');
     body.classList.add('is-swap');
+    root.dataset.b = btn.dataset.b;
     requestAnimationFrame(() => requestAnimationFrame(() => {
       render(btn.dataset.b);
       body.classList.remove('is-swap');
