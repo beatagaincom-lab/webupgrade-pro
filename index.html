@@ -1748,6 +1748,53 @@
       .vn-today { border-right: 0; border-bottom: 1px solid var(--line-2); }
     }
 
+    /* ── FORMULAR-LABOR ── */
+    .fl-pane[hidden], .fl-step[hidden], .fl-verdict[hidden], .fl-baddone[hidden], .fl-attached[hidden] { display: none !important; }
+    .fl { margin-top: 2rem; padding: 0; overflow: hidden; }
+    .fl-modes { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line-2); }
+    .fl-mode { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-2); background: transparent; border: 0; border-bottom: 2px solid transparent;
+      padding: .9rem 1rem; cursor: pointer; transition: color 260ms var(--e-out-quart), border-color 260ms var(--e-out-quart); }
+    .fl-mode + .fl-mode { border-left: 1px solid var(--line-2); }
+    .fl-mode.is-on { color: var(--mark); border-bottom-color: var(--mark); }
+    .fl-pane { padding: 1.5rem 1.8rem 1.7rem; }
+    .fl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem .9rem; }
+    .fl-badform label { display: block; font-size: .74rem; color: var(--ink-2); }
+    .fl-badform input, .fl-badform select, .fl-badform textarea { display: block; width: 100%; margin-top: .25rem;
+      background: rgba(255,255,255,.03); border: 1px solid var(--line-3); border-radius: 2px;
+      color: var(--ink); font-size: .85rem; padding: .45rem .55rem; font-family: 'Inter', sans-serif; }
+    .fl-msg { margin-top: .9rem; }
+    .fl-badsend { margin-top: 1rem; background: rgba(255,255,255,.06); color: var(--ink-2);
+      border: 1px solid var(--line-3); border-radius: 2px; padding: .6rem 1.4rem; font-size: .85rem; cursor: pointer; }
+    .fl-baddone { margin-top: .8rem; color: var(--ink-2); font-size: .9rem; }
+    .fl-verdict { list-style: none; margin: 1.2rem 0 0; padding: 1rem 0 0; border-top: 1px solid var(--line-2); }
+    .fl-verdict li { position: relative; padding: .3rem 0 .3rem 1.3rem; font-size: .84rem; color: var(--ink-2); }
+    .fl-verdict li::before { content: ''; position: absolute; left: 2px; top: .72em; width: 7px; height: 7px;
+      background: transparent; border: 1px solid var(--signal); }
+    .fl-q { font-size: 1.15rem; font-weight: 700; color: var(--ink); margin: 0 0 .3rem; }
+    .fl-why { font-size: .8rem; color: var(--ink-2); margin: 0 0 .9rem; }
+    .fl-prog { font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-2); margin: 0 0 .6rem; }
+    .fl-step { opacity: 0; transform: translateY(8px);
+      transition: opacity 380ms var(--e-out-quart), transform 380ms var(--e-out-quart); }
+    .fl-step.is-in { opacity: 1; transform: none; }
+    .fl-attach { display: inline-block; margin-top: 1rem; background: transparent; color: var(--ink-2);
+      border: 1px dashed var(--line-3); border-radius: 2px; padding: .45rem .8rem; font-size: .78rem; cursor: pointer;
+      transition: color 260ms var(--e-out-quart), border-color 260ms var(--e-out-quart); }
+    .fl-attach:hover { color: var(--ink); border-color: var(--ink-2); }
+    .fl-attached { margin-top: .6rem; font-size: .8rem; color: var(--mark); }
+    .fl-sumlist { margin-top: .4rem; }
+    .fl-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0;
+      padding: 1rem 1.8rem 1.2rem; border-top: 1px solid var(--line-2);
+      font-size: .8rem; color: var(--ink-2); }
+    .fl-facts strong { color: var(--ink); font-weight: 600; }
+    @media (max-width: 900px) {
+      .fl-pane, .fl-facts { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .fl-grid { grid-template-columns: 1fr 1fr; }
+      .fl-facts { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) { .fl-grid { grid-template-columns: 1fr; } }
+
     /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -2652,6 +2699,90 @@
           <a class="db-cta" href="#analyse" data-einstieg="vorher-nachher">Meinen Ablauf pr&uuml;fen lassen &rarr;</a>
         </div>
       </div>
+    </div>
+
+
+    <!-- FORMULAR-LABOR (§8) -->
+    <div class="fl panel reveal" id="labor">
+      <header class="ps-head">
+        <span class="db-kicker">Formular-Labor</span>
+        <h3 class="db-title">Zwei Formulare. Derselbe Zweck. Sp&uuml;ren Sie den Unterschied.</h3>
+        <p class="db-sub">Links das Formular, das man &uuml;berall bekommt. Rechts eines, das mitdenkt.
+        Beide sind Demos &ndash; es wird nichts gesendet oder gespeichert, ausser Ihrem Fortschritt im Browser.</p>
+      </header>
+
+      <div class="fl-modes" role="group" aria-label="Formular-Variante w&auml;hlen">
+        <button type="button" class="fl-mode is-on" aria-pressed="true" data-m="bad">Typisches Formular</button>
+        <button type="button" class="fl-mode" aria-pressed="false" data-m="smart">Intelligentes Formular</button>
+      </div>
+
+      <div class="fl-pane" id="flBad">
+        <form class="fl-badform" novalidate autocomplete="off" aria-label="Typisches Formular (Demo)">
+          <div class="fl-grid">
+            <label>Anrede*<select><option>Bitte w&auml;hlen</option><option>Herr</option><option>Frau</option></select></label>
+            <label>Titel<input type="text"></label>
+            <label>Vorname*<input type="text"></label>
+            <label>Nachname*<input type="text"></label>
+            <label>Firma*<input type="text"></label>
+            <label>Strasse / Nr.*<input type="text"></label>
+            <label>PLZ*<input type="text"></label>
+            <label>Ort*<input type="text"></label>
+            <label>Telefon*<input type="text"></label>
+            <label>Fax<input type="text"></label>
+            <label>E-Mail*<input type="text"></label>
+            <label>Betreff*<input type="text"></label>
+          </div>
+          <label class="fl-msg">Ihre Nachricht*<textarea rows="4"></textarea></label>
+          <button type="button" class="fl-badsend" id="flBadSend">Absenden</button>
+          <p class="fl-baddone" id="flBadDone" hidden>Vielen Dank.</p>
+        </form>
+        <ul class="fl-verdict" id="flBadVerdict" hidden>
+          <li>13 Felder sofort &ndash; bevor klar ist, worum es geht</li>
+          <li>Keine Frage wird begr&uuml;ndet</li>
+          <li>Fax. Im Jahr 2026.</li>
+          <li>Nach dem Absenden: &laquo;Vielen Dank.&raquo; &ndash; und dann?</li>
+          <li>Bei einem Fehler w&auml;re alles weg</li>
+        </ul>
+      </div>
+
+      <div class="fl-pane" id="flSmart" hidden>
+        <div class="fl-step" data-fs="1">
+          <p class="fl-q">Worum geht es?</p>
+          <p class="fl-why">Eine Frage zu Beginn &ndash; alles Weitere richtet sich danach.</p>
+          <div class="ps-chips">
+            <button type="button" class="ps-chip" data-fv="offerte">Offerte anfragen</button>
+            <button type="button" class="ps-chip" data-fv="termin">Termin vereinbaren</button>
+            <button type="button" class="ps-chip" data-fv="frage">Kurze Frage stellen</button>
+          </div>
+        </div>
+        <div class="fl-step" data-fs="2" hidden>
+          <p class="fl-prog" id="flProg">Frage 2 von 2</p>
+          <p class="fl-q" id="flQ2"></p>
+          <p class="fl-why" id="flWhy2"></p>
+          <div class="ps-chips" id="flOpts2"></div>
+          <button type="button" class="fl-attach" id="flAttach" aria-pressed="false">Unterlage anh&auml;ngen (optional)</button>
+          <p class="fl-attached" id="flAttached" hidden>beispiel-grundriss.pdf angeh&auml;ngt &middot; <span class="sys-chip">DEMO</span></p>
+        </div>
+        <div class="fl-step fl-sum" data-fs="3" hidden>
+          <p class="fl-q">Das haben wir verstanden:</p>
+          <dl class="ps-eval-list fl-sumlist">
+            <div><dt>Anliegen</dt><dd id="flSum1">&mdash;</dd></div>
+            <div><dt>Detail</dt><dd id="flSum2">&mdash;</dd></div>
+            <div><dt>Unterlage</dt><dd id="flSum3">keine</dd></div>
+            <div><dt>N&auml;chster Schritt</dt><dd id="flSumNext">&mdash;</dd></div>
+          </dl>
+          <p class="db-result-note">Zwei Antworten statt 13 Felder &ndash; und Ihr Fortschritt bliebe gespeichert.
+          Kontaktdaten w&uuml;rden erst jetzt gefragt, mit dieser Zusammenfassung davor.</p>
+          <a class="db-cta" href="#analyse" data-einstieg="formular-labor">Im echten Formular weitermachen &rarr;</a>
+          <button type="button" class="db-reset" id="flAgain">Nochmals ansehen</button>
+        </div>
+      </div>
+
+      <p class="fl-facts">
+        <span><strong>Typisch:</strong> 13 Felder sofort &middot; alles Pflicht &middot; keine Begr&uuml;ndung</span>
+        <span><strong>Intelligent:</strong> 1 Frage zu Beginn &middot; nur relevante Folgefragen &middot; jede Frage begr&uuml;ndet</span>
+      </p>
+      <p class="sr-only" role="status" aria-live="polite" id="flSay"></p>
     </div>
 
   </div>
@@ -3715,6 +3846,7 @@ function getSupabase(){
     document.getElementById('psEvalErr').textContent = errs.length ? errs.join(', ') : 'hängt von den gewählten Schritten ab';
     document.getElementById('psEvalNeed').textContent = needs.length ? needs.join(', ') : 'eine zentrale Erfassung';
     document.getElementById('psEvalSys').textContent = sys.length ? sys.join(', ') : 'E-Mail, Kalender, Ablage – je nach Betrieb';
+    if (window.wupDemo) window.wupDemo.set('studio:' + inKey + '>' + workKeys.join('+') + '>' + outKeys.join('+'));
     evalBox.hidden = false;
     say.textContent = 'Simulation abgeschlossen';
   }
@@ -3842,6 +3974,116 @@ function getSupabase(){
     });
   }
   document.getElementById('vnRun').addEventListener('click', runVn);
+})();
+
+// ── GETEILTER DEMO-ZUSTAND (§12) — nie Kontaktdaten, 7 Tage ──
+window.wupDemo = {
+  set(v) {
+    try { localStorage.setItem('wup_demo_v1', JSON.stringify({ v: String(v).slice(0, 120), t: Date.now() })); } catch (e) {}
+  },
+  get() {
+    try {
+      const d = JSON.parse(localStorage.getItem('wup_demo_v1') || 'null');
+      if (d && d.v && Date.now() - d.t < 7 * 24 * 3600 * 1000) return d.v;
+    } catch (e) {}
+    return '';
+  }
+};
+
+// ── FORMULAR-LABOR (§8) ──
+(() => {
+  const root = document.getElementById('labor');
+  if (!root) return;
+  const badPane = document.getElementById('flBad');
+  const smartPane = document.getElementById('flSmart');
+  const say = document.getElementById('flSay');
+  const steps = [...smartPane.querySelectorAll('.fl-step')];
+  const FLOW = {
+    offerte: { q: 'Wof\u00fcr brauchen Sie die Offerte?',
+      why: 'So landet Ihre Anfrage direkt bei der richtigen Vorbereitung \u2013 ohne R\u00fcckfrage-Schlaufe.',
+      opts: [['neu', 'Neue Website'], ['ueberarbeitung', '\u00dcberarbeitung'], ['unsicher', 'Weiss ich noch nicht']],
+      next: 'Offerte wird vorbereitet \u2013 Antwort mit konkreten Punkten' },
+    termin: { q: 'Wann passt es Ihnen grunds\u00e4tzlich?',
+      why: 'Wir schlagen nur Zeiten vor, die f\u00fcr Sie infrage kommen.',
+      opts: [['vormittag', 'Vormittag'], ['nachmittag', 'Nachmittag'], ['abend', 'Abend']],
+      next: '2 Terminvorschl\u00e4ge im passenden Zeitfenster' },
+    frage: { q: 'Worum geht es bei Ihrer Frage?',
+      why: 'So antwortet direkt die Person, die es wirklich weiss.',
+      opts: [['preise', 'Zu den Preisen'], ['ablauf', 'Zum Ablauf'], ['anderes', 'Etwas anderes']],
+      next: 'Direkte Antwort \u2013 keine Weiterleitungs-Kette' }
+    };
+  const state = { a1: '', a1Label: '', a2Label: '', attached: false };
+
+  root.querySelector('.fl-modes').addEventListener('click', e => {
+    const btn = e.target.closest('.fl-mode');
+    if (!btn) return;
+    root.querySelectorAll('.fl-mode').forEach(b => { b.classList.remove('is-on'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('is-on'); btn.setAttribute('aria-pressed', 'true');
+    const smart = btn.dataset.m === 'smart';
+    badPane.hidden = smart;
+    smartPane.hidden = !smart;
+    if (smart) showStep(1);
+    say.textContent = smart ? 'Intelligentes Formular' : 'Typisches Formular';
+  });
+
+  document.getElementById('flBadSend').addEventListener('click', () => {
+    document.getElementById('flBadDone').hidden = false;
+    document.getElementById('flBadVerdict').hidden = false;
+  });
+
+  function showStep(n) {
+    steps.forEach(st => {
+      const on = Number(st.dataset.fs) === n;
+      st.hidden = !on;
+      st.classList.remove('is-in');
+      if (on) requestAnimationFrame(() => requestAnimationFrame(() => st.classList.add('is-in')));
+    });
+  }
+  showStep(1);
+  steps[0].classList.add('is-in');
+
+  smartPane.querySelector('[data-fs="1"] .ps-chips').addEventListener('click', e => {
+    const btn = e.target.closest('.ps-chip');
+    if (!btn) return;
+    state.a1 = btn.dataset.fv;
+    state.a1Label = btn.textContent;
+    const f = FLOW[state.a1];
+    document.getElementById('flQ2').textContent = f.q;
+    document.getElementById('flWhy2').textContent = f.why;
+    const opts = document.getElementById('flOpts2');
+    opts.innerHTML = '';
+    f.opts.forEach(([v, label]) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'ps-chip'; b.dataset.fv = v; b.textContent = label;
+      opts.appendChild(b);
+    });
+    document.getElementById('flAttached').hidden = true;
+    state.attached = false;
+    document.getElementById('flAttach').setAttribute('aria-pressed', 'false');
+    showStep(2);
+  });
+
+  document.getElementById('flAttach').addEventListener('click', function () {
+    state.attached = !state.attached;
+    this.setAttribute('aria-pressed', state.attached ? 'true' : 'false');
+    document.getElementById('flAttached').hidden = !state.attached;
+  });
+
+  document.getElementById('flOpts2').addEventListener('click', e => {
+    const btn = e.target.closest('.ps-chip');
+    if (!btn) return;
+    state.a2Label = btn.textContent;
+    const f = FLOW[state.a1];
+    document.getElementById('flSum1').textContent = state.a1Label;
+    document.getElementById('flSum2').textContent = state.a2Label;
+    document.getElementById('flSum3').textContent = state.attached ? 'beispiel-grundriss.pdf (Demo)' : 'keine';
+    document.getElementById('flSumNext').textContent = f.next;
+    window.wupDemo.set('labor:' + state.a1 + '/' + btn.dataset.fv + (state.attached ? '+upload' : ''));
+    showStep(3);
+    say.textContent = 'Zusammenfassung erstellt';
+  });
+
+  document.getElementById('flAgain').addEventListener('click', () => showStep(1));
 })();
 
 // ── SYSTEME ZUM ANFASSEN ──
@@ -4673,7 +4915,8 @@ const KFG = (() => {
         'q=v1|branche=' + clean(state.branche) + '|anlass=' + state.anlass.map(clean).join(',') +
         '|umbau=' + clean(state.umbau) + '|ziel=' + clean(state.ziel) + '|zeit=' + clean(state.zeit) +
         '|blatt=' + state.nr + '|einstieg=' + clean(state.einstieg) +
-        '|dauer=' + Math.round((Date.now() - state.t0) / 1000) + '|steps=6/6'];
+        '|dauer=' + Math.round((Date.now() - state.t0) / 1000) + '|steps=6/6' +
+        (window.wupDemo && window.wupDemo.get() ? '|demo=' + window.wupDemo.get().replace(/[|,]/g, ' ') : '')];
       return lines.join('\n').slice(0, 4000);
     },
     finish() {
