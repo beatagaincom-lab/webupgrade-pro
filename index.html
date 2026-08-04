@@ -903,9 +903,13 @@
       color: var(--mark); letter-spacing: .06em; margin-bottom: .4rem;
     }
     @media (max-width: 700px) {
-      .betriebe-grid { grid-template-columns: 1fr; gap: 1rem; }
+      /* Drei nebeneinander statt gestapelt: So sieht man die drei Handschriften
+         nebeneinander – das ist die Aussage – und spart zwei Bildschirme Scrollweg. */
+      .betriebe-grid { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
       .betriebe-grid figure.shift { margin-top: 0; }
-      .betriebe-grid img { aspect-ratio: 3/2; }
+      .betriebe-grid img { aspect-ratio: 3/4; }
+      .betriebe-grid figcaption { padding: .5rem .5rem .6rem; font-size: .72rem; line-height: 1.4; }
+      .betriebe-grid figcaption span { font-size: .62rem; margin-bottom: .25rem; }
     }
 
     .abnahme { margin: 3.5rem auto 0; max-width: 780px; border: 1px solid var(--line-2); }
@@ -1902,6 +1906,37 @@
       .wb-grp { border-right: 0; border-bottom: 1px solid var(--line-2); }
       .wb-grp:last-child { border-bottom: 0; }
       .wb-lead-2 { margin-top: 2.4rem; }
+    }
+
+    /* ── MOBIL VERDICHTEN: gleiche Inhalte, kürzerer Weg ──
+          Nur Abstände und Schriftgrade werden enger. Verborgen wird ausschliesslich,
+          was im Ruhezustand ohnehin leer ist (die Vorgangskarte vor dem Start). */
+    @media (max-width: 700px) {
+      /* Karten: enger, aber nicht gedrängt */
+      .why-card, #services .service-card { padding: 1.25rem 1.15rem; }
+      .why-card h3, #services .service-card h3 { font-size: .97rem; line-height: 1.3; margin-bottom: .3rem; }
+      .why-card p, #services .service-card p { font-size: .855rem; line-height: 1.5; }
+      .why-icon, .service-icon { margin-bottom: .55rem; }
+
+      /* Digitaler Betrieb: Stationen dichter setzen */
+      .db-st { padding-top: .42rem; padding-bottom: .42rem; }
+      .db-st .db-txt strong { font-size: .92rem; line-height: 1.3; }
+      .db-st .db-txt em { font-size: .765rem; line-height: 1.4; }
+      .db-phase { margin-top: .9rem; }
+
+      /* Vor dem Start zeigt die Vorgangskarte nur sieben leere Striche – die spart der Besucher sich */
+      .db:not(.is-running) .db-card { display: none; }
+      .db.is-running .db-card { display: block; }
+
+      /* Preiskarten und Prozessschritte enger */
+      .price-card { padding: 1.5rem 1.25rem; }
+      .process-step { padding-top: 1rem; padding-bottom: 1rem; }
+
+      /* Werkbank-Auswahl kompakter – die Beschreibung bleibt, sie führt */
+      .wb-card { padding: .5rem .65rem; margin-bottom: .4rem; }
+      .wb-card-name { font-size: .88rem; }
+      .wb-card-desc { font-size: .74rem; }
+      .wb-grp { padding: .9rem 1rem 1rem; }
     }
 
     /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
@@ -3883,12 +3918,14 @@ function getSupabase(){
     if (resultEl) resultEl.hidden = true;
     setStatus('bereit'); if (nrEl) nrEl.textContent = '—';
     running = false;
+    root.classList.remove('is-running');
     if (startBtn) startBtn.disabled = false;
   }
   if (startBtn) startBtn.addEventListener('click', () => {
     if (running) return;
     reset();
     running = true;
+    root.classList.add('is-running');
     startBtn.disabled = true;
     if (nrEl) nrEl.textContent = 'V-2026-118';
     play(SCRIPT, 0);
