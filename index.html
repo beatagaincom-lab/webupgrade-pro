@@ -1924,6 +1924,10 @@
                 background: var(--line-2); border: 1px solid var(--line-2); }
     #why .why-card { border: 0; border-radius: 0; }
     #why .why-card.panel::before { display: none; }
+    /* Abschlusskarte über die volle Breite: sie schliesst die Sektion, statt als Rest übrig zu bleiben.
+       Gold, weil es um Ihre Freigabe geht — dieselbe Regel wie überall auf der Seite. */
+    #why .why-card-wide { grid-column: 1 / -1; box-shadow: inset 2px 0 0 var(--signal); }
+    #why .why-card-wide p { max-width: 74ch; }
     @media (max-width: 900px) {
       .services-grid, .why-grid { grid-template-columns: 1fr; }
     }
@@ -3534,7 +3538,7 @@
     <div class="section-header text-center reveal">
       <div class="sec-index"><span class="sec-no">11</span><span class="sec-rule"></span><span class="sec-name">Über uns</span></div>
       <h2 class="section-title">Klein genug, dass Sie mit dem sprechen, der baut.</h2>
-      <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Das ist mein Versprechen.</p>
+      <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Dafür stehen wir gerade.</p>
     </div>
     <div class="why-grid">
       <div class="why-card panel">
@@ -3544,8 +3548,8 @@
       </div>
       <div class="why-card panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-hand"/></svg></span>
-        <h3>Persönlicher Kontakt – direkt zu mir</h3>
-        <p>Kein Support-Ticket, kein Call-Center. Sie schreiben mir direkt per WhatsApp oder E-Mail und bekommen eine echte Antwort – von mir persönlich.</p>
+        <h3>Persönlicher Kontakt – ohne Umweg</h3>
+        <p>Kein Support-Ticket, kein Call-Center. Sie schreiben direkt per WhatsApp oder E-Mail – und bekommen eine echte Antwort von der Person, die Ihre Website auch baut.</p>
       </div>
       <div class="why-card panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-spark"/></svg></span>
@@ -3567,10 +3571,11 @@
         <h3>Ergebnisse die zählen</h3>
         <p>Mehr Anfragen, mehr Vertrauen, mehr Umsatz. Wir messen Erfolg an Ihren Ergebnissen – nicht an unseren Stundenzahlen.</p>
       </div>
-      <div class="why-card panel" style="border-color:rgba(6,182,212,0.3);background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(59,130,246,0.03))">
+      <div class="why-card why-card-wide panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span>
         <h3>Ihre Live-Website bleibt unangetastet</h3>
-        <p>Alle Änderungen werden zuerst auf einer <strong style="color:var(--cyan)">separaten Vorschau-Umgebung</strong> entwickelt und gezeigt. Ihre originale Website läuft die ganze Zeit unverändert weiter. Erst wenn Sie alles gesehen haben, geprüft haben und <strong style="color:var(--white)">einverstanden sind</strong>, werden die Änderungen live geschaltet. Sie haben jederzeit die volle Kontrolle.</p>
+        <p>Jede Änderung entsteht zuerst auf einer separaten Vorschau. Ihre laufende Website
+        arbeitet die ganze Zeit unverändert weiter &ndash; und geht erst live, wenn Sie sie gesehen und freigegeben haben.</p>
       </div>
     </div>
   </div>
