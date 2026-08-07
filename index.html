@@ -6,6 +6,15 @@
   <title>Website modernisieren Schweiz – WebUpgrade Pro | Websites & digitale Systeme für KMU</title>
   <meta name="description" content="Wir verstehen zuerst Ihren Betrieb – dann modernisieren wir Ihre Website und bauen die Systeme dahinter. Kostenlose Erstanalyse, faire Festpreise, direkt aus der Schweiz." />
   <link rel="canonical" href="https://webupgradepro.ch/" />
+  <script>
+    /* Die Vorschau-Kopie (GitHub Pages) darf nicht gegen die eigene Domain indexiert werden.
+       Auf webupgradepro.ch passiert hier nichts. */
+    if (location.hostname.endsWith('github.io')) {
+      var m = document.createElement('meta');
+      m.name = 'robots'; m.content = 'noindex, nofollow';
+      document.head.appendChild(m);
+    }
+  </script>
   <meta property="og:title" content="WebUpgrade Pro – Ihre Website, unverwechselbar nach Ihnen" />
   <meta property="og:description" content="Kostenlose Website-Analyse. Websites und digitale Systeme für Schweizer KMU. Faire Festpreise." />
   <meta property="og:type" content="website" />
@@ -545,9 +554,13 @@
       display: flex; align-items: center; gap: 0.7rem;
       font-size: 0.88rem; color: var(--muted);
     }
+    /* Echter Haken statt leerem Kästchen: In einer Preisliste liest sich ein leeres
+       Quadrat als «nicht enthalten». Gezeichnet, nicht als Schriftzeichen. */
     .price-features li .chk {
-      width: 12px; height: 12px; border-radius: 0; background: none;
-      border: 1px solid var(--mark); font-size: 0; flex-shrink: 0;
+      width: 11px; height: 6px; background: none; border: 0; border-radius: 0;
+      border-left: 1.5px solid var(--mark); border-bottom: 1.5px solid var(--mark);
+      transform: rotate(-45deg); transform-origin: center;
+      font-size: 0; flex-shrink: 0; margin-top: -3px;
     }
     .btn-price {
       width: 100%; padding: 0.85rem; border-radius: 2px;
@@ -2120,7 +2133,7 @@
   <a href="#why" onclick="closeMenu()">Warum wir</a>
   <a href="#quick-services" onclick="closeMenu()">Klein-Services</a>
   <a href="#analyse" onclick="closeMenu()" style="color:var(--cyan)">→ Gratis Analyse</a>
-  <a href="#analyse" onclick="closeMenu()">Garantie</a>
+  <a href="#garantie" onclick="closeMenu()">Garantie</a>
 </div>
 
 <!-- HERO -->
@@ -2253,7 +2266,7 @@
       <li class="finding reveal">
         <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-phonex"/></svg></span>
         <div><h3>Nicht mobil-optimiert</h3>
-             <p>78% der Nutzer surfen mit dem Handy – und sehen bei Ihnen nur Chaos.</p></div>
+             <p>Die meisten Ihrer Besucher kommen heute über das Handy – und sehen bei Ihnen nur Chaos.</p></div>
       </li>
       <li class="finding reveal">
         <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-searchx"/></svg></span>
@@ -2405,7 +2418,7 @@
 
       <div class="wb-menu">
         <div class="wb-grp">
-          <h4 class="wb-grp-h">Werkzeuge im Einsatz</h4>
+          <h4 class="wb-grp-h">Fertige Systeme ausprobieren</h4>
           <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-termin" style="--acc:#fb923c">
             <span class="wb-card-name">Termin buchen</span>
             <span class="wb-card-desc">Der Kunde bucht selbst, Best&auml;tigung sofort</span>
@@ -2420,7 +2433,7 @@
           </button>
         </div>
         <div class="wb-grp">
-          <h4 class="wb-grp-h">Selbst zusammenstellen</h4>
+          <h4 class="wb-grp-h">Eigenen Ablauf bauen</h4>
           <button type="button" class="wb-card" data-open="studio" style="--acc:#38bdf8">
             <span class="wb-card-name">Prozess-Studio</span>
             <span class="wb-card-desc">Ihren eigenen Ablauf bauen und laufen lassen</span>
@@ -2431,7 +2444,7 @@
           </button>
         </div>
         <div class="wb-grp">
-          <h4 class="wb-grp-h">Unterschiede sehen</h4>
+          <h4 class="wb-grp-h">Zwei Varianten vergleichen</h4>
           <button type="button" class="wb-card" data-open="labor" style="--acc:#a78bfa">
             <span class="wb-card-name">Formular-Labor</span>
             <span class="wb-card-desc">Typisches gegen intelligentes Formular</span>
@@ -2442,12 +2455,6 @@
           </button>
         </div>
       </div>
-
-      <a class="wb-mehr" href="systeme.html">
-        <span class="wb-mehr-txt"><strong>Noch mehr Systeme?</strong>
-          Im Werkzeugraum liegen acht weitere &ndash; jedes mit Ablauf, Nutzen und ehrlichen Grenzen.</span>
-        <span class="wb-mehr-go">Werkzeugraum &ouml;ffnen &rarr;</span>
-      </a>
 
       <div class="wb-bar" id="wbBar" hidden>
         <span class="wb-bar-name" id="wbBarName"></span>
@@ -3042,6 +3049,13 @@
 
       </div>
       </div>
+
+      <a class="wb-mehr" href="systeme.html">
+        <span class="wb-mehr-txt"><strong>Noch mehr Systeme?</strong>
+          Im Werkzeugraum liegen acht weitere &ndash; jedes mit Ablauf, Nutzen und ehrlichen Grenzen.</span>
+        <span class="wb-mehr-go">Werkzeugraum &ouml;ffnen &rarr;</span>
+      </a>
+
     </div>
 
   </div>
@@ -3152,7 +3166,7 @@
 
 <!-- GARANTIE BANNER -->
 <div style="padding: 0 2rem; background: var(--bg);">
-  <div class="guarantee-banner panel reveal">
+  <div class="guarantee-banner panel reveal" id="garantie">
     <div class="guarantee-text">
       <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Garantie</span></div>
       <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
@@ -3390,7 +3404,7 @@
     </div>
     <div class="qs-grid">
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Texte%20aktualisieren%20(ab%20CHF%2060)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Texte%20aktualisieren%20(CHF%2060%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Texte aktualisieren</h3>
           <p>Inhalte, Beschreibungen oder Kontaktdaten auf Ihrer Website ändern.</p>
@@ -3402,7 +3416,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Bild%20austauschen%20(ab%20CHF%2060)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Bilder%20austauschen%20(CHF%2060%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Bilder austauschen</h3>
           <p>Fotos, Banner oder Logos auf Ihrer Website ersetzen und optimieren.</p>
@@ -3414,7 +3428,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Kontaktformular%20einbauen%20(ab%20CHF%2080)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Kontaktformular%20einbauen%20(CHF%2080%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Kontaktformular einbauen</h3>
           <p>Professionelles Formular – Nachrichten landen direkt in Ihrem Postfach.</p>
@@ -3426,7 +3440,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Mobile-Fix%20(ab%20CHF%2090)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Mobile-Darstellung%20fixen%20(CHF%2090%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Mobile-Darstellung fixen</h3>
           <p>Ihre Website sieht auf dem Handy komisch aus? Wir reparieren das.</p>
@@ -3442,7 +3456,7 @@
     <details class="qs-more">
       <summary>Alle 12 Klein-Services anzeigen</summary>
       <div class="qs-grid">
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Google%20Maps%20einbinden%20(ab%20CHF%2090)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Google%20Maps%20einbinden%20(CHF%2090%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Google Maps einbinden</h3>
           <p>Interaktive Karte mit Ihrem Standort direkt auf der Kontaktseite.</p>
@@ -3454,7 +3468,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20WhatsApp-Button%20einbauen%20(ab%20CHF%2070)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20WhatsApp-Button%20einbauen%20(CHF%2070%20fix)." target="_blank">
         <div class="qs-info">
           <h3>WhatsApp-Button einbauen</h3>
           <p>Floating-Button auf Ihrer Website – Kunden schreiben Ihnen direkt.</p>
@@ -3466,7 +3480,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Speed-Optimierung%20(ab%20CHF%20150)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Speed-Optimierung%20(CHF%20150%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Speed-Optimierung</h3>
           <p>Ladezeit drastisch reduzieren – besseres Google-Ranking und weniger Absprünge.</p>
@@ -3478,7 +3492,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SEO-Grundoptimierung%20(ab%20CHF%20180)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SEO-Grundoptimierung%20(CHF%20180%20fix)." target="_blank">
         <div class="qs-info">
           <h3>SEO-Grundoptimierung</h3>
           <p>Meta-Tags, Titles, Beschreibungen – besser gefunden bei Google.</p>
@@ -3490,7 +3504,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SSL%20%26%20Sicherheits-Update%20(ab%20CHF%20120)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SSL%20%26%20Sicherheits-Update%20(CHF%20120%20fix)." target="_blank">
         <div class="qs-info">
           <h3>SSL & Sicherheits-Update</h3>
           <p>HTTPS aktivieren, veraltete Plugins updaten, Sicherheitslücken schliessen.</p>
@@ -3502,7 +3516,7 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Analytics%20einrichten%20(ab%20CHF%2090)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Analytics%20einrichten%20(CHF%2090%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Analytics einrichten</h3>
           <p>Google Analytics / Matomo – verstehen Sie, wer Ihre Website besucht.</p>
@@ -3514,10 +3528,10 @@
         </div>
       </a>
 
-      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Cookie-Banner%20%26%20Datenschutz%20(ab%20CHF%20100)." target="_blank">
+      <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Cookie-Banner%20%26%20Datenschutz%20(CHF%20100%20fix)." target="_blank">
         <div class="qs-info">
           <h3>Cookie-Banner & Datenschutz</h3>
-          <p>revDSG-konforme Lösung nach Schweizer Recht – rechtssicher ohne technischen Aufwand.</p>
+          <p>revDSG-konforme Lösung nach Schweizer Recht – technisch sauber umgesetzt, ohne Aufwand für Sie.</p>
         </div>
         <div class="qs-price">
           <span class="amount">100</span>
@@ -3542,7 +3556,7 @@
     </details>
     <div hidden></div>
     <div class="qs-cta">
-      <p><strong>Nicht sicher was Sie brauchen?</strong><br/>Beschreiben Sie uns einfach das Problem – wir sagen Ihnen ehrlich, was nötig ist und was es kostet.</p>
+      <p><strong>Nicht sicher, was Sie brauchen?</strong><br/>Beschreiben Sie uns einfach das Problem – wir sagen Ihnen ehrlich, was nötig ist und was es kostet.</p>
       <div class="qs-cta-btns">
         <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20brauche%20Hilfe%20mit%20meiner%20Website%20und%20weiss%20nicht%20genau%20was." target="_blank" class="btn-whatsapp" style="font-size:0.9rem;padding:0.75rem 1.5rem">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -3590,7 +3604,7 @@
       </div>
       <div class="why-card panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-target"/></svg></span>
-        <h3>Ergebnisse die zählen</h3>
+        <h3>Ergebnisse, die zählen</h3>
         <p>Mehr Anfragen, mehr Vertrauen, mehr Umsatz. Wir messen Erfolg an Ihren Ergebnissen – nicht an unseren Stundenzahlen.</p>
       </div>
       <div class="why-card why-card-wide panel">
@@ -3674,6 +3688,7 @@
       <h4>Navigation</h4>
       <a href="#services">Leistungen</a>
       <a href="#systeme">Systeme-Demos</a>
+      <a href="systeme.html">Werkzeugraum</a>
       <a href="#process">Prozess</a>
       <a href="#pricing">Preise</a>
       <a href="#analyse">Gratis Analyse</a>
@@ -4475,6 +4490,14 @@ window.wupDemo = {
     }
     barName.textContent = card.querySelector('.wb-card-name').textContent;
     bar.hidden = false;
+    // Auf dem Handy liegt das geöffnete Werkzeug sonst unterhalb des Bildschirms —
+    // ohne Rückmeldung wirkt der Klick folgenlos. Nur scrollen, wenn nötig.
+    requestAnimationFrame(() => {
+      const r = bar.getBoundingClientRect();
+      if (r.top < 60 || r.top > window.innerHeight - 120) {
+        bar.scrollIntoView({ behavior: REDUCE_MOTION ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
   }
   cards.forEach(card => {
     card.setAttribute('aria-expanded', 'false');
