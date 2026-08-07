@@ -627,9 +627,8 @@
       cursor: pointer; text-decoration: none;
     }
     .qs-card.visible { opacity: 1; transform: none; }
-    .qs-icon { display: none; }
     .qs-info { flex: 1; }
-    .qs-info h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .qs-info h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; color: var(--ink); }
     .qs-info p { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
     .qs-price {
       text-align: right; flex-shrink: 0;
@@ -3379,7 +3378,7 @@
 <section id="quick-services">
   <div class="container">
     <div class="qs-intro">
-      <div class="qs-intro-left">
+      <div class="qs-intro-left reveal">
         <div class="sec-index"><span class="sec-no">10</span><span class="sec-rule"></span><span class="sec-name">Klein-Services</span></div>
         <h2 class="section-title">Nur eine kleine Sache?<br/>Kein Problem.</h2>
           <p class="section-sub">Nicht jede Verbesserung braucht ein grosses Projekt. Wählen Sie genau das aus, was Sie brauchen – wir erledigen es schnell und unkompliziert.</p>
@@ -3392,7 +3391,6 @@
     <div class="qs-grid">
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Texte%20aktualisieren%20(ab%20CHF%2060)." target="_blank">
-        <div class="qs-icon">P-01</div>
         <div class="qs-info">
           <h3>Texte aktualisieren</h3>
           <p>Inhalte, Beschreibungen oder Kontaktdaten auf Ihrer Website ändern.</p>
@@ -3405,7 +3403,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Bild%20austauschen%20(ab%20CHF%2060)." target="_blank">
-        <div class="qs-icon">P-02</div>
         <div class="qs-info">
           <h3>Bilder austauschen</h3>
           <p>Fotos, Banner oder Logos auf Ihrer Website ersetzen und optimieren.</p>
@@ -3418,7 +3415,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Kontaktformular%20einbauen%20(ab%20CHF%2080)." target="_blank">
-        <div class="qs-icon">P-03</div>
         <div class="qs-info">
           <h3>Kontaktformular einbauen</h3>
           <p>Professionelles Formular – Nachrichten landen direkt in Ihrem Postfach.</p>
@@ -3431,7 +3427,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Mobile-Fix%20(ab%20CHF%2090)." target="_blank">
-        <div class="qs-icon">P-04</div>
         <div class="qs-info">
           <h3>Mobile-Darstellung fixen</h3>
           <p>Ihre Website sieht auf dem Handy komisch aus? Wir reparieren das.</p>
@@ -3448,7 +3443,6 @@
       <summary>Alle 12 Klein-Services anzeigen</summary>
       <div class="qs-grid">
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Google%20Maps%20einbinden%20(ab%20CHF%2090)." target="_blank">
-        <div class="qs-icon">P-05</div>
         <div class="qs-info">
           <h3>Google Maps einbinden</h3>
           <p>Interaktive Karte mit Ihrem Standort direkt auf der Kontaktseite.</p>
@@ -3461,7 +3455,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20WhatsApp-Button%20einbauen%20(ab%20CHF%2070)." target="_blank">
-        <div class="qs-icon">P-06</div>
         <div class="qs-info">
           <h3>WhatsApp-Button einbauen</h3>
           <p>Floating-Button auf Ihrer Website – Kunden schreiben Ihnen direkt.</p>
@@ -3474,7 +3467,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Speed-Optimierung%20(ab%20CHF%20150)." target="_blank">
-        <div class="qs-icon">P-07</div>
         <div class="qs-info">
           <h3>Speed-Optimierung</h3>
           <p>Ladezeit drastisch reduzieren – besseres Google-Ranking und weniger Absprünge.</p>
@@ -3487,7 +3479,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SEO-Grundoptimierung%20(ab%20CHF%20180)." target="_blank">
-        <div class="qs-icon">P-08</div>
         <div class="qs-info">
           <h3>SEO-Grundoptimierung</h3>
           <p>Meta-Tags, Titles, Beschreibungen – besser gefunden bei Google.</p>
@@ -3500,7 +3491,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20SSL%20%26%20Sicherheits-Update%20(ab%20CHF%20120)." target="_blank">
-        <div class="qs-icon">P-09</div>
         <div class="qs-info">
           <h3>SSL & Sicherheits-Update</h3>
           <p>HTTPS aktivieren, veraltete Plugins updaten, Sicherheitslücken schliessen.</p>
@@ -3513,7 +3503,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Analytics%20einrichten%20(ab%20CHF%2090)." target="_blank">
-        <div class="qs-icon">P-10</div>
         <div class="qs-info">
           <h3>Analytics einrichten</h3>
           <p>Google Analytics / Matomo – verstehen Sie, wer Ihre Website besucht.</p>
@@ -3526,7 +3515,6 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20folgenden%20Klein-Service%20bestellen%3A%20Cookie-Banner%20%26%20Datenschutz%20(ab%20CHF%20100)." target="_blank">
-        <div class="qs-icon">P-11</div>
         <div class="qs-info">
           <h3>Cookie-Banner & Datenschutz</h3>
           <p>revDSG-konforme Lösung nach Schweizer Recht – rechtssicher ohne technischen Aufwand.</p>
@@ -3539,10 +3527,9 @@
       </a>
 
       <a class="qs-card panel" href="https://wa.me/41784464832?text=Hallo%2C%20ich%20m%C3%B6chte%20%C3%BCber%20einen%20individuellen%20Klein-Service%20sprechen." target="_blank">
-        <div class="qs-icon">P-12</div>
         <div class="qs-info">
           <h3>Etwas anderes?</h3>
-          <p>Haben Sie eine spezifische Anfrage? Schreiben Sie mir – wir finden eine Lösung.</p>
+          <p>Haben Sie eine spezifische Anfrage? Schreiben Sie uns – wir finden eine Lösung.</p>
         </div>
         <div class="qs-price">
           <span class="amount">?</span>
@@ -3639,7 +3626,7 @@
           <span class="faq-arrow">+</span>
         </div>
         <div class="faq-a">
-          <p>Die Erstanalyse ist 100% kostenlos und unverbindlich. Sie erhalten von mir ein detailliertes Feedback zu Ihrer aktuellen Website – ohne jegliche Verpflichtung.</p>
+          <p>Die Erstanalyse ist 100% kostenlos und unverbindlich. Sie erhalten von uns ein detailliertes Feedback zu Ihrer aktuellen Website – ohne jegliche Verpflichtung.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -3709,7 +3696,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 WebUpgrade Pro · Schweiz</span>
+    <span>© <span id="jahr">2026</span> WebUpgrade Pro · Schweiz</span>
     <span>Moderne Websites. Faire Preise. Für Ihren Betrieb gebaut.</span>
     <div style="display:flex;gap:1rem">
       <a href="impressum.html">Impressum</a>
@@ -3802,6 +3789,12 @@ document.querySelectorAll('.reveal, .service-card, .process-step, .process-steps
   el.style.transitionDelay = (i % 4) * 60 + 'ms';
   observer.observe(el);
 });
+
+// ── Copyright-Jahr: schreibt sich selbst fort, damit es nie veraltet ──
+(() => {
+  const j = document.getElementById('jahr');
+  if (j) j.textContent = String(new Date().getFullYear());
+})();
 
 // ── FAQ ──
 function toggleFaq(el){
