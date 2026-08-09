@@ -1973,6 +1973,10 @@
     #why .why-card.panel::before { display: none; }
     /* Abschlusskarte über die volle Breite: sie schliesst die Sektion, statt als Rest übrig zu bleiben.
        Gold, weil es um Ihre Freigabe geht — dieselbe Regel wie überall auf der Seite. */
+    /* Wer dahintersteht — die Seite verspricht Nähe, also nennt sie auch den Namen */
+    .wer-steht-dahinter { max-width: 56ch; margin: 1.1rem auto 0; padding-top: 1rem;
+      border-top: 1px solid var(--line-2); font-size: .92rem; color: var(--ink-2); }
+    .wer-steht-dahinter strong { color: var(--ink); font-weight: 700; }
     #why .why-card-wide { grid-column: 1 / -1; box-shadow: inset 2px 0 0 var(--signal); }
     #why .why-card-wide p { max-width: 74ch; }
     @media (max-width: 900px) {
@@ -2162,7 +2166,7 @@
 
       <ul class="hero-trust">
         <li>Kostenlose Erstanalyse</li>
-        <li>Antwort innert 24 Stunden</li>
+        <li>Antwort innert 24 Stunden (Mo&ndash;Fr)</li>
         <li>Live erst nach Ihrer Freigabe</li>
         <li>Faire Festpreise</li>
       </ul>
@@ -2182,7 +2186,7 @@
       </ol>
       <p class="befund-foot">
         Diese Felder sind leer, weil wir Ihre Zahlen noch nicht kennen.<br>
-        Genau daf&uuml;r ist die Analyse da &ndash; kostenlos, R&uuml;ckmeldung in 24 Stunden.
+        Genau daf&uuml;r ist die Analyse da &ndash; kostenlos, R&uuml;ckmeldung in 24 Stunden (Mo&ndash;Fr).
       </p>
     </aside>
   </div>
@@ -2244,7 +2248,7 @@
     <div class="stats-grid">
       <div class="stat reveal"><h3>100%</h3><p>Live erst nach Ihrer Freigabe – vorher bleibt alles beim Alten</p></div>
       <div class="stat reveal"><h3>3s</h3><p>Zeit bis Besucher abspringen – bei langsamen Seiten (Google)</p></div>
-      <div class="stat reveal"><h3>24h</h3><p>Feedback nach Ihrer Analyse</p></div>
+      <div class="stat reveal"><h3>24h</h3><p>Feedback nach Ihrer Analyse (Mo&ndash;Fr)</p></div>
     </div>
   </div>
 </section>
@@ -2271,7 +2275,7 @@
       <li class="finding reveal">
         <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-searchx"/></svg></span>
         <div><h3>Unsichtbar bei Google</h3>
-             <p>Ohne SEO finden Sie Ihre Kunden nie – Ihre Konkurrenz schon.</p></div>
+             <p>Ohne SEO finden Sie viele Kunden gar nicht erst – Ihre Konkurrenz schon.</p></div>
       </li>
       <li class="finding reveal">
         <span class="fd-no fd-ic" aria-hidden="true"><svg class="ico"><use href="#i-shieldq"/></svg></span>
@@ -2313,7 +2317,7 @@
       <div class="service-card panel">
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-phone"/></svg></div>
         <h3>Mobile-First Design</h3>
-        <p>100% perfekt auf jedem Gerät – Smartphone, Tablet und Desktop. Kein Besucher verliert sich mehr im Layout.</p>
+        <p>Sauber bedienbar auf Smartphone, Tablet und Desktop – getestet auf echten Geräten, nicht nur im Browser.</p>
       </div>
       <div class="service-card panel">
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-search"/></svg></div>
@@ -3078,7 +3082,7 @@
       <div class="process-step">
         <div class="step-num">2</div>
         <h3>Feedback & Konzept</h3>
-        <p>Innerhalb von 24 Stunden erhalten Sie konkretes Feedback und einen klaren Verbesserungsplan.</p>
+        <p>Innerhalb von 24 Stunden (Mo&ndash;Fr) erhalten Sie konkretes Feedback und einen klaren Verbesserungsplan.</p>
       </div>
       <div class="process-step">
         <div class="step-num">3</div>
@@ -3169,14 +3173,14 @@
   <div class="guarantee-banner panel reveal" id="garantie">
     <div class="guarantee-text">
       <div class="sec-index"><span class="sec-no">08</span><span class="sec-rule"></span><span class="sec-name">Garantie</span></div>
-      <h3>Unser Versprechen: <span>100% Geld-zurück-Garantie</span></h3>
+      <h3>Unser Versprechen: <span>Sie zahlen erst nach Ihrer Freigabe</span></h3>
       <p>
-        Wir sind von unserer Arbeit überzeugt – und das beweisen wir. Wenn Sie mit dem Ergebnis nicht zufrieden sind,
-        erhalten Sie Ihr Geld vollständig zurück. Kein Streit, keine Erklärungen nötig.
-        Wir liefern Qualität – oder Sie zahlen nichts.
+        Ihre neue Website entsteht auf einer separaten Vorschau. Sie sehen alles fertig, bevor irgendetwas live geht.
+        Gefällt Ihnen das Ergebnis nach der letzten Revisionsrunde nicht, schalten wir es nicht live –
+        und Sie zahlen nichts. Ihre bestehende Website läuft die ganze Zeit unverändert weiter.
       </p>
       <div class="guarantee-points">
-        <span class="gp">✓ 100% Rückerstattung</span>
+        <span class="gp">✓ Zahlung erst nach Ihrer Freigabe</span>
         <span class="gp">✓ Original-Website bleibt unangetastet</span>
       </div>
     </div>
@@ -3209,7 +3213,7 @@
             <p class="kfg-hint">Sechs Zeilen, gut zwei Minuten &ndash; f&uuml;nf davon ohne Tippen.
             Zum Schluss brauchen wir: Name, E-Mail und Ihre Website-Adresse. Sonst nichts.</p>
             <button type="button" class="kfg-next kfg-start">Blatt anlegen &rarr;</button>
-            <p class="kfg-trustline">Kostenlos &middot; unverbindlich &middot; R&uuml;ckmeldung in 24 Stunden</p>
+            <p class="kfg-trustline">Kostenlos &middot; unverbindlich &middot; R&uuml;ckmeldung in 24 Stunden (Mo&ndash;Fr)</p>
             <p class="kfg-alt2">Lieber kurz fragen statt ausf&uuml;llen?
               <a href="https://wa.me/41784464832?text=Hallo%2C%20ich%20h%C3%A4tte%20eine%20kurze%20Frage%20zu%20meiner%20Website." target="_blank" rel="noopener">Schreiben Sie uns &rarr;</a></p>
           </div>
@@ -3315,7 +3319,7 @@
             <li class="kfg-row" data-row="05"><span class="bf-no">05</span><span class="bf-label">Zeitrahmen</span><span class="bf-val">&mdash;</span></li>
             <li class="kfg-row" data-row="06"><span class="bf-no">06</span><span class="bf-label">Kontakt</span><span class="bf-val">&mdash;</span></li>
           </ol>
-          <p class="kfg-blatt-b">Teil B &middot; messen wir &middot; Rückmeldung in 24 Stunden</p>
+          <p class="kfg-blatt-b">Teil B &middot; messen wir &middot; Rückmeldung in 24 Stunden (Mo&ndash;Fr)</p>
         </aside>
       </div>
 
@@ -3575,6 +3579,10 @@
       <div class="sec-index"><span class="sec-no">11</span><span class="sec-rule"></span><span class="sec-name">Über uns</span></div>
       <h2 class="section-title">Klein genug, dass Sie mit dem sprechen, der baut.</h2>
       <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Dafür stehen wir gerade.</p>
+      <p class="wer-steht-dahinter">
+        Hinter WebUpgrade&nbsp;Pro steht <strong>Bernard Fries</strong> aus Zürich.
+        Sie schreiben nicht an ein Postfach, sondern an die Person, die Ihre Website auch baut.
+      </p>
     </div>
     <div class="why-grid">
       <div class="why-card panel">
@@ -3595,7 +3603,7 @@
       <div class="why-card panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-tag"/></svg></span>
         <h3>Faires Preis-Leistungs-Verhältnis</h3>
-        <p>Qualität muss nicht teuer sein. Wir bieten Resultate auf Agentur-Niveau zu Preisen, die für KMU und Selbstständige tatsächlich funktionieren.</p>
+        <p>Qualität muss nicht teuer sein. Wir bieten Sorgfältige Arbeit zu Preisen, die für KMU und Selbstständige tatsächlich tragbar sind.</p>
       </div>
       <div class="why-card panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-bolt"/></svg></span>
