@@ -19,6 +19,11 @@
   <meta property="og:description" content="Kostenlose Website-Analyse. Websites und digitale Systeme für Schweizer KMU. Faire Festpreise." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://webupgradepro.ch/" />
+  <meta property="og:image" content="https://webupgradepro.ch/img/og-bild.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="WebUpgrade Pro – Websites und digitale Systeme für Schweizer KMU" />
+  <meta name="twitter:image" content="https://webupgradepro.ch/img/og-bild.png" />
   <meta property="og:locale" content="de_CH" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="WebUpgrade Pro – Website-Modernisierung Schweiz" />
@@ -923,6 +928,28 @@
       .betriebe-grid figcaption { padding: .5rem .5rem .6rem; font-size: .72rem; line-height: 1.4; }
       .betriebe-grid figcaption span { font-size: .62rem; margin-bottom: .25rem; }
     }
+
+    /* ── Betriebszeichnungen: konstruiert, nicht generiert ──
+          Jede Branche ihr eigener Ton – dieselbe Zuordnung wie in der Branchen-Simulation. */
+    .betriebe-grid figure[data-b="schreinerei"] { --bz: #fb923c; }
+    .betriebe-grid figure[data-b="praxis"]      { --bz: #2dd4bf; }
+    .betriebe-grid figure[data-b="treuhand"]    { --bz: #a78bfa; }
+    .bz { display: block; width: 100%; height: auto; aspect-ratio: 240/320;
+      background: #040c1c; }
+    .bz path, .bz rect { fill: none; stroke-linecap: square; }
+    .bz .bz-thin path { stroke: var(--line-2); stroke-width: .5; }
+    .bz .bz-line path { stroke: var(--ink-2); stroke-width: 1; }
+    .bz .bz-dim path  { stroke: var(--ink-2); stroke-width: .6; }
+    .bz .bz-acc path  { stroke: var(--bz, var(--mark)); stroke-width: 1.2; }
+    .bz .bz-fill rect { fill: color-mix(in srgb, var(--bz, var(--mark)) 22%, transparent);
+      stroke: var(--bz, var(--mark)); stroke-width: .8; }
+    .bz text { font-family: var(--mono); fill: var(--ink-2); }
+    .bz .bz-nr { font-size: 7px; letter-spacing: .12em; fill: var(--bz, var(--mark)); }
+    .bz .bz-t  { font-size: 9px; letter-spacing: .06em; fill: var(--ink); }
+    .bz .bz-h  { font-size: 7px; letter-spacing: .1em; fill: var(--ink-2); }
+    .bz .bz-m  { font-size: 7.5px; }
+    .bz .bz-sum { fill: var(--ink); }
+    .bz .bz-f  { font-size: 6px; letter-spacing: .14em; fill: var(--ink-2); opacity: .75; }
 
     .abnahme { margin: 3.5rem auto 0; max-width: 780px; border: 1px solid var(--line-2); }
     .abnahme img { display: block; width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; }
@@ -2218,16 +2245,117 @@
            Schreiner. Deshalb bekommt bei uns keiner die Website des anderen.</p>
       </div>
       <div class="betriebe-grid">
-        <figure>
-          <img src="img/betrieb-schreinerei.webp" width="560" height="840" alt="Werkbank einer Schreinerei am Abend, Werkzeug präzise ausgelegt" loading="lazy" decoding="async">
+        <figure data-b="schreinerei">
+          <svg class="bz" viewBox="0 0 240 320" role="img" aria-label="Konstruktionszeichnung: Zinkenverbindung, Brettbreite 168 Millimeter, Zinkenteilung 24 Millimeter">
+  <g class="bz-thin">
+    <path d="M20 44h200M20 44v232M220 44v232M20 276h200"/>
+  </g>
+  <text class="bz-nr" x="28" y="60">POS. 01</text>
+  <text class="bz-t" x="28" y="74">ZINKENVERBINDUNG</text>
+
+  <!-- Brett A, Zinken nach unten -->
+  <g class="bz-line">
+    <path d="M44 96h152v34H44z"/>
+    <path d="M44 130h24v26H44zM92 130h24v26H92zM140 130h24v26h-24zM188 130v26h8v-26"/>
+  </g>
+  <!-- Brett B, Gegenzinken -->
+  <g class="bz-line">
+    <path d="M44 186h152v34H44z"/>
+    <path d="M68 160h24v26H68zM116 160h24v26h-24zM164 160h24v26h-24z"/>
+  </g>
+  <!-- Fuegerichtung -->
+  <g class="bz-acc">
+    <path d="M120 142v22" stroke-dasharray="3 3"/>
+    <path d="M116 160l4 6 4-6"/>
+  </g>
+
+  <!-- Bemassung Breite: 168 -->
+  <g class="bz-dim">
+    <path d="M44 246h152M44 242v8M196 242v8"/>
+    <path d="M50 243l-6 3 6 3M190 243l6 3-6 3"/>
+  </g>
+  <text class="bz-m" x="120" y="240">168</text>
+  <!-- Bemassung Teilung: 24 -->
+  <g class="bz-dim"><path d="M44 118h24M44 114v8M68 114v8"/></g>
+  <text class="bz-m" x="56" y="112">24</text>
+
+  <text class="bz-f" x="28" y="266">MASSE IN MM &#183; MASSSTAB 1:2</text>
+</svg>
           <figcaption><span>01 · Die Schreinerei</span>Hier zählt, was man anfassen kann.</figcaption>
         </figure>
-        <figure class="shift">
-          <img src="img/betrieb-praxis.webp" width="560" height="840" alt="Empfang einer Arztpraxis am Abend, aufgeräumt und ruhig" loading="lazy" decoding="async">
+        <figure class="shift" data-b="praxis">
+          <svg class="bz" viewBox="0 0 240 320" role="img" aria-label="Terminraster einer Woche, 08:00 bis 12:00 in Halbstundenschritten, drei Termine belegt">
+  <g class="bz-thin">
+    <path d="M20 44h200M20 44v232M220 44v232M20 276h200"/>
+  </g>
+  <text class="bz-nr" x="28" y="60">POS. 02</text>
+  <text class="bz-t" x="28" y="74">TERMINRASTER KW 33</text>
+
+  <!-- Spaltenkoepfe -->
+  <text class="bz-h" x="76" y="98">MO</text>
+  <text class="bz-h" x="112" y="98">DI</text>
+  <text class="bz-h" x="148" y="98">MI</text>
+  <text class="bz-h" x="184" y="98">DO</text>
+
+  <!-- Zeitachse 08:00-12:00, 9 Zeilen a 30 min -->
+  <text class="bz-m" x="52" y="114" text-anchor="end">08:00</text>
+  <text class="bz-m" x="52" y="134" text-anchor="end">08:30</text>
+  <text class="bz-m" x="52" y="154" text-anchor="end">09:00</text>
+  <text class="bz-m" x="52" y="174" text-anchor="end">09:30</text>
+  <text class="bz-m" x="52" y="194" text-anchor="end">10:00</text>
+  <text class="bz-m" x="52" y="214" text-anchor="end">10:30</text>
+  <text class="bz-m" x="52" y="234" text-anchor="end">11:00</text>
+
+  <!-- Raster -->
+  <g class="bz-thin">
+    <path d="M58 104h148M58 124h148M58 144h148M58 164h148M58 184h148M58 204h148M58 224h148M58 240h148"/>
+    <path d="M58 104v136M94 104v136M130 104v136M166 104v136M206 104v136"/>
+  </g>
+
+  <!-- Belegte Slots: Mo 08:30 (30min), Di 09:30 (60min), Do 10:30 (30min) -->
+  <g class="bz-fill">
+    <rect x="59" y="125" width="34" height="18"/>
+    <rect x="95" y="165" width="34" height="38"/>
+    <rect x="167" y="205" width="38" height="18"/>
+  </g>
+  <g class="bz-acc">
+    <path d="M62 134h6M98 174h6M170 214h6"/>
+  </g>
+
+  <text class="bz-f" x="28" y="266">3 VON 28 SLOTS BELEGT</text>
+</svg>
           <figcaption><span>02 · Die Praxis</span>Hier zählt Vertrauen ab der ersten Minute.</figcaption>
         </figure>
-        <figure>
-          <img src="img/betrieb-treuhand.webp" width="560" height="840" alt="Schreibtisch eines Treuhandbüros mit Ordnern und Messinglampe" loading="lazy" decoding="async">
+        <figure data-b="treuhand">
+          <svg class="bz" viewBox="0 0 240 320" role="img" aria-label="Kontenblatt mit Soll und Haben, beide Seiten summieren auf 16620 Franken">
+  <g class="bz-thin">
+    <path d="M20 44h200M20 44v232M220 44v232M20 276h200"/>
+  </g>
+  <text class="bz-nr" x="28" y="60">POS. 03</text>
+  <text class="bz-t" x="28" y="74">KONTENBLATT 1020</text>
+
+  <!-- Kopf -->
+  <g class="bz-line"><path d="M36 96h168M120 96v130"/></g>
+  <text class="bz-h" x="42" y="110">SOLL</text>
+  <text class="bz-h" x="126" y="110">HABEN</text>
+  <g class="bz-thin"><path d="M36 116h168"/></g>
+
+  <!-- Soll -->
+  <text class="bz-m" x="42" y="134">Debitoren</text><text class="bz-m" x="114" y="134" text-anchor="end">12&#8217;480</text>
+  <text class="bz-m" x="42" y="154">Vorsteuer</text><text class="bz-m" x="114" y="154" text-anchor="end">3&#8217;250</text>
+  <text class="bz-m" x="42" y="174">Spesen</text><text class="bz-m" x="114" y="174" text-anchor="end">890</text>
+  <!-- Haben -->
+  <text class="bz-m" x="126" y="134">Ertrag</text><text class="bz-m" x="198" y="134" text-anchor="end">14&#8217;900</text>
+  <text class="bz-m" x="126" y="154">Anzahlung</text><text class="bz-m" x="198" y="154" text-anchor="end">1&#8217;720</text>
+
+  <!-- Summenstrich -->
+  <g class="bz-line"><path d="M42 194h72M126 194h72"/></g>
+  <text class="bz-m bz-sum" x="114" y="210" text-anchor="end">16&#8217;620</text>
+  <text class="bz-m bz-sum" x="198" y="210" text-anchor="end">16&#8217;620</text>
+  <g class="bz-acc"><path d="M42 216h72M126 216h72"/></g>
+
+  <text class="bz-f" x="28" y="266">SALDIERT &#183; CHF</text>
+</svg>
           <figcaption><span>03 · Das Treuhandbüro</span>Hier zählt Genauigkeit bis zur letzten Zahl.</figcaption>
         </figure>
       </div>
