@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Aufmassblatt mit Schriftfeld, Aenderungsindex und Freigabefeld der Kundschaft">
+  <defs>
+    <style>
+      .p  { fill:none; stroke:#9fb0c9; stroke-width:1.2; }
+      .th { fill:none; stroke:rgba(148,177,224,.22); stroke-width:.8; }
+      .dm { fill:none; stroke:#9fb0c9; stroke-width:.9; }
+      .ac { fill:none; stroke:#38bdf8; stroke-width:1.4; }
+      .gd { fill:none; stroke:#f0a92c; stroke-width:1.4; }
+      text { font-family:ui-monospace,'Cascadia Mono',Consolas,monospace; fill:#9fb0c9; }
+      .t9  { font-size:13px; letter-spacing:.1em; }
+      .t8  { font-size:11.5px; letter-spacing:.08em; }
+      .t7  { font-size:10px; letter-spacing:.12em; }
+      .hd  { font-size:15px; letter-spacing:.1em; fill:#eef2f8; }
+      .bl  { fill:#38bdf8; }
+      .go  { fill:#f0a92c; }
+      .wh  { fill:#eef2f8; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="800" fill="#04101f"/>
+
+  <!-- Millimeterraster -->
+  <g class="th">
+    <path d="M0 0h1200M0 40h1200M0 80h1200M0 120h1200M0 160h1200M0 200h1200M0 240h1200M0 280h1200M0 320h1200M0 360h1200M0 400h1200M0 440h1200M0 480h1200M0 520h1200M0 560h1200M0 600h1200M0 640h1200M0 680h1200M0 720h1200M0 760h1200"/>
+    <path d="M0 0v800M40 0v800M80 0v800M120 0v800M160 0v800M200 0v800M240 0v800M280 0v800M320 0v800M360 0v800M400 0v800M440 0v800M480 0v800M520 0v800M560 0v800M600 0v800M640 0v800M680 0v800M720 0v800M760 0v800M800 0v800M840 0v800M880 0v800M920 0v800M960 0v800M1000 0v800M1040 0v800M1080 0v800M1120 0v800M1160 0v800"/>
+  </g>
+
+  <!-- Blattrahmen -->
+  <g class="p"><path d="M40 32h1120v736H40z"/></g>
+  <g class="th"><path d="M52 44h1096v712H52z"/></g>
+
+  <!-- Kopfzeile -->
+  <text class="hd" x="72" y="82">AUFMASSBLATT · WEBSITE</text>
+  <g class="p"><path d="M72 96h560"/></g>
+  <text class="t8" x="72" y="120">Bestandsaufnahme vor der Modernisierung</text>
+
+  <!-- ── Zeichnung: Seitenaufbau in Draufsicht, bemasst ── -->
+  <!-- Rahmen des Aufbaus -->
+  <g class="p">
+    <path d="M120 180h520v420H120z"/>
+    <path d="M120 240h520M120 330h520M120 470h520"/>
+    <path d="M380 330v140"/>
+  </g>
+  <!-- Positionsnummern -->
+  <circle cx="140" cy="206" r="11" class="p"/><text class="t8" x="140" y="211" text-anchor="middle">1</text>
+  <circle cx="140" cy="282" r="11" class="p"/><text class="t8" x="140" y="287" text-anchor="middle">2</text>
+  <circle cx="140" cy="396" r="11" class="p"/><text class="t8" x="140" y="401" text-anchor="middle">3</text>
+  <circle cx="404" cy="396" r="11" class="p"/><text class="t8" x="404" y="401" text-anchor="middle">4</text>
+  <circle cx="140" cy="530" r="11" class="p"/><text class="t8" x="140" y="535" text-anchor="middle">5</text>
+  <!-- Beschriftung der Positionen -->
+  <text class="t8" x="166" y="211">Kopfbereich · Navigation</text>
+  <text class="t8" x="166" y="287">Aufmacher · Kernversprechen</text>
+  <text class="t8" x="166" y="401">Leistungen</text>
+  <text class="t8" x="430" y="401">Anfrageweg</text>
+  <text class="t8" x="166" y="535">Fussbereich · Rechtliches</text>
+  <!-- Anfrageweg hervorgehoben -->
+  <g class="ac"><path d="M380 330h260v140H380z"/></g>
+  <text class="t7 bl" x="430" y="424">GEMESSEN</text>
+
+  <!-- Bemassung Breite gesamt: 1280 -->
+  <g class="dm">
+    <path d="M120 636h520M120 630v12M640 630v12"/>
+    <path d="M128 633l-8 3 8 3M632 633l8 3-8 3"/>
+  </g>
+  <text class="t8" x="380" y="628" text-anchor="middle">1280</text>
+  <!-- Bemassung Hoehe: 4200 -->
+  <g class="dm">
+    <path d="M676 180v420M670 180h12M670 600h12"/>
+    <path d="M673 188l3-8 3 8M673 592l3 8 3-8"/>
+  </g>
+  <text class="t8" x="694" y="394">4200</text>
+  <!-- Teilmass Aufmacher: 900 -->
+  <g class="dm"><path d="M120 264h0M96 240v90M90 240h12M90 330h12"/></g>
+  <text class="t8" x="86" y="290" text-anchor="end">900</text>
+
+  <!-- ── Aenderungsindex links unten ── -->
+  <g class="p"><path d="M120 664h520v72H120z"/><path d="M120 688h520M168 664v72M120 712h520"/></g>
+  <text class="t7" x="132" y="681">IDX</text>
+  <text class="t7" x="182" y="681">AENDERUNG</text>
+  <text class="t8" x="132" y="705">A</text><text class="t8" x="182" y="705">Erstaufnahme · Bestand gemessen</text>
+  <text class="t8" x="132" y="729">B</text><text class="t8" x="182" y="729">Anfrageweg gekuerzt: 11 Felder auf 6</text>
+
+  <!-- ── Schriftfeld rechts ── -->
+  <g class="p"><path d="M740 180h320v300H740z"/></g>
+  <g class="th"><path d="M740 216h320M740 252h320M740 288h320M740 324h320M740 360h320M740 396h320M740 432h320M868 180v300"/></g>
+  <text class="t7" x="754" y="204">AUFTRAG</text>       <text class="t8 wh" x="882" y="204">A-2026-0312</text>
+  <text class="t7" x="754" y="240">OBJEKT</text>        <text class="t8 wh" x="882" y="240">Website Bestand</text>
+  <text class="t7" x="754" y="276">MASSSTAB</text>      <text class="t8 wh" x="882" y="276">1:20</text>
+  <text class="t7" x="754" y="312">BLATT</text>         <text class="t8 wh" x="882" y="312">1 von 1</text>
+  <text class="t7" x="754" y="348">DATUM</text>         <text class="t8 wh" x="882" y="348">07.08.2026</text>
+  <text class="t7" x="754" y="384">AUFGENOMMEN</text>   <text class="t8 wh" x="882" y="384">B. Fries</text>
+  <text class="t7" x="754" y="420">INDEX</text>         <text class="t8 wh" x="882" y="420">B</text>
+  <text class="t7" x="754" y="456">EINHEIT</text>       <text class="t8 wh" x="882" y="456">px</text>
+
+  <!-- ── Freigabefeld der Kundschaft ── -->
+  <g class="gd"><path d="M740 520h320v216H740z"/></g>
+  <text class="t7 go" x="754" y="546">FREIGABE KUNDSCHAFT</text>
+  <text class="t8" x="754" y="576">Nichts geht live, bevor dieses Feld</text>
+  <text class="t8" x="754" y="596">unterschrieben ist.</text>
+  <g class="th"><path d="M754 664h292M754 712h292"/></g>
+  <text class="t7" x="754" y="682">DATUM</text>
+  <text class="t7" x="754" y="730">UNTERSCHRIFT</text>
+
+  <!-- Fusszeile -->
+  <text class="t7" x="72" y="756">MASSE IN PIXEL · ERSTELLT MIT DER ERSTANALYSE · WEBUPGRADEPRO.CH</text>
+</svg>

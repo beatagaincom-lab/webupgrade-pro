@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seite nicht gefunden | WebUpgrade Pro</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <style>
+    :root {
+      --bg:#020817; --panel:#060f22; --ink:#eef2f8; --ink-2:#9fb0c9;
+      --line-2:rgba(148,177,224,.20); --line-3:rgba(148,177,224,.38);
+      --mark:#38bdf8; --signal:#f0a92c;
+      --mono: ui-monospace,'SF Mono','Cascadia Mono',Consolas,monospace;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { min-height:100vh; background:var(--bg); color:var(--ink);
+      font-family:'Inter',-apple-system,'Segoe UI',sans-serif; line-height:1.6;
+      display:flex; align-items:center; justify-content:center; padding:2rem;
+      -webkit-font-smoothing:antialiased; }
+    /* Millimeterraster — dieselbe Sprache wie auf der Hauptseite */
+    body::before { content:''; position:fixed; inset:0; pointer-events:none;
+      background-image:
+        repeating-linear-gradient(to right, rgba(148,177,224,.07) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(to bottom, rgba(148,177,224,.07) 0 1px, transparent 1px 24px); }
+    .blatt { position:relative; max-width:620px; width:100%;
+      border:1px solid var(--line-2); background:var(--panel); padding:2.6rem 2.4rem; }
+    .blatt::before, .blatt::after { content:''; position:absolute; width:14px; height:14px; }
+    .blatt::before { top:-1px; left:-1px; border-top:1px solid var(--line-3); border-left:1px solid var(--line-3); }
+    .blatt::after { bottom:-1px; right:-1px; border-bottom:1px solid var(--line-3); border-right:1px solid var(--line-3); }
+    .kopf { display:flex; align-items:baseline; gap:.9rem; font-family:var(--mono);
+      font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--signal); }
+    .kopf .rule { flex:1; height:1px; background:var(--line-2); }
+    h1 { font-size:clamp(1.6rem,4vw,2.1rem); font-weight:800; letter-spacing:-.5px;
+      line-height:1.2; margin:1.1rem 0 .8rem; }
+    p { color:var(--ink-2); font-size:.95rem; max-width:52ch; }
+    .wege { list-style:none; margin:1.8rem 0 0; padding-top:1.4rem; border-top:1px solid var(--line-2); }
+    .wege li { position:relative; padding:.5rem 0 .5rem 1.5rem; }
+    .wege li::before { content:''; position:absolute; left:2px; top:1.05em;
+      width:6px; height:6px; border:1px solid var(--mark); }
+    .wege a { color:var(--ink); text-decoration:none; font-weight:600; font-size:.95rem; }
+    .wege a:hover { color:var(--mark); }
+    .wege span { display:block; font-size:.8rem; color:var(--ink-2); }
+    .cta { display:inline-block; margin-top:1.8rem; background:var(--mark); color:#04121f;
+      text-decoration:none; font-weight:700; font-size:.92rem; padding:.75rem 1.4rem; border-radius:2px; }
+    .fuss { margin-top:1.6rem; font-family:var(--mono); font-size:.66rem;
+      letter-spacing:.12em; color:var(--ink-2); }
+    :focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+  </style>
+</head>
+<body>
+  <main class="blatt">
+    <div class="kopf"><span>Fehler 404</span><span class="rule"></span><span>webupgradepro.ch</span></div>
+    <h1>Diese Seite gibt es nicht.</h1>
+    <p>Vermutlich hat sich ein Tippfehler in die Adresse geschlichen, oder die Seite wurde
+    umbenannt. Hier kommen Sie weiter:</p>
+    <ul class="wege">
+      <li><a href="/">Zur Startseite</a><span>Was wir machen, was es kostet, wie es abläuft</span></li>
+      <li><a href="/systeme.html">Werkzeugraum</a><span>Acht digitale Systeme zum Durchklicken</span></li>
+      <li><a href="/#analyse">Kostenlose Erstanalyse</a><span>Sechs Fragen, Rückmeldung in 24 Stunden (Mo–Fr)</span></li>
+    </ul>
+    <a class="cta" href="/">Zurück zur Startseite &rarr;</a>
+    <p class="fuss">WEBUPGRADE PRO · ZÜRICH · SCHWEIZ</p>
+  </main>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Website modernisieren Schweiz – WebUpgrade Pro | Websites & digitale Systeme für KMU</title>
+  <title>Website modernisieren für Schweizer KMU | WebUpgrade Pro</title>
   <meta name="description" content="Wir verstehen zuerst Ihren Betrieb – dann modernisieren wir Ihre Website und bauen die Systeme dahinter. Kostenlose Erstanalyse, faire Festpreise, direkt aus der Schweiz." />
   <link rel="canonical" href="https://webupgradepro.ch/" />
   <script>
@@ -162,8 +162,12 @@
       text-decoration: none; letter-spacing: -0.5px;
     }
     .nav-logo .logo-symbol { height: 34px; width: auto; display: block; }
-    .nav-logo .logo-wordmark { height: 21px; width: auto; display: block; }
-    @media (max-width: 480px) { .nav-logo .logo-wordmark { height: 17px; } }
+    /* Wortmarke gesetzt statt als Bild: flach, in jeder Grösse scharf, ohne Verlauf und Fase */
+    .logo-wortmarke { font: 800 1.12rem/1 'Inter', sans-serif; letter-spacing: -.02em;
+      color: var(--ink); white-space: nowrap; display: block; }
+    .logo-wortmarke b { color: var(--mark); font-weight: 800; }
+    footer .logo-wortmarke { font-size: 1rem; }
+    @media (max-width: 480px) { .logo-wortmarke { font-size: .96rem; } }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-links a {
       color: var(--muted); text-decoration: none; font-size: 0.9rem;
@@ -589,7 +593,7 @@
     .guarantee-banner {
       background:
         linear-gradient(90deg, rgba(4,10,24,0.96) 0%, rgba(4,10,24,0.9) 55%, rgba(4,10,24,0.62) 100%),
-        url('img/abnahme-plan.webp') right center / cover no-repeat;
+        url('img/aufmassblatt.svg') right center / cover no-repeat;
       padding: 2.5rem 3rem; margin: 4rem auto 0;
       max-width: 900px; display: flex; align-items: center; gap: 2.5rem;
       flex-wrap: wrap;
@@ -2060,7 +2064,7 @@
       /* B6: Garantie-Banner */
       .guarantee-banner { padding: 1.6rem 1.2rem;
         background: linear-gradient(rgba(4,10,24,.94), rgba(4,10,24,.94)),
-                    url('img/abnahme-plan.webp') center / cover no-repeat; }
+                    url('img/aufmassblatt.svg') center / cover no-repeat; }
       /* B9: Footer */
       .footer-inner { flex-direction: column; gap: 1.5rem; }
       .footer-bottom { flex-direction: column; align-items: flex-start; gap: .5rem; }
@@ -2137,7 +2141,7 @@
 <nav id="navbar">
   <a href="#hero" class="nav-logo" aria-label="WebUpgrade Pro – zur Startseite">
     <img class="logo-symbol" src="img/logo-symbol.svg" alt="" width="55" height="36" decoding="async" />
-    <img class="logo-wordmark" src="img/logo-wordmark.png" alt="WebUpgrade Pro" width="768" height="88" decoding="async" />
+    <span class="logo-wortmarke">WebUpgrade<b>Pro</b></span>
   </a>
   <div class="nav-links">
     <a href="#philosophie">Philosophie</a>
@@ -2815,7 +2819,7 @@
       <div class="sys-pan" role="tabpanel" id="pan-status" aria-labelledby="tab-status" tabindex="0" hidden>
         <div class="sys-demo sysC panel is-tool" id="demoStatus" data-demo="status">
 
-          <div class="sys-head" style="--head-img:url('img/abnahme-plan.webp')">
+          <div class="sys-head" style="--head-img:url('img/aufmassblatt.svg')">
             <span class="sys-head-title">Kundenportal · Schreinerei Brunner <em>(Beispielbetrieb)</em></span>
             <span class="sys-head-path">angemeldet: Musterkunde</span>
           </div>
@@ -2858,8 +2862,8 @@
 
             <div class="sysC-check">
               <figure class="sysC-foto">
-                <img src="img/abnahme-plan.webp" width="1200" height="800"
-                     alt="Ein gedruckter Plan auf einem Tisch, mit Bleistift abgezeichnet."
+                <img src="img/aufmassblatt.svg" width="1200" height="800"
+                     alt="Aufmassblatt mit Schriftfeld, Aenderungsindex und einem Freigabefeld, das die Kundschaft unterschreibt."
                      loading="lazy" decoding="async">
                 <figcaption>Abnahme-Foto vom 31.07.</figcaption>
               </figure>
@@ -3229,7 +3233,7 @@
       </div>
     </div>
     <figure class="abnahme reveal">
-      <img src="img/abnahme-plan.webp" width="1200" height="800" alt="Ein gedruckter Plan auf einem Tisch, mit Bleistift abgezeichnet."
+      <img src="img/aufmassblatt.svg" width="1200" height="800" alt="Aufmassblatt mit Schriftfeld, Aenderungsindex und einem Freigabefeld, das die Kundschaft unterschreibt."
            loading="lazy" decoding="async">
       <figcaption>Nichts geht live, bevor Sie abgezeichnet haben.</figcaption>
     </figure>
@@ -3816,7 +3820,7 @@
     <div class="footer-brand">
       <a href="#hero" class="nav-logo" aria-label="WebUpgrade Pro – zur Startseite">
         <img class="logo-symbol" src="img/logo-symbol.svg" alt="" width="55" height="36" decoding="async" />
-        <img class="logo-wordmark" src="img/logo-wordmark.png" alt="WebUpgrade Pro" width="768" height="88" decoding="async" />
+        <span class="logo-wortmarke">WebUpgrade<b>Pro</b></span>
       </a>
       <p>Websites und digitale Systeme für Schweizer KMU. Faire Preise. Direkt aus der Schweiz.</p>
     </div>
