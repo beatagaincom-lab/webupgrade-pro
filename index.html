@@ -2045,7 +2045,30 @@
         color-mix(in srgb, var(--sc, var(--mark)) 10%, transparent) 45%,
         transparent 72%);
       filter: blur(26px); opacity: .5; pointer-events: none;
-      transition: opacity 520ms var(--e-out-quart), transform 520ms var(--e-out-quart); }
+      will-change: transform, opacity;
+      transition: opacity 520ms var(--e-out-quart), transform 520ms var(--e-out-quart);
+      /* Läuft nur, wenn die Sektion im Blick ist — siehe .is-live weiter unten */
+      animation: sc-wandern 34s ease-in-out infinite;
+      animation-play-state: paused; }
+
+    /* Die Farbe baut sich langsam auf, wandert und kommt zurück.
+       Ausschliesslich transform und opacity: das rechnet die Grafikkarte, nicht der Prozessor. */
+    @keyframes sc-wandern {
+      0%   { transform: translate3d(0, 0, 0) scale(1);          opacity: .38; }
+      28%  { transform: translate3d(-7%, -5%, 0) scale(1.22);   opacity: .66; }
+      54%  { transform: translate3d(-3%, -9%, 0) scale(1.10);   opacity: .52; }
+      78%  { transform: translate3d(-9%, -2%, 0) scale(1.26);   opacity: .70; }
+      100% { transform: translate3d(0, 0, 0) scale(1);          opacity: .38; }
+    }
+    /* Angehalten, bis die Sektion sichtbar ist. Kein Rechenaufwand ausserhalb des Bildschirms. */
+    #services.is-live .sc-aura { animation-play-state: running; }
+    /* Versetzt, damit die sechs Karten nicht im Gleichschritt pulsieren */
+    #services .service-card:nth-child(1) .sc-aura { animation-delay: 0s; }
+    #services .service-card:nth-child(2) .sc-aura { animation-delay: -5.5s; }
+    #services .service-card:nth-child(3) .sc-aura { animation-delay: -11s; }
+    #services .service-card:nth-child(4) .sc-aura { animation-delay: -17s; }
+    #services .service-card:nth-child(5) .sc-aura { animation-delay: -22.5s; }
+    #services .service-card:nth-child(6) .sc-aura { animation-delay: -28s; }
 
     /* Grosses Motiv: dasselbe Zeichen wie vorne, nur weich und angeschnitten */
     .sc-motiv { position: absolute; z-index: 1; right: -7%; bottom: -12%;
@@ -2055,7 +2078,7 @@
       opacity: .13; filter: blur(1.6px); pointer-events: none;
       transition: opacity 520ms var(--e-out-quart), transform 520ms var(--e-out-quart); }
 
-    #services .service-card:hover .sc-aura  { opacity: .72; transform: translate3d(-4px, -4px, 0); }
+    #services .service-card:hover .sc-aura  { animation-duration: 18s; }
     #services .service-card:hover .sc-motiv { opacity: .19; transform: translate3d(-5px, -5px, 0); }
     #services .service-card .service-icon .ico { color: var(--sc, var(--mark)); }
 
@@ -2064,8 +2087,8 @@
       .sc-aura { opacity: .42; }
     }
     @media (prefers-reduced-motion: reduce) {
-      #services .service-card:hover .sc-aura,
       #services .service-card:hover .sc-motiv { transform: none; }
+      .sc-aura { animation: none !important; opacity: .5; }
     }
 
     /* ── Teamfoto: als Blatt gefasst, nicht als Rechteck danebengelegt ──
@@ -4663,6 +4686,20 @@ window.wupDemo = {
       render(btn.dataset.b);
       body.classList.remove('is-swap');
     }));
+  });
+})();
+
+// ── Farbwanderung in den Leistungskarten: läuft nur im Sichtfeld ──
+(() => {
+  const sec = document.getElementById('services');
+  if (!sec || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((eintraege) => {
+    eintraege.forEach(e => sec.classList.toggle('is-live', e.isIntersecting));
+  }, { threshold: 0 });
+  io.observe(sec);
+  // Im Hintergrundtab ebenfalls anhalten
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) sec.classList.remove('is-live');
   });
 })();
 
