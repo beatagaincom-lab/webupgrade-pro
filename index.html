@@ -2003,6 +2003,50 @@
     #why .why-card.panel::before { display: none; }
     /* Abschlusskarte über die volle Breite: sie schliesst die Sektion, statt als Rest übrig zu bleiben.
        Gold, weil es um Ihre Freigabe geht — dieselbe Regel wie überall auf der Seite. */
+    /* ── Leistungskarten mit Tiefe ──
+          Vorne scharf: Icon und Text. Dahinter weich: ein grosses angeschnittenes Motiv
+          und ein ovaler Schein in der Kartenfarbe. Konstruiert, kein Fremdbild. */
+    #services .service-card[data-sc="redesign"]  { --sc: #38bdf8; }
+    #services .service-card[data-sc="automatik"] { --sc: #34d399; }
+    #services .service-card[data-sc="tempo"]     { --sc: #fb923c; }
+    #services .service-card[data-sc="mobil"]     { --sc: #2dd4bf; }
+    #services .service-card[data-sc="seo"]       { --sc: #a78bfa; }
+    #services .service-card[data-sc="sicher"]    { --sc: #f472b6; }
+
+    #services .service-card { position: relative; overflow: hidden; isolation: isolate; }
+    #services .service-card > *:not(.sc-aura):not(.sc-motiv) { position: relative; z-index: 2; }
+
+    /* Ovaler Schein, unten rechts angeschnitten */
+    .sc-aura { position: absolute; z-index: 0; right: -14%; bottom: -34%;
+      width: 74%; aspect-ratio: 1.7 / 1; border-radius: 50%;
+      background: radial-gradient(ellipse at center,
+        color-mix(in srgb, var(--sc, var(--mark)) 34%, transparent) 0%,
+        color-mix(in srgb, var(--sc, var(--mark)) 10%, transparent) 45%,
+        transparent 72%);
+      filter: blur(26px); opacity: .5; pointer-events: none;
+      transition: opacity 520ms var(--e-out-quart), transform 520ms var(--e-out-quart); }
+
+    /* Grosses Motiv: dasselbe Zeichen wie vorne, nur weich und angeschnitten */
+    .sc-motiv { position: absolute; z-index: 1; right: -7%; bottom: -12%;
+      width: 46%; height: auto; aspect-ratio: 1; color: var(--sc, var(--mark));
+      fill: none; stroke: currentColor; stroke-width: 1.1;
+      stroke-linecap: round; stroke-linejoin: round;
+      opacity: .13; filter: blur(1.6px); pointer-events: none;
+      transition: opacity 520ms var(--e-out-quart), transform 520ms var(--e-out-quart); }
+
+    #services .service-card:hover .sc-aura  { opacity: .72; transform: translate3d(-4px, -4px, 0); }
+    #services .service-card:hover .sc-motiv { opacity: .19; transform: translate3d(-5px, -5px, 0); }
+    #services .service-card .service-icon .ico { color: var(--sc, var(--mark)); }
+
+    @media (max-width: 700px) {
+      .sc-motiv { width: 38%; opacity: .11; }
+      .sc-aura { opacity: .42; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #services .service-card:hover .sc-aura,
+      #services .service-card:hover .sc-motiv { transform: none; }
+    }
+
     /* ── Teamfoto: als Blatt gefasst, nicht als Rechteck danebengelegt ──
           Passmarken wie bei den Panels, Bildunterschrift im Schriftfeld-Stil.
           Die Farbanpassung bleibt zurückhaltend – Gesichter müssen erkennbar bleiben. */
@@ -2455,32 +2499,44 @@
       <p class="section-sub">Von der Analyse bis zum Launch – alles aus einer Hand.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card panel">
+      <div class="service-card panel" data-sc="redesign">
+        <span class="sc-aura" aria-hidden="true"></span>
+        <svg class="sc-motiv" aria-hidden="true" focusable="false"><use href="#i-penruler"/></svg>
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-penruler"/></svg></div>
         <h3>Modernes Redesign</h3>
         <p>Zeitgemässes Design, das Vertrauen schafft und Besucher in Kunden verwandelt. Professionell, klar und auf Ihre Marke zugeschnitten.</p>
       </div>
-      <div class="service-card panel">
+      <div class="service-card panel" data-sc="automatik">
+        <span class="sc-aura" aria-hidden="true"></span>
+        <svg class="sc-motiv" aria-hidden="true" focusable="false"><use href="#i-flow"/></svg>
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-flow"/></svg></div>
         <h3>Automatisierung mit Augenmass</h3>
         <p>Nur dort, wo es Ihrem Betrieb wirklich hilft: automatische Terminanfragen, strukturierte Anfragen, schnelle Antworten. Kein Schnickschnack – spürbare Entlastung im Alltag.</p>
       </div>
-      <div class="service-card panel">
+      <div class="service-card panel" data-sc="tempo">
+        <span class="sc-aura" aria-hidden="true"></span>
+        <svg class="sc-motiv" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg>
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-gauge"/></svg></div>
         <h3>Performance-Optimierung</h3>
         <p>Blitzschnelle Ladezeiten und Top-Scores bei Google PageSpeed. Mehr Geschwindigkeit = mehr Conversions, ganz einfach.</p>
       </div>
-      <div class="service-card panel">
+      <div class="service-card panel" data-sc="mobil">
+        <span class="sc-aura" aria-hidden="true"></span>
+        <svg class="sc-motiv" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-phone"/></svg></div>
         <h3>Mobile-First Design</h3>
         <p>Sauber bedienbar auf Smartphone, Tablet und Desktop – getestet auf echten Geräten, nicht nur im Browser.</p>
       </div>
-      <div class="service-card panel">
+      <div class="service-card panel" data-sc="seo">
+        <span class="sc-aura" aria-hidden="true"></span>
+        <svg class="sc-motiv" aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-search"/></svg></div>
         <h3>SEO-Optimierung</h3>
         <p>Besser gefunden bei Google – mehr organischer Traffic ohne Werbebudget. Ihre Kunden suchen Sie. Wir sorgen dafür, dass sie Sie finden.</p>
       </div>
-      <div class="service-card panel">
+      <div class="service-card panel" data-sc="sicher">
+        <span class="sc-aura" aria-hidden="true"></span>
+        <svg class="sc-motiv" aria-hidden="true" focusable="false"><use href="#i-shieldok"/></svg>
         <div class="service-icon" aria-hidden="true"><svg class="ico"><use href="#i-shieldok"/></svg></div>
         <h3>Sicherheit & Compliance</h3>
         <p>HTTPS, aktuelle Technologien, revDSG-konform. Ihre Website ist sicher, modern und zukunftsfähig.</p>
