@@ -2003,6 +2003,31 @@
     #why .why-card.panel::before { display: none; }
     /* Abschlusskarte über die volle Breite: sie schliesst die Sektion, statt als Rest übrig zu bleiben.
        Gold, weil es um Ihre Freigabe geht — dieselbe Regel wie überall auf der Seite. */
+    /* ── Teamfoto: als Blatt gefasst, nicht als Rechteck danebengelegt ──
+          Passmarken wie bei den Panels, Bildunterschrift im Schriftfeld-Stil.
+          Die Farbanpassung bleibt zurückhaltend – Gesichter müssen erkennbar bleiben. */
+    .team { margin: 0 0 3rem; display: grid; grid-template-columns: 1.55fr 1fr; gap: 0;
+      border: 1px solid var(--line-2); background: var(--panel); position: relative; }
+    .team::before, .team::after { content: ''; position: absolute; width: 14px; height: 14px; z-index: 2; }
+    .team::before { top: -1px; left: -1px; border-top: 1px solid var(--line-3); border-left: 1px solid var(--line-3); }
+    .team::after { bottom: -1px; right: -1px; border-bottom: 1px solid var(--line-3); border-right: 1px solid var(--line-3); }
+    .team-bild { position: relative; overflow: hidden; min-height: 300px; }
+    .team-bild img { display: block; width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(.82) contrast(1.04) brightness(.94); }
+    /* Verlauf nach rechts, damit Bild und Textfläche eine Fläche werden */
+    .team-bild::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(90deg, rgba(2,8,23,.30) 0%, rgba(2,8,23,0) 22%, rgba(2,8,23,0) 62%, var(--panel) 100%); }
+    .team-cap { display: flex; flex-direction: column; justify-content: center;
+      padding: 2rem 2.2rem; font-size: .93rem; line-height: 1.65; color: var(--ink-2); }
+    .team-lbl { display: block; font-family: var(--mono); font-size: .66rem; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--mark); margin-bottom: .7rem; }
+    @media (max-width: 900px) {
+      .team { grid-template-columns: 1fr; }
+      .team-bild { min-height: 0; aspect-ratio: 4/3; }
+      .team-bild::after { background: linear-gradient(180deg, rgba(2,8,23,.28) 0%, rgba(2,8,23,0) 30%, rgba(2,8,23,0) 66%, var(--panel) 100%); }
+      .team-cap { padding: 1.4rem 1.3rem 1.6rem; }
+    }
+
     /* Wer dahintersteht — die Seite verspricht Nähe, also nennt sie auch den Namen */
     .wer-steht-dahinter { max-width: 56ch; margin: 1.1rem auto 0; padding-top: 1rem;
       border-top: 1px solid var(--line-2); font-size: .92rem; color: var(--ink-2); }
@@ -3708,13 +3733,25 @@
   <div class="container">
     <div class="section-header text-center reveal">
       <div class="sec-index"><span class="sec-no">11</span><span class="sec-rule"></span><span class="sec-name">Über uns</span></div>
-      <h2 class="section-title">Klein genug, dass Sie mit dem sprechen, der baut.</h2>
+      <h2 class="section-title">Klein genug, dass Sie mit denen sprechen, die bauen.</h2>
       <p class="section-sub">Direkter Kontakt, echtes Fachwissen, faire Preise. Dafür stehen wir gerade.</p>
       <p class="wer-steht-dahinter">
         Wir sitzen in <strong>Zürich</strong> und arbeiten für Betriebe in der ganzen Deutschschweiz.
         Sie schreiben nicht an ein Postfach, sondern an die Leute, die Ihre Website auch bauen.
       </p>
     </div>
+
+    <figure class="team reveal">
+      <div class="team-bild">
+        <img src="img/team.webp" width="1400" height="1050" loading="lazy" decoding="async"
+             alt="Das Team von WebUpgrade Pro im Büro in Zürich" />
+      </div>
+      <figcaption class="team-cap">
+        <span class="team-lbl">Das Team &middot; Zürich</span>
+        Diese Leute bauen Ihre Website. Keine Zwischenstelle, kein Call-Center &ndash;
+        Sie sprechen direkt mit der Person, die an Ihrem Projekt arbeitet.
+      </figcaption>
+    </figure>
     <div class="why-grid">
       <div class="why-card panel">
         <span class="why-icon" aria-hidden="true"><svg class="ico"><use href="#i-tools"/></svg></span>
