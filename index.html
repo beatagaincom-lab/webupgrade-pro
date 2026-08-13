@@ -308,20 +308,22 @@
     .hero-rechts { display: flex; flex-direction: column; min-width: 0; }
     /* ── Teamband über der Erstanalyse-Karte ──
           Freigestellte Person plus Wortmeldung. Wechselt sanft, nur wenn sichtbar. */
-    .teamband { position: relative; margin: 0 0 .9rem; min-height: 74px; }
-    .tb-liste { list-style: none; margin: 0; padding: 0; position: relative; min-height: 74px; }
-    .tb-p { position: absolute; inset: 0; display: flex; align-items: center; gap: .85rem;
-      opacity: 0; transform: translate3d(0, 8px, 0); pointer-events: none;
-      transition: opacity 620ms var(--e-out-quart), transform 620ms var(--e-out-quart); }
+    .teamband { position: relative; margin: 0 0 1rem; min-height: 132px; }
+    .tb-liste { list-style: none; margin: 0; padding: 0; position: relative; min-height: 132px; }
+    .tb-p { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 1rem;
+      opacity: 0; transform: translate3d(0, 10px, 0); pointer-events: none;
+      transition: opacity 700ms var(--e-out-quart), transform 700ms var(--e-out-quart); }
     .tb-p.is-da { opacity: 1; transform: none; }
-    .tb-p img { width: 66px; height: 66px; flex-shrink: 0; object-fit: contain; object-position: bottom;
-      filter: saturate(.9) contrast(1.03) brightness(.98) drop-shadow(0 4px 10px rgba(0,0,0,.45)); }
-    .tb-satz { font-size: .85rem; line-height: 1.45; color: var(--ink-2); max-width: 34ch;
-      border-left: 1px solid var(--line-2); padding-left: .85rem; }
+    /* Der dunkle Bildgrund läuft weich aus, statt als Kachel zu enden */
+    .tb-p img { width: 104px; height: 132px; flex-shrink: 0; object-fit: cover; object-position: top;
+      -webkit-mask-image: radial-gradient(115% 108% at 50% 34%, #000 52%, transparent 92%);
+      mask-image: radial-gradient(115% 108% at 50% 34%, #000 52%, transparent 92%); }
+    .tb-satz { font-size: .88rem; line-height: 1.5; color: var(--ink-2); max-width: 32ch;
+      border-left: 1px solid var(--line-2); padding: .2rem 0 .5rem .95rem; }
     @media (max-width: 900px) {
-      .teamband, .tb-liste { min-height: 66px; }
-      .tb-p img { width: 56px; height: 56px; }
-      .tb-satz { font-size: .8rem; max-width: none; }
+      .teamband, .tb-liste { min-height: 108px; }
+      .tb-p img { width: 84px; height: 108px; }
+      .tb-satz { font-size: .82rem; max-width: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       .tb-p { transition-duration: .01ms; transform: none; }
@@ -2341,40 +2343,36 @@
     <div class="teamband" id="teamband" aria-label="Wer bei uns woran arbeitet">
       <ul class="tb-liste">
         <li class="tb-p is-da">
-          <img src="img/p-01.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich nehme Ihre Anfrage auf und melde mich noch am selben Tag.</span>
+          <img src="img/m-01.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich lese Ihre Anfrage und antworte mit konkreten Punkten &ndash; keinem Katalog.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-02.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich messe Ihre Ladezeiten – auf echten Geräten, nicht nur im Browser.</span>
+          <img src="img/m-02.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich messe Ihre Ladezeit auf einem echten Mittelklasse-Handy im Mobilfunknetz.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-03.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich schaue nach, wie Ihre Kunden Sie bei Google finden.</span>
+          <img src="img/m-03.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich pr&uuml;fe, ob Google Ihre Adresse, &Ouml;ffnungszeiten und Leistungen &uuml;berhaupt lesen kann.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-04.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich prüfe, ob Ihr Formular Anfragen verliert.</span>
+          <img src="img/m-04.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich z&auml;hle die Felder Ihres Formulars &ndash; und welche davon Sie Anfragen kosten.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-05.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich baue Ihre Seite auf – Sie sehen jeden Schritt vorher.</span>
+          <img src="img/m-05.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich baue auf einer separaten Vorschau. Ihre laufende Seite bleibt unber&uuml;hrt.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-06.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich richte die Automatik ein, die zu Ihrem Betrieb passt.</span>
+          <img src="img/m-06.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich verbinde Formular, Kalender und Postfach, damit nichts zweimal getippt wird.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-07.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich teste alles auf Smartphone und Tablet durch.</span>
+          <img src="img/m-07.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich teste auf echten Ger&auml;ten: iPhone, Android, Tablet &ndash; nicht im Browserfenster.</span>
         </li>
         <li class="tb-p">
-          <img src="img/p-08.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich kümmere mich um Sicherheit und Datenschutz.</span>
-        </li>
-        <li class="tb-p">
-          <img src="img/p-09.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
-          <span class="tb-satz">Ich bin da, wenn nach dem Start noch etwas ist.</span>
+          <img src="img/m-08.webp" width="480" height="620" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich setze HTTPS, Sicherheits-Header und die revDSG-Punkte, bevor etwas live geht.</span>
         </li>
       </ul>
       <p class="sr-only" role="status" aria-live="polite" id="tbSay"></p>
