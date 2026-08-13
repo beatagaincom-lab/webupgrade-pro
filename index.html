@@ -305,6 +305,28 @@
     }
     .hero-trust li::before { content: '✓'; color: var(--mark); font-weight: 700; }
 
+    .hero-rechts { display: flex; flex-direction: column; min-width: 0; }
+    /* ── Teamband über der Erstanalyse-Karte ──
+          Freigestellte Person plus Wortmeldung. Wechselt sanft, nur wenn sichtbar. */
+    .teamband { position: relative; margin: 0 0 .9rem; min-height: 74px; }
+    .tb-liste { list-style: none; margin: 0; padding: 0; position: relative; min-height: 74px; }
+    .tb-p { position: absolute; inset: 0; display: flex; align-items: center; gap: .85rem;
+      opacity: 0; transform: translate3d(0, 8px, 0); pointer-events: none;
+      transition: opacity 620ms var(--e-out-quart), transform 620ms var(--e-out-quart); }
+    .tb-p.is-da { opacity: 1; transform: none; }
+    .tb-p img { width: 66px; height: 66px; flex-shrink: 0; object-fit: contain; object-position: bottom;
+      filter: saturate(.9) contrast(1.03) brightness(.98) drop-shadow(0 4px 10px rgba(0,0,0,.45)); }
+    .tb-satz { font-size: .85rem; line-height: 1.45; color: var(--ink-2); max-width: 34ch;
+      border-left: 1px solid var(--line-2); padding-left: .85rem; }
+    @media (max-width: 900px) {
+      .teamband, .tb-liste { min-height: 66px; }
+      .tb-p img { width: 56px; height: 56px; }
+      .tb-satz { font-size: .8rem; max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tb-p { transition-duration: .01ms; transform: none; }
+    }
+
     /* ── Aufnahmeblatt ── */
     .befund { padding: 1.5rem 1.6rem 1.3rem; }
     .befund-head {
@@ -2315,6 +2337,49 @@
       </ul>
     </div>
 
+    <div class="hero-rechts">
+    <div class="teamband" id="teamband" aria-label="Wer bei uns woran arbeitet">
+      <ul class="tb-liste">
+        <li class="tb-p is-da">
+          <img src="img/p-01.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich nehme Ihre Anfrage auf und melde mich noch am selben Tag.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-02.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich messe Ihre Ladezeiten – auf echten Geräten, nicht nur im Browser.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-03.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich schaue nach, wie Ihre Kunden Sie bei Google finden.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-04.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich prüfe, ob Ihr Formular Anfragen verliert.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-05.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich baue Ihre Seite auf – Sie sehen jeden Schritt vorher.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-06.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich richte die Automatik ein, die zu Ihrem Betrieb passt.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-07.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich teste alles auf Smartphone und Tablet durch.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-08.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich kümmere mich um Sicherheit und Datenschutz.</span>
+        </li>
+        <li class="tb-p">
+          <img src="img/p-09.webp" width="320" height="320" loading="lazy" decoding="async" alt="" />
+          <span class="tb-satz">Ich bin da, wenn nach dem Start noch etwas ist.</span>
+        </li>
+      </ul>
+      <p class="sr-only" role="status" aria-live="polite" id="tbSay"></p>
+    </div>
+
     <aside class="befund panel reveal" aria-label="Was wir in der kostenlosen Analyse messen">
       <header class="befund-head">
         <span class="befund-title">Ihre kostenlose Erstanalyse</span>
@@ -2332,6 +2397,7 @@
         Genau daf&uuml;r ist die Analyse da &ndash; kostenlos, R&uuml;ckmeldung in 24 Stunden (Mo&ndash;Fr).
       </p>
     </aside>
+    </div>
   </div>
 </section>
 
@@ -4687,6 +4753,35 @@ window.wupDemo = {
       body.classList.remove('is-swap');
     }));
   });
+})();
+
+// ── Teamband: wechselt die Person alle paar Sekunden, hält an wenn ausser Sicht ──
+(() => {
+  const band = document.getElementById('teamband');
+  if (!band) return;
+  const leute = [...band.querySelectorAll('.tb-p')];
+  const say = document.getElementById('tbSay');
+  if (leute.length < 2) return;
+  let i = 0, timer = null, sichtbar = true;
+
+  function zeigen(n) {
+    leute[i].classList.remove('is-da');
+    i = n;
+    leute[i].classList.add('is-da');
+    const t = leute[i].querySelector('.tb-satz');
+    if (say && t) say.textContent = t.textContent;
+  }
+  function weiter() { zeigen((i + 1) % leute.length); }
+  function start() { if (!timer && sichtbar) timer = setInterval(weiter, 5200); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((e) => {
+      sichtbar = e[0].isIntersecting;
+      sichtbar ? start() : stop();
+    }, { threshold: 0 }).observe(band);
+  } else { start(); }
+  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
 })();
 
 // ── Farbwanderung in den Leistungskarten: läuft nur im Sichtfeld ──
