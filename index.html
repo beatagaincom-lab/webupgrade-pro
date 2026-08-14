@@ -2166,6 +2166,10 @@
       .schluss-fakten { gap: .5rem 1.2rem; }
     }
 
+    /* Kleine typografische Eigenheit in der Navigation — wie eine Positionsnummer */
+    .nav-zahl { font-family: var(--mono); font-size: .58em; letter-spacing: .04em;
+      color: var(--mark); margin-left: .18em; vertical-align: super; font-weight: 700; }
+
     /* ── Kinetische Grosstypografie ──
           Zwei Zeilen, jede in einer Maske. Beim Erreichen schiebt sich die Zeile
           von unten herein. Nur transform, deshalb ohne Rechenlast. */
@@ -2437,7 +2441,7 @@
   <div class="nav-links">
     <a href="#philosophie">Philosophie</a>
     <a href="#services">Leistungen</a>
-    <a href="#systeme">Systeme</a>
+    <a href="#systeme">Systeme<sup class="nav-zahl">08</sup></a>
     <a href="#process">Prozess</a>
     <a href="#pricing">Preise</a>
     <a href="#quick-services">Klein-Services</a>
