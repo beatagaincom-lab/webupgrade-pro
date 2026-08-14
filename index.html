@@ -2166,6 +2166,21 @@
       .schluss-fakten { gap: .5rem 1.2rem; }
     }
 
+    /* ── Kinetische Grosstypografie ──
+          Zwei Zeilen, jede in einer Maske. Beim Erreichen schiebt sich die Zeile
+          von unten herein. Nur transform, deshalb ohne Rechenlast. */
+    .kt { font-size: clamp(2.6rem, 8.4vw, 7rem); line-height: .96; letter-spacing: -2px;
+      margin: 0 0 1.4rem; }
+    .kt-z { display: block; overflow: hidden; }
+    .kt-i { display: block; transform: translate3d(0, 105%, 0);
+      transition: transform 900ms var(--e-out-expo); }
+    .kt-z.kt-laut .kt-i { transition-delay: 130ms; color: var(--ink); }
+    .kt-z:not(.kt-laut) .kt-i { color: var(--ink-2); }
+    .visible .kt-i, .kt.visible .kt-i { transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .kt-i { transform: none; transition: none; }
+    }
+
     /* ── STILLE MESSACHSE — dünn, wortlos, nur Position ── */
     .rail { position: fixed; z-index: 1200; pointer-events: none;
             left: calc(18px + env(safe-area-inset-left, 0px)); top: 0; bottom: 0; width: 18px; }
@@ -2756,7 +2771,10 @@
 
     <div class="section-header reveal">
       <div class="sec-index"><span class="sec-no">05</span><span class="sec-rule"></span><span class="sec-name">Systeme zum Anfassen</span></div>
-      <h2 class="section-title">Nicht erklärt. Ausprobiert.</h2>
+      <h2 class="section-title kt" aria-label="Nicht erklärt. Ausprobiert.">
+        <span class="kt-z" aria-hidden="true"><span class="kt-i">Nicht erklärt.</span></span>
+        <span class="kt-z kt-laut" aria-hidden="true"><span class="kt-i">Ausprobiert.</span></span>
+      </h2>
       <p class="section-sub">
         Zuerst schauen Sie einem System bei der Arbeit zu. Danach probieren Sie selbst aus &ndash;
         ein Werkzeug nach dem anderen, nie alles auf einmal.
