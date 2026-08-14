@@ -1866,6 +1866,16 @@
     #studio.ist-hell .db-st .db-dot { border-color: rgba(16,29,51,.32); }
     #studio.ist-hell .db-title { color: #0b1729; }
     #studio.ist-hell .db-kicker { color: #1668d8; }
+    /* Kein Fadenkreuz und keine Passmarken auf der hellen Flaeche — sie gehoeren zum Systemblick */
+    #studio.ist-hell::before, #studio.ist-hell::after { display: none; }
+    #studio.ist-hell .panel::after, #studio.ist-hell .panel::before { display: none; }
+    /* Ruhigere, edlere Flaeche: feine Trennlinien statt Rahmen, mehr Luft */
+    #studio.ist-hell .db-st { border-bottom: 1px solid rgba(16,29,51,.06); }
+    #studio.ist-hell .db-st:last-child { border-bottom: 0; }
+    #studio.ist-hell .db-who { background: #f3f6fb; border-color: rgba(16,29,51,.12); }
+    #studio.ist-hell .db-who.db-mensch { background: #fff7e8; border-color: #e0a94a; color: #96660d; }
+    #studio.ist-hell .ps-rail { padding-top: .4rem; }
+    #studio.ist-hell .db-phase { letter-spacing: .18em; color: #93a0b5; }
 
     /* Fensterleiste, damit erkennbar ist: das ist die Ansicht Ihrer Kundschaft */
     .ps-fenster { display: flex; align-items: center; gap: .8rem;
