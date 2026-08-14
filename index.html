@@ -1828,6 +1828,63 @@
       padding: 1.1rem 1.8rem 1.4rem; border-top: 1px solid var(--line-2); }
     .ps-count { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; color: var(--ink-2); }
     .ps-sim { border-top: 1px solid var(--line-2); }
+
+    /* ── Der Wechsel: aus dem Systemblick in die Kundenansicht ──
+          Beim Simulieren werden die Farbtokens im Studio umgeschrieben.
+          Alles darin – Zeilen, Marken, Schrift – zieht sanft mit. */
+    #studio { transition: background-color 900ms var(--e-out-quart),
+                          border-color 900ms var(--e-out-quart); }
+    #studio, #studio * { transition-property: background-color, color, border-color, fill, stroke, opacity, transform;
+      transition-duration: 900ms; transition-timing-function: var(--e-out-quart); }
+    #studio.ist-hell {
+      --panel:  #ffffff;
+      --bg:     #f4f6fa;
+      --ink:    #101d33;
+      --ink-2:  #56637c;
+      --line-1: rgba(16,29,51,.07);
+      --line-2: rgba(16,29,51,.13);
+      --line-3: rgba(16,29,51,.26);
+      --mark:   #1668d8;
+      /* Die Altnamen werden auf der Wurzel berechnet und müssen mitgezogen werden */
+      --white: #101d33; --muted: #56637c; --border: rgba(16,29,51,.13);
+      --blue: #1668d8; --cyan: #1668d8; --blue-light: #1668d8; --glass: #ffffff;
+      background: #ffffff; border-color: rgba(16,29,51,.16);
+      box-shadow: 0 26px 70px -30px rgba(2,8,23,.85);
+    }
+    #studio.ist-hell .ps-head { background: #fbfcfe; }
+    #studio.ist-hell .db-st.on .db-dot { background: var(--mark); }
+    #studio.ist-hell .db-phase { color: #7c879b; }
+    #studio.ist-hell .db-who.db-auto { color: #56637c; border-color: rgba(16,29,51,.2); }
+    #studio.ist-hell .db-state { color: var(--mark); }
+    #studio.ist-hell .ps-eval { background: #f7f9fc; }
+    #studio.ist-hell .db-cta { background: var(--mark); color: #fff; }
+    #studio.ist-hell .db-reset { color: #56637c; }
+    /* Kommende Schritte bleiben lesbar, statt auf Weiss zu verblassen */
+    #studio.ist-hell .db-st .db-txt strong { color: #26334c; }
+    #studio.ist-hell .db-st .db-txt em { color: #6b7690; }
+    #studio.ist-hell .db-st.on .db-txt strong { color: #0b1729; }
+    #studio.ist-hell .db-st .db-dot { border-color: rgba(16,29,51,.32); }
+    #studio.ist-hell .db-title { color: #0b1729; }
+    #studio.ist-hell .db-kicker { color: #1668d8; }
+
+    /* Fensterleiste, damit erkennbar ist: das ist die Ansicht Ihrer Kundschaft */
+    .ps-fenster { display: flex; align-items: center; gap: .8rem;
+      padding: .6rem .95rem; border-bottom: 1px solid var(--line-2);
+      background: #eef1f6; opacity: 0; transform: translate3d(0,-6px,0);
+      transition: opacity 700ms var(--e-out-quart) 260ms, transform 700ms var(--e-out-quart) 260ms; }
+    #studio.ist-hell .ps-fenster { opacity: 1; transform: none; }
+    .pf-punkte { display: flex; gap: .3rem; }
+    .pf-punkte i { width: 9px; height: 9px; border-radius: 50%; background: #cfd6e2; }
+    .pf-adresse { font-family: var(--mono); font-size: .74rem; color: #46536c;
+      background: #fff; border: 1px solid rgba(16,29,51,.12); border-radius: 100px;
+      padding: .24rem .8rem; flex: 1; }
+    .pf-pfad { color: #93a0b5; }
+    .pf-marke { font-family: var(--mono); font-size: .62rem; letter-spacing: .14em;
+      text-transform: uppercase; color: #1668d8; white-space: nowrap; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #studio, #studio *, .ps-fenster { transition-duration: .01ms !important; }
+    }
     .ps-rail { border-right: 0; }
     .ps-eval { padding: 1.4rem 1.8rem 1.6rem; border-top: 1px solid var(--line-2); }
     .ps-eval-list { display: grid; gap: 0; margin: .9rem 0 .4rem; }
@@ -3160,6 +3217,11 @@
       </div>
 
       <div class="ps-sim" id="psSim" hidden>
+        <div class="ps-fenster" aria-hidden="true">
+          <span class="pf-punkte"><i></i><i></i><i></i></span>
+          <span class="pf-adresse">ihr-betrieb.ch<span class="pf-pfad">/anfrage</span></span>
+          <span class="pf-marke">Live-Ansicht</span>
+        </div>
         <ol class="db-rail ps-rail" id="psRail"></ol>
         <div class="ps-eval" id="psEval" hidden>
           <p class="db-result-line" id="psEvalLine"></p>
@@ -4406,7 +4468,9 @@ function getSupabase(){
     });
 
     build.hidden = true; actions.hidden = true; sim.hidden = false;
-    say.textContent = 'Simulation läuft';
+    // Der Wechsel in die Kundenansicht: erst im nächsten Bild, damit die Überblendung greift
+    requestAnimationFrame(() => root.classList.add('ist-hell'));
+    say.textContent = 'Simulation läuft – Ansicht wie bei Ihrer Kundschaft';
     let idx = 0;
     const auto = steps.filter(st => !st.freeBtn).length;
     const humans = steps.length - auto;
@@ -4448,6 +4512,7 @@ function getSupabase(){
   document.getElementById('psRun').addEventListener('click', runSim);
   document.getElementById('psAgain').addEventListener('click', () => {
     clearT();
+    root.classList.remove('ist-hell');
     sim.hidden = true; build.hidden = false; actions.hidden = false;
     rail.innerHTML = ''; evalBox.hidden = true;
     say.textContent = '';
