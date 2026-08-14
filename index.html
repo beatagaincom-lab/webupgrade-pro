@@ -2083,6 +2083,149 @@
     .wb-card-name { display: block; font-size: .92rem; font-weight: 700; color: var(--ink); }
     .wb-card.is-on .wb-card-name { color: var(--acc); }
     .wb-card-desc { display: block; font-size: .76rem; color: var(--ink-2); margin-top: .1rem; line-height: 1.4; }
+
+    /* ── WERKZEUG-VORSCHAU: die Karte zeigt beim Zeigen, was sie tut ──
+          Ausschliesslich transform und opacity, damit kein Layout neu gerechnet wird.
+          Jede Bewegung endet - nichts laeuft dauerhaft. Auf Touch entfaellt sie ganz. */
+    .wb-prev { --wbh: 1.15rem; position: relative; display: block; height: var(--wbh);
+      margin-top: .5rem; overflow: hidden; pointer-events: none; font-family: var(--mono);
+      font-size: .58rem; letter-spacing: .04em; color: var(--ink-2); }
+    .wb-prev i, .wb-prev b { font-style: normal; }
+    /* Ruhezustand: nur eine feine Kante in der Farbe des Werkzeugs */
+    .wb-ptick { position: absolute; left: 0; top: 50%; width: 1.1rem; height: 1px;
+      background: var(--acc, var(--line-3)); opacity: .32;
+      transform: translateY(-50%) scaleX(1); transform-origin: left center;
+      transition: opacity 150ms var(--e-out-quart), transform 300ms var(--e-out-quart); }
+    .wb-card:is(:hover, :focus-visible) .wb-ptick { opacity: 0; transform: translateY(-50%) scaleX(.15); }
+    /* will-change haelt die Ebene bereit: sonst kostet der Start der Blende
+       genau eine Layout-Runde, weil die Ebene erst dann angelegt wuerde. */
+    .wb-pv { position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex;
+      align-items: center; gap: .3rem; opacity: 0; will-change: opacity;
+      transition: opacity 190ms var(--e-out-quart); }
+    .wb-pv > * { flex: 0 0 auto; }
+    .wb-card:is(:hover, :focus-visible) .wb-pv { opacity: 1; transition-delay: 70ms; }
+    /* Zahlwerk: gestapelte Werte, die in Schritten durchlaufen */
+    .wb-od { position: relative; display: block; height: var(--wbh); overflow: hidden; }
+    .wb-od > i { display: block; transform: translateY(0); }
+    .wb-od b { display: block; height: var(--wbh); line-height: var(--wbh);
+      white-space: nowrap; color: var(--ink); font-weight: 600; }
+
+    /* Termin buchen: die Terminkarte klappt auf, zwei Zeiten kommen nach */
+    .wb-tm-sheet { display: block; padding: 0 .3rem; line-height: calc(var(--wbh) - 2px);
+      border: 1px solid var(--acc); color: var(--acc);
+      transform: scaleY(.16); transform-origin: top center;
+      transition: transform 340ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-tm-sheet { transform: scaleY(1); }
+    .wb-tm-slot { display: block; padding: 0 .28rem; line-height: calc(var(--wbh) - 2px);
+      border: 1px solid var(--line-3); color: var(--ink); opacity: 0; transform: translateY(.45rem);
+      transition: opacity 260ms var(--e-out-quart), transform 300ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-tm-slot { opacity: 1; transform: translateY(0); }
+    .wb-card:is(:hover, :focus-visible) .wb-tm-slot:nth-of-type(2) { transition-delay: 280ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-tm-slot:nth-of-type(3) { transition-delay: 420ms; }
+
+    /* Offerte rechnen: der Betrag zaehlt hoch */
+    .wb-of-od b { color: var(--acc); }
+    .wb-of-od > i { transition: transform 880ms steps(4, end); }
+    .wb-card:is(:hover, :focus-visible) .wb-of-od > i {
+      transform: translateY(calc(var(--wbh) * -4)); transition-delay: 120ms; }
+    .wb-of-note { display: block; opacity: 0; transform: translateX(-.3rem);
+      transition: opacity 300ms var(--e-out-quart), transform 300ms var(--e-out-quart); }
+    .wb-card:is(:hover, :focus-visible) .wb-of-note { opacity: .75; transform: translateX(0); transition-delay: 900ms; }
+
+    /* Auftrag freigeben: der Statuspunkt wandert drei Stufen */
+    .wb-st-rail { position: relative; display: block; width: 2.9rem; height: 1px;
+      background: var(--line-3); }
+    .wb-st-dot { position: absolute; left: 0; top: 50%; width: .38rem; height: .38rem;
+      border-radius: 50%; background: var(--acc); transform: translate(0, -50%);
+      transition: transform 760ms steps(2, end); }
+    .wb-card:is(:hover, :focus-visible) .wb-st-dot {
+      transform: translate(2.52rem, -50%); transition-delay: 120ms; }
+    .wb-st-od > i { transition: transform 760ms steps(2, end); }
+    .wb-card:is(:hover, :focus-visible) .wb-st-od > i {
+      transform: translateY(calc(var(--wbh) * -2)); transition-delay: 120ms; }
+
+    /* Prozess-Studio: drei Bausteine rasten nacheinander ein */
+    .wb-sd-b { display: block; width: 1rem; height: .62rem; border: 1px solid var(--acc);
+      background: color-mix(in srgb, var(--acc) 16%, transparent);
+      opacity: 0; transform: translateX(-.4rem) scale(.5);
+      transition: opacity 240ms var(--e-out-quart), transform 340ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-sd-b { opacity: 1; transform: translateX(0) scale(1); }
+    .wb-card:is(:hover, :focus-visible) .wb-sd-b:nth-of-type(2) { transition-delay: 150ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-sd-b:nth-of-type(3) { transition-delay: 300ms; }
+    .wb-sd-lb { display: block; opacity: 0; transform: translateX(-.3rem);
+      transition: opacity 300ms var(--e-out-quart), transform 300ms var(--e-out-quart); }
+    .wb-card:is(:hover, :focus-visible) .wb-sd-lb { opacity: .75; transform: translateX(0); transition-delay: 470ms; }
+
+    /* Vorher / Nachher: aus acht Schritten werden zwei */
+    .wb-vg-bar { display: flex; align-items: center; gap: .14rem; }
+    .wb-vg-bar i { display: block; width: .3rem; height: .52rem; background: var(--line-3);
+      transform: scaleX(1); transform-origin: left center;
+      transition: opacity 240ms var(--e-out-quart), transform 240ms var(--e-out-quart); }
+    .wb-vg-bar i:nth-child(-n+2) { background: var(--acc); opacity: .5; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(-n+2) { opacity: 1; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(n+3) { transform: scaleX(0); opacity: 0; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(8) { transition-delay: 0ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(7) { transition-delay: 70ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(6) { transition-delay: 140ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(5) { transition-delay: 210ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(4) { transition-delay: 280ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-bar i:nth-child(3) { transition-delay: 350ms; }
+    .wb-vg-od > i { transition: transform 320ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-od > i {
+      transform: translateY(calc(var(--wbh) * -1)); transition-delay: 520ms; }
+    /* Die eingeklappten Segmente lassen ihren Platz stehen - die Zahl rueckt nach,
+       damit keine Luecke bleibt. Verschoben wird, nicht neu gesetzt. */
+    .wb-vg-od { will-change: transform; transition: transform 420ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-vg-od { transform: translateX(-2.64rem); transition-delay: 380ms; }
+
+    /* Formular-Labor: von zehn Feldern bleiben zwei */
+    .wb-lb-set { display: flex; align-items: flex-end; gap: .12rem; height: .72rem; }
+    .wb-lb-set i { display: block; width: .17rem; height: .72rem; background: var(--line-3);
+      transform: scaleY(1); transform-origin: bottom center;
+      transition: opacity 220ms var(--e-out-quart), transform 220ms var(--e-out-quart); }
+    .wb-lb-set i:nth-child(-n+2) { background: var(--acc); opacity: .5; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(-n+2) { opacity: 1; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(n+3) { transform: scaleY(0); opacity: 0; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(10) { transition-delay: 0ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(9) { transition-delay: 50ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(8) { transition-delay: 100ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(7) { transition-delay: 150ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(6) { transition-delay: 200ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(5) { transition-delay: 250ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(4) { transition-delay: 300ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-set i:nth-child(3) { transition-delay: 350ms; }
+    .wb-lb-od > i { transition: transform 320ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-od > i {
+      transform: translateY(calc(var(--wbh) * -1)); transition-delay: 520ms; }
+    .wb-lb-od { will-change: transform; transition: transform 420ms var(--e-out-expo); }
+    .wb-card:is(:hover, :focus-visible) .wb-lb-od { transform: translateX(-2.32rem); transition-delay: 380ms; }
+
+    /* Branchen-Simulation: drei Farbwelten wechseln einmal durch */
+    .wb-br-d { display: block; width: .44rem; height: .44rem; border-radius: 50%;
+      background: var(--d); opacity: .22; transform: scale(.8);
+      transition: opacity 240ms var(--e-out-quart), transform 240ms var(--e-out-quart); }
+    .wb-card:is(:hover, :focus-visible) .wb-br-d { animation: wbBrDurch 620ms var(--e-out-quart) both; }
+    .wb-card:is(:hover, :focus-visible) .wb-br-d:nth-of-type(2) { animation-delay: 290ms; }
+    .wb-card:is(:hover, :focus-visible) .wb-br-d:nth-of-type(3) { animation-delay: 580ms; }
+    @keyframes wbBrDurch {
+      0%   { opacity: .22; transform: scale(.8); }
+      35%  { opacity: 1;   transform: scale(1.28); }
+      100% { opacity: .62; transform: scale(1); }
+    }
+    .wb-br-lb { display: block; opacity: 0; transform: translateX(-.3rem);
+      transition: opacity 300ms var(--e-out-quart), transform 300ms var(--e-out-quart); }
+    .wb-card:is(:hover, :focus-visible) .wb-br-lb { opacity: .75; transform: translateX(0); transition-delay: 900ms; }
+
+    /* Zeigen gibt es nur mit Zeiger - auf Touch keine Vorschau */
+    @media (hover: none) {
+      .wb-prev { display: none; }
+    }
+    /* Weniger Bewegung: der Endzustand erscheint direkt */
+    @media (prefers-reduced-motion: reduce) {
+      .wb-prev, .wb-prev i, .wb-prev b, .wb-prev span {
+        transition-duration: .01ms !important; transition-delay: 0s !important;
+        animation-duration: .01ms !important; animation-delay: 0s !important; }
+    }
     .wb-mehr { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap;
       margin-top: .9rem; padding: .85rem 1.2rem; border: 1px solid var(--line-2); border-radius: 2px;
       text-decoration: none; transition: border-color 260ms var(--e-out-quart), background-color 260ms var(--e-out-quart); }
@@ -2865,14 +3008,17 @@
           <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-termin" style="--acc:#fb923c">
             <span class="wb-card-name">Termin buchen</span>
             <span class="wb-card-desc">Der Kunde bucht selbst, Best&auml;tigung sofort</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><b class="wb-tm-sheet">Termin</b><b class="wb-tm-slot">09:15</b><b class="wb-tm-slot">14:30</b></span></span>
           </button>
           <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-offerte" style="--acc:#34d399">
             <span class="wb-card-name">Offerte rechnen</span>
             <span class="wb-card-desc">Konfigurator mit Richtpreis statt R&uuml;ckruf</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><b class="wb-od wb-of-od"><i><b>CHF 0</b><b>CHF 1&#39;260</b><b>CHF 2&#39;700</b><b>CHF 3&#39;900</b><b>CHF 4&#39;840</b></i></b><b class="wb-of-note">Richtpreis</b></span></span>
           </button>
           <button type="button" class="wb-card" data-open="werkzeuge" data-tab="tab-status" style="--acc:#f472b6">
             <span class="wb-card-name">Auftrag freigeben</span>
             <span class="wb-card-desc">Kundenportal mit Status und Freigabe</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><b class="wb-st-rail"><i class="wb-st-dot"></i></b><b class="wb-od wb-st-od"><i><b>Eingegangen</b><b>In Arbeit</b><b>Bereit</b></i></b></span></span>
           </button>
         </div>
         <div class="wb-grp">
@@ -2880,10 +3026,12 @@
           <button type="button" class="wb-card" data-open="studio" style="--acc:#38bdf8">
             <span class="wb-card-name">Prozess-Studio</span>
             <span class="wb-card-desc">Ihren eigenen Ablauf bauen und laufen lassen</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><b class="wb-sd-b"></b><b class="wb-sd-b"></b><b class="wb-sd-b"></b><b class="wb-sd-lb">Ablauf steht</b></span></span>
           </button>
           <button type="button" class="wb-card" data-open="vergleich" style="--acc:#2dd4bf">
             <span class="wb-card-name">Vorher / Nachher</span>
             <span class="wb-card-desc">Wie viel Handarbeit heute drinsteckt</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><b class="wb-vg-bar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></b><b class="wb-od wb-vg-od"><i><b>8 Schritte</b><b>2 Schritte</b></i></b></span></span>
           </button>
         </div>
         <div class="wb-grp">
@@ -2891,10 +3039,12 @@
           <button type="button" class="wb-card" data-open="labor" style="--acc:#a78bfa">
             <span class="wb-card-name">Formular-Labor</span>
             <span class="wb-card-desc">Typisches gegen intelligentes Formular</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><b class="wb-lb-set"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></b><b class="wb-od wb-lb-od"><i><b>10 Felder</b><b>2 Felder</b></i></b></span></span>
           </button>
           <button type="button" class="wb-card" data-open="branchen" style="--acc:#a3e635">
             <span class="wb-card-name">Branchen-Simulation</span>
             <span class="wb-card-desc">Wie anders ein System je Branche denkt</span>
+          <span class="wb-prev" aria-hidden="true"><i class="wb-ptick"></i><span class="wb-pv"><i class="wb-br-d" style="--d:#fb923c"></i><i class="wb-br-d" style="--d:#2dd4bf"></i><i class="wb-br-d" style="--d:#a78bfa"></i><b class="wb-br-lb">drei Branchen</b></span></span>
           </button>
         </div>
       </div>
