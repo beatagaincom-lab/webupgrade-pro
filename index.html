@@ -956,47 +956,73 @@
       .betriebe-grid figcaption span { font-size: .62rem; margin-bottom: .25rem; }
     }
 
-    /* ── Betriebe als Fotografik ──
-          Das Foto liefert Material und Licht, die Datenebene liefert die Zahlen.
-          Jede Zahl ist dieselbe wie in der Konstruktionszeichnung zuvor. */
+    /* ── Betriebe als Blätter einer Mappe ──
+          Das Foto liegt nicht auf der Fläche, es ist in ein Blatt eingelegt:
+          Passmarken wie bei allen Panels, Positionsmarke, Schriftfeld unten.
+          Der helle Bildgrund wird nach aussen ins Navy geführt. */
     .betriebe-grid figure[data-b="schreinerei"] { --bz: #fb923c; }
     .betriebe-grid figure[data-b="praxis"]      { --bz: #2dd4bf; }
     .betriebe-grid figure[data-b="treuhand"]    { --bz: #a78bfa; }
-    .bf { position: relative; overflow: hidden; background: transparent; }
-    .bf-holz   { aspect-ratio: 1000/850; }
-    .bf-planer { aspect-ratio: 1000/746; }
-    .bf-buch   { aspect-ratio: 1000/648; }
-    .bf img { display: block; width: 100%; height: 100%; object-fit: contain;
-      filter: saturate(.94) contrast(1.02) brightness(.98); }
-    /* Weiche Vignette: die Ecken laufen ins Dunkle, damit kein Rechteck auf der Fläche klebt */
-    .bf::after { content: ''; position: absolute; inset: -1px; pointer-events: none; z-index: 1;
+
+    .betriebe-grid figure { position: relative; background: var(--panel);
+      border: 1px solid var(--line-2); padding: 0; }
+    /* Passmarken oben links und unten rechts — dieselbe Sprache wie die Panels */
+    .betriebe-grid figure::before, .betriebe-grid figure::after {
+      content: ''; position: absolute; width: 13px; height: 13px; z-index: 3; }
+    .betriebe-grid figure::before { top: -1px; left: -1px;
+      border-top: 1px solid var(--bz); border-left: 1px solid var(--bz); }
+    .betriebe-grid figure::after { bottom: -1px; right: -1px;
+      border-bottom: 1px solid var(--line-3); border-right: 1px solid var(--line-3); }
+
+    .bf { position: relative; overflow: hidden; margin: 0; background: #060f22; }
+    .bf-holz   { aspect-ratio: 4/3.2; }
+    .bf-planer { aspect-ratio: 4/3; }
+    .bf-buch   { aspect-ratio: 4/2.9; }
+    .bf img { display: block; width: 100%; height: 100%; object-fit: cover;
+      /* Der Bildrand wird nach aussen weggeblendet, damit keine Kachelkante bleibt */
+      -webkit-mask-image: radial-gradient(128% 122% at 50% 46%, #000 46%, rgba(0,0,0,.55) 76%, transparent 99%);
+      mask-image: radial-gradient(128% 122% at 50% 46%, #000 46%, rgba(0,0,0,.55) 76%, transparent 99%); }
+    /* Farbschleier in der Kartenfarbe: bindet das Foto an die Sektion */
+    .bf::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
       background:
-        radial-gradient(118% 108% at 50% 46%, transparent 44%, rgba(2,8,23,.32) 74%, rgba(2,8,23,.88) 100%),
-        linear-gradient(to bottom, rgba(2,8,23,.36) 0%, transparent 13%, transparent 87%, rgba(2,8,23,.44) 100%); }
+        radial-gradient(90% 80% at 50% 42%, transparent 40%, rgba(6,15,34,.55) 82%, var(--panel) 100%),
+        linear-gradient(160deg, color-mix(in srgb, var(--bz) 14%, transparent) 0%, transparent 46%); }
+
+    /* Positionsmarke oben links im Bild */
+    .bf-pos { position: absolute; top: .7rem; left: .8rem; z-index: 4;
+      font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; color: var(--bz);
+      background: rgba(6,15,34,.72); padding: .2rem .45rem; }
+
     .bf-daten { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
     .bf-daten path, .bf-daten rect { fill: none; }
     .bf-daten text { font-family: var(--mono); }
-
-    /* Helle Beschriftung auf Holz */
-    .bd-dim path { stroke: #fff; stroke-width: 1.1; opacity: .92; }
-    .bd-plate { fill: rgba(10,20,38,.82); }
+    .bd-dim path { stroke: #f2f6ff; stroke-width: 1.1; opacity: .95; }
+    .bd-plate { fill: rgba(4,10,22,.86); }
     .bd-t { font-size: 11px; fill: #fff; letter-spacing: .04em; }
     .bd-t.bd-s { font-size: 9px; }
-    .bd-f { font-size: 6.6px; fill: #fff; opacity: .8; letter-spacing: .14em; }
-
-    /* Tinte auf Papier */
-    .bf-tinte .bd-h { font-size: 7.4px; fill: #1b2c4a; letter-spacing: .12em; opacity: .9; }
-    .bf-tinte .bd-z { font-size: 8px; fill: #22304d; letter-spacing: .02em; }
-    .bf-tinte .bd-sum { fill: #0f1c33; font-weight: 700; }
+    .bd-f { font-size: 6.6px; fill: #fff; opacity: .82; letter-spacing: .14em; }
+    .bf-tinte .bd-h { font-size: 7.4px; fill: #1b2c4a; letter-spacing: .12em; opacity: .92; }
+    .bf-tinte .bd-z { font-size: 8px; fill: #22304d; }
+    .bf-tinte .bd-sum { fill: #0d1a30; font-weight: 700; }
     .bf-tinte .bd-f2 { font-size: 6.4px; fill: #3a4a68; letter-spacing: .14em; }
     .bf-tinte .bd-rule path { stroke: #26364f; stroke-width: .8; }
-    .bf-tinte .bd-rule2 path { stroke: var(--bz); stroke-width: 1.1; opacity: .85; }
-    .bd-slot rect { fill: color-mix(in srgb, var(--bz) 30%, transparent);
+    .bf-tinte .bd-rule2 path { stroke: var(--bz); stroke-width: 1.2; }
+    .bd-slot rect { fill: color-mix(in srgb, var(--bz) 34%, transparent);
       stroke: var(--bz); stroke-width: .9; }
+
+    /* Schriftfeld unten — wie bei einer technischen Zeichnung */
+    .betriebe-grid figcaption { position: relative; z-index: 2;
+      padding: .95rem 1.1rem 1.05rem; border-top: 1px solid var(--line-2);
+      font-size: .86rem; color: var(--ink-2); line-height: 1.5;
+      display: grid; grid-template-columns: auto 1fr; gap: .2rem .9rem; align-items: baseline; }
+    .betriebe-grid figcaption span { grid-column: 1 / -1;
+      font: 700 .7rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--bz); margin-bottom: .35rem; }
 
     @media (max-width: 700px) {
       .bd-t { font-size: 13px; } .bd-f, .bf-tinte .bd-f2 { font-size: 7.6px; }
       .bf-tinte .bd-z { font-size: 9px; } .bf-tinte .bd-h { font-size: 8.4px; }
+      .betriebe-grid figcaption { padding: .8rem .9rem .9rem; font-size: .8rem; }
     }
 
     .abnahme { margin: 3.5rem auto 0; max-width: 780px; border: 1px solid var(--line-2); }
@@ -2427,6 +2453,7 @@
       <div class="betriebe-grid">
         <figure data-b="schreinerei">
           <div class="bf bf-holz">
+            <span class="bf-pos">POS. 01</span>
             <img src="img/betrieb-zinken.webp" width="1000" height="850" loading="lazy" decoding="async"
                  alt="Handgeschnittene Zinkenverbindung in Eiche, die Zinken greifen präzise ineinander" />
             <svg class="bf-daten" viewBox="0 0 400 340" aria-hidden="true">
@@ -2446,6 +2473,7 @@
         </figure>
         <figure class="shift" data-b="praxis">
           <div class="bf bf-planer">
+            <span class="bf-pos">POS. 02</span>
             <img src="img/betrieb-planer.webp" width="1000" height="746" loading="lazy" decoding="async"
                  alt="Aufgeschlagener Terminplaner mit leerem Raster" />
             <svg class="bf-daten bf-tinte" viewBox="0 0 400 298" aria-hidden="true">
@@ -2473,6 +2501,7 @@
         </figure>
         <figure data-b="treuhand">
           <div class="bf bf-buch">
+            <span class="bf-pos">POS. 03</span>
             <img src="img/betrieb-buch.webp" width="1000" height="648" loading="lazy" decoding="async"
                  alt="Aufgeschlagenes Kontenbuch mit leeren Spalten" />
             <svg class="bf-daten bf-tinte" viewBox="0 0 400 259" aria-hidden="true">
