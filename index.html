@@ -965,7 +965,27 @@
     .betriebe-grid figure[data-b="treuhand"]    { --bz: #a78bfa; }
 
     .betriebe-grid figure { position: relative; background: var(--panel);
-      border: 1px solid var(--line-2); padding: 0; }
+      border: 1px solid var(--line-2); padding: 0;
+      transition: transform 620ms var(--e-out-quart), border-color 620ms var(--e-out-quart); }
+    /* Fokus auf eines: Zeigt der Besucher auf ein Blatt, treten die anderen zurück.
+       Nur filter, opacity und transform — das rechnet die Grafikkarte. */
+    .betriebe-grid figure img { transition: filter 620ms var(--e-out-quart); }
+    .betriebe-grid figure figcaption { transition: opacity 620ms var(--e-out-quart); }
+    .betriebe-grid:hover figure img { filter: grayscale(1) brightness(.68); }
+    .betriebe-grid:hover figure figcaption { opacity: .42; }
+    .betriebe-grid:hover figure:hover img { filter: none; }
+    .betriebe-grid:hover figure:hover figcaption { opacity: 1; }
+    .betriebe-grid:hover figure:hover { transform: translate3d(0, -6px, 0); border-color: var(--bz); }
+    .bf-pos { transition: background-color 420ms var(--e-out-quart), color 420ms var(--e-out-quart); }
+    .betriebe-grid figure:hover .bf-pos { background: var(--bz); color: #05101f; }
+    /* Auf Touchgeräten bleibt alles farbig — dort gibt es kein Zeigen */
+    @media (hover: none) {
+      .betriebe-grid:hover figure img { filter: none; }
+      .betriebe-grid:hover figure figcaption { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .betriebe-grid:hover figure:hover { transform: none; }
+    }
     /* Passmarken oben links und unten rechts — dieselbe Sprache wie die Panels */
     .betriebe-grid figure::before, .betriebe-grid figure::after {
       content: ''; position: absolute; width: 13px; height: 13px; z-index: 3; }
